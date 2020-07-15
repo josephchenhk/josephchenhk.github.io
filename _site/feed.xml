@@ -1,4 +1,88 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-14T22:44:31+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">Vmware Workstation</title><link href="http://localhost:4000/vmware-workstation/" rel="alternate" type="text/html" title="Vmware Workstation" /><published>2020-07-14T22:44:00+08:00</published><updated>2020-07-14T22:44:00+08:00</updated><id>http://localhost:4000/vmware-workstation</id><content type="html" xml:base="http://localhost:4000/vmware-workstation/">&lt;h2 id=&quot;准备&quot;&gt;准备&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-15T19:11:33+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">Vmware Workstation</title><link href="http://localhost:4000/vmware-workstation/" rel="alternate" type="text/html" title="Vmware Workstation" /><published>2020-07-14T22:44:00+08:00</published><updated>2020-07-14T22:44:00+08:00</updated><id>http://localhost:4000/vmware-workstation</id><content type="html" xml:base="http://localhost:4000/vmware-workstation/">&lt;h2 id=&quot;准备&quot;&gt;准备&lt;/h2&gt;
+
+&lt;p&gt;在装好的RHEL7.5上安装Vmware Workstation，需要提前做好如下准备：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;设置上网&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;替换yum源（Redhat的yum需要付费，切换成CentOS的源）&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;安装GUI&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;设置上网&quot;&gt;设置上网&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt;$ ls /etc/sysconfig/network-scripts/
+ifcfg-enp0s31f6
+ifcfg-lo
+...
+&amp;gt;&amp;gt;&amp;gt;$ ls -l /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
+-rw-r--r--
+&amp;gt;&amp;gt;&amp;gt;$ sudo chmod o+w /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
+&amp;gt;&amp;gt;&amp;gt;$ ls -l /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
+-rw-r--rw-&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;修改ifcfg-enp0s31f6:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt;$ vi /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
+TYPE=Ethernet
+...
+# 以下为修改项
+BOOTPROTO=static     # dhcp为动态分配ip
+ONBOOT=yes
+IPADDR0=192.168.1.20 # fixed局域网ip，0可省略
+GATEWAY0=192.168.1.1 # 网关，0可省略
+PREFIX0=24           # 子网掩码，0可省略（也可以是NETMASK=255.255.255.0，换算成2进制是24个1）
+DNS1=192.168.1.1     # DNS解释地址（通常与网关一致），不要忘记DNS后面有个1
+ZONE=public          # 可能是optional的&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;按wq保存之后，记得将权限改回来：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt;$ sudo chmod o-w /etc/sysconfig/network-scripts/ifcfg-enp0s31f6&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;之后reboot电脑，让ip生效。重启电脑后&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt;$ ip address   # 查看ip地址，看到刚刚的配置已经生效
+1: lo: ...
+2: enp0s31f6: ...
+   ...
+   inet 192.168.1.20/24 ...
+&amp;gt;&amp;gt;&amp;gt;$ ping www.baidu.com # 试一试连外网，收到数据的话即ok&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;替换yum源&quot;&gt;替换yum源&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt;$ rpm -qa | grep yum # 查询rpm库中的yum文件
+yum-3.4.3-158.e17.noarch
+yum-metadata-parser-1.1.4-10.e17.x86_64
+yum-rhn-plugin-2.0.1-10.e17.noarch
+&amp;gt;&amp;gt;&amp;gt;$ rpm -qa | grep yum | xargs rpm -e --nodeps # 切换到root用户，通过以下命令删除yum文件&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;去mirrors.aliyun.com/centos/7/os/x86_64/Packages/ 下载以下几个文件
+yum-3.4.3-167.el7.centos.noarch.rpm
+yum-metadata-parser-1.1.4-10.el7.x86_64.rpm
+yum-plugin-fastestmirror-1.1.31-53.el7.noarch.rpm
+yum-utils-1.1.31-53.el7.noarch.rpm
+yum-rhn-plugin-2.0.1-10.el7.noarch.rpm
+python-urlgrabber-3.10-10.el7.noarch.rpm
+python-iniparse-0.4-9.el7.noarch.rpm&lt;/p&gt;
+
+&lt;p&gt;上传至RHEL服务器，按顺序进行安装&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt;$ sudo rpm -ivh python-iniparse-0.4-9.el7.noarch.rpm
+&amp;gt;&amp;gt;&amp;gt;$ sudo rpm -ivh python-urlgrabber-3.10-10.el7.noarch.rpm
+&amp;gt;&amp;gt;&amp;gt;$ sudo rpm -ivh yum-metadata-parser-1.1.4-10.el7.x86_64.rpm
+&amp;gt;&amp;gt;&amp;gt;$ sudo rpm -ivh yum-plugin-fastestmirror-1.1.31-53.el7.noarch.rpm
+&amp;gt;&amp;gt;&amp;gt;$ sudo rpm -ivh yum-utils-1.1.31-53.el7.noarch.rpm
+&amp;gt;&amp;gt;&amp;gt;$ sudo rpm -ivh yum-rhn-plugin-2.0.1-10.el7.noarch.rpm
+&amp;gt;&amp;gt;&amp;gt;$ sudo rpm -ivh yum-3.4.3-167.el7.centos.noarch.rpm&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;通常直接这样会遇到报错”**.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY …“，可以在上述命令后面加上 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--force --nodeps&lt;/code&gt; 进行强制安装.&lt;/p&gt;
+
+&lt;h3 id=&quot;安装gui&quot;&gt;安装GUI&lt;/h3&gt;
 
 &lt;p&gt;This note &lt;strong&gt;demonstrates&lt;/strong&gt; some of what &lt;a href=&quot;https://daringfireball.net/projects/markdown/&quot;&gt;Markdown&lt;/a&gt; is &lt;em&gt;capable of doing&lt;/em&gt;.&lt;/p&gt;
 

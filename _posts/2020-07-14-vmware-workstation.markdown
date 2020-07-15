@@ -37,6 +37,7 @@ ifcfg-lo
 -rw-r--rw-
 {% endhighlight %}
 
+
 修改ifcfg-enp0s31f6:
 {% highlight raw %}
 >>>$ vi /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
@@ -45,11 +46,28 @@ TYPE=Ethernet
 # 以下为修改项
 BOOTPROTO=static     # dhcp为动态分配ip
 ONBOOT=yes
-IPADDR0=192.168.1.20 # fixed局域网ip
-GATEWAY0=192.168.1.1 # 网关
-PREFIX0=24           # 子网掩码（也可以是NETMASK=255.255.255.0）
-DNS1=192.168.1.1     # DNS解释地址（通常与网关一致）
+IPADDR0=192.168.1.20 # fixed局域网ip，0可省略
+GATEWAY0=192.168.1.1 # 网关，0可省略
+PREFIX0=24           # 子网掩码，0可省略（也可以是NETMASK=255.255.255.0，换算成2进制是24个1）
+DNS1=192.168.1.1     # DNS解释地址（通常与网关一致），不要忘记DNS后面有个1
 ZONE=public          # 可能是optional的
+{% endhighlight %}
+
+按wq保存之后，记得将权限改回来：
+
+{% highlight raw %}
+>>>$ sudo chmod o-w /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
+{% endhighlight %}
+
+之后reboot电脑，让ip生效。重启电脑后
+
+{% highlight raw %}
+>>>$ ip address   # 查看ip地址，看到刚刚的配置已经生效
+1: lo: ...
+2: enp0s31f6: ...
+   ...
+   inet 192.168.1.20/24 ...
+>>>$ ping www.baidu.com # 试一试连外网，收到数据的话即ok
 {% endhighlight %}
 
 ### 替换yum源
@@ -61,6 +79,30 @@ yum-metadata-parser-1.1.4-10.e17.x86_64
 yum-rhn-plugin-2.0.1-10.e17.noarch
 >>>$ rpm -qa | grep yum | xargs rpm -e --nodeps # 切换到root用户，通过以下命令删除yum文件
 {% endhighlight %}
+
+去mirrors.aliyun.com/centos/7/os/x86_64/Packages/ 下载以下几个文件
+yum-3.4.3-167.el7.centos.noarch.rpm
+yum-metadata-parser-1.1.4-10.el7.x86_64.rpm
+yum-plugin-fastestmirror-1.1.31-53.el7.noarch.rpm
+yum-utils-1.1.31-53.el7.noarch.rpm
+yum-rhn-plugin-2.0.1-10.el7.noarch.rpm
+python-urlgrabber-3.10-10.el7.noarch.rpm
+python-iniparse-0.4-9.el7.noarch.rpm
+
+上传至RHEL服务器，按顺序进行安装
+{% highlight raw %}
+>>>$ sudo rpm -ivh python-iniparse-0.4-9.el7.noarch.rpm
+>>>$ sudo rpm -ivh python-urlgrabber-3.10-10.el7.noarch.rpm
+>>>$ sudo rpm -ivh yum-metadata-parser-1.1.4-10.el7.x86_64.rpm
+>>>$ sudo rpm -ivh yum-plugin-fastestmirror-1.1.31-53.el7.noarch.rpm
+>>>$ sudo rpm -ivh yum-utils-1.1.31-53.el7.noarch.rpm
+>>>$ sudo rpm -ivh yum-rhn-plugin-2.0.1-10.el7.noarch.rpm
+>>>$ sudo rpm -ivh yum-3.4.3-167.el7.centos.noarch.rpm
+{% endhighlight %}
+
+通常直接这样会遇到报错"**.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY ..."，可以在上述命令后面加上 `--force --nodeps` 进行强制安装.
+
+### 安装GUI
 
 
 This note **demonstrates** some of what [Markdown][1] is *capable of doing*.
