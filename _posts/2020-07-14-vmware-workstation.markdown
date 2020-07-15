@@ -15,6 +15,54 @@ description: Install vmware workstation in Linux
 
 ## 准备
 
+在装好的RHEL7.5上安装Vmware Workstation，需要提前做好如下准备：
+
+0. 设置上网
+
+1. 替换yum源（Redhat的yum需要付费，切换成CentOS的源）
+
+2. 安装GUI
+
+### 设置上网
+
+{% highlight raw %}
+>>>$ ls /etc/sysconfig/network-scripts/
+ifcfg-enp0s31f6
+ifcfg-lo
+...
+>>>$ ls -l /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
+-rw-r--r--
+>>>$ sudo chmod o+w /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
+>>>$ ls -l /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
+-rw-r--rw-
+{% endhighlight %}
+
+修改ifcfg-enp0s31f6:
+{% highlight raw %}
+>>>$ vi /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
+TYPE=Ethernet
+...
+# 以下为修改项
+BOOTPROTO=static     # dhcp为动态分配ip
+ONBOOT=yes
+IPADDR0=192.168.1.20 # fixed局域网ip
+GATEWAY0=192.168.1.1 # 网关
+PREFIX0=24           # 子网掩码（也可以是NETMASK=255.255.255.0）
+DNS1=192.168.1.1     # DNS解释地址（通常与网关一致）
+ZONE=public          # 可能是optional的
+{% endhighlight %}
+
+### 替换yum源
+
+{% highlight raw %}
+>>>$ rpm -qa | grep yum # 查询rpm库中的yum文件
+yum-3.4.3-158.e17.noarch
+yum-metadata-parser-1.1.4-10.e17.x86_64
+yum-rhn-plugin-2.0.1-10.e17.noarch
+>>>$ rpm -qa | grep yum | xargs rpm -e --nodeps # 切换到root用户，通过以下命令删除yum文件
+{% endhighlight %}
+
+
 This note **demonstrates** some of what [Markdown][1] is *capable of doing*.
 
 And that's how to do it.
