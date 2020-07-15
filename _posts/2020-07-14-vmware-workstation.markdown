@@ -102,6 +102,16 @@ python-iniparse-0.4-9.el7.noarch.rpm
 
 通常直接这样会遇到报错"**.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY ..."，可以在上述命令后面加上 `--force --nodeps` 进行强制安装.
 
+另一种方法是[用CentOS的签名去注册][6]
+{% highlight raw %}
+>>>$ cd /etc/pki/rpm-gpg/
+>>>$ wget http://mirrors.163.com/centos/RPM-GPG-KEY-CentOS-7
+>>>$ rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+{% endhighlight %}
+
+
+
+
 ### 安装GUI
 
 
@@ -291,3 +301,4 @@ $(window).scroll(function() {
 [3]: https://daringfireball.net/projects/markdown/basics
 [4]: https://daringfireball.net/projects/markdown/syntax
 [5]: https://kune.fr/wp-content/uploads/2013/10/ghost-blog.jpg
+[6]: https://www.cnblogs.com/code1992/p/10735725.html
