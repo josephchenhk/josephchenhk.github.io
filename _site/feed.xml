@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-15T19:18:45+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">Vmware Workstation</title><link href="http://localhost:4000/vmware-workstation/" rel="alternate" type="text/html" title="Vmware Workstation" /><published>2020-07-14T22:44:00+08:00</published><updated>2020-07-14T22:44:00+08:00</updated><id>http://localhost:4000/vmware-workstation</id><content type="html" xml:base="http://localhost:4000/vmware-workstation/">&lt;h2 id=&quot;准备&quot;&gt;准备&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-16T18:55:28+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">Vmware Workstation</title><link href="http://localhost:4000/vmware-workstation/" rel="alternate" type="text/html" title="Vmware Workstation" /><published>2020-07-14T22:44:00+08:00</published><updated>2020-07-14T22:44:00+08:00</updated><id>http://localhost:4000/vmware-workstation</id><content type="html" xml:base="http://localhost:4000/vmware-workstation/">&lt;h2 id=&quot;准备&quot;&gt;准备&lt;/h2&gt;
 
 &lt;p&gt;在装好的RHEL7.5上安装Vmware Workstation，需要提前做好如下准备：&lt;/p&gt;
 
@@ -88,7 +88,99 @@ python-iniparse-0.4-9.el7.noarch.rpm&lt;/p&gt;
 &amp;gt;&amp;gt;&amp;gt;$ wget http://mirrors.163.com/centos/RPM-GPG-KEY-CentOS-7
 &amp;gt;&amp;gt;&amp;gt;$ rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
+&lt;p&gt;修改yum源配置文件。先看看现有的配置：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt;$ ls /etc/yum.repos.d/  # 空白目录，说明未有配置&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;接着下载阿里镜像到/etc/yum.repos.d/ 目录下：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt;$wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;如果wget命令不可用，则可以在另外的机子下载好，然后通过sftp上载至服务器上。修改刚刚下载的文件 /etc/yum.repos.d/CentOS-Base.repo，将所有的$releasever 替换成7:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt; vi /etc/yum.repos.d/CentOS-Base.repo
+
+:%s/$releasever/7/g&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;最后，运行以下命令进行更新源&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt;$ yum clean all
+&amp;gt;&amp;gt;&amp;gt;$ yum makecache
+&amp;gt;&amp;gt;&amp;gt;$ yum update # 【注意】不要跑这句，yum update之后会mess up /boot/efi/EFI 里面的启动项&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
 &lt;h3 id=&quot;安装gui&quot;&gt;安装GUI&lt;/h3&gt;
+
+&lt;p&gt;首先，经过上面更换yum源之后，应该已经可以通过以下命令查看可用的package groups：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt;$ yum group list
+Loaded plugins: fastestmirror, ...
+...
+Available Environment Groups
+ ...
+ Server with GUI
+ GNOME Desktop
+ ...
+Available Groups:
+ ...
+ Graphical Administration Tools
+ ...
+Done
+
+# 如果是Centos 7:
+&amp;gt;&amp;gt;&amp;gt;$ yum groupinstall &quot;GNOME Desktop&quot; &quot;Graphical Adminstration Tools&quot;
+
+# 如果是RHEL 7:
+&amp;gt;&amp;gt;&amp;gt;$ yum groupinstall &quot;Server with GUI&quot;
+
+# 令系统在启动后启用GUI（level5是图形界面，原来文字界面应该是level3）
+&amp;gt;&amp;gt;&amp;gt;$ ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
+
+# 千万不要重启电脑！
+【！！】&amp;gt;&amp;gt;&amp;gt;$ reboot&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;重启电脑之前，先检查以下启动项是否已经被污染了：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt;$ ls /etc/efi/EFI
+BOOT redhat CentOS # 多了一个CentOS，grub已经mess up，如果此时reboot，会导致不能进入系统
+&amp;gt;&amp;gt;&amp;gt;$ ls /etc/efi/EFI/redhat
+fonts grub.cfg grubenv grubx64.efi
+&amp;gt;&amp;gt;&amp;gt;$ ls /etc/efi/EFI/centos
+BOOT.CSV BOOTX64.CSV fw fwupia32.efi fwupx64.efi MokManager.efi shim.efi shimx64-cemtps.efi shimx64.efi
+# grub.cfg文件在redhat下，但其实系统需要到/etc/efi/EFI/centos目录下面进行启动，所以要在该目录重建grub
+&amp;gt;&amp;gt;&amp;gt;$ grub-mkconfig -o /boot/efi/EFI/centos/grub.cfg
+&amp;gt;&amp;gt;&amp;gt;$ ls /etc/efi/EFI/centos
+... grub.cfg # 已经生成grub.cfg文件&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;现在，试一试重启&lt;/p&gt;
+
+&lt;p&gt;我们需要修复grub&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;# 进入grub
+grub&amp;gt; ls (hd1,1)/efi  # 找到efi文件夹
+./ ../ redhat/ boot/ centos/
+grub&amp;gt; ls (hd1,2)/     # 找到kernel镜像所在位置
+... vmlinuz-3.10.0-1127.13.1.el7.x86_64 initramfs-3.10.0-1127.13.1.el7.x86_64.img...
+grub&amp;gt; set pager=1
+grub&amp;gt; cat (hd1,1)/efi/redhat/grub.cfg
+(找出以下两句话：)
+linuxefi /vmlinuz-3.10.0-1127.13.1.el7.x86_64 root=/dev/mapper/rehel-root ro crashkernel=auto rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet LANG=en_US.UTF-8
+initrdefi /initramfs-3.10.0-1127.13.1.el7.x86_64.img
+
+grub&amp;gt; GRUB_PRELOAD_MODULES=&quot;lvm&quot;
+grub&amp;gt; set root=(hd1,2)  # kernel镜像所在位置
+grub&amp;gt; linuxefi /vmlinuz-3.10.0-1127.13.1.el7.x86_64 # 通过tab键补全
+grub&amp;gt; initrdefi /initramfs-3.10.0-1127.13.1.el7.x86_64.img
+grub&amp;gt; boot&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;如果此方法不能正常启动linux，则可以找到u盘镜像所在位置，然后重装系统了：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;grub&amp;gt; ls (hd0,4)/
+... images/ ...
+grub&amp;gt; GRUB_PRELOAD_MODULES=&quot;lvm&quot;
+grub&amp;gt; set root=(hd0,4)
+grub&amp;gt; linuxefi /images/pxeboot/vmlinuz inst.stage2=hd:/dev/sdb4 quiet # 注意这里要指定根目录
+grub&amp;gt; initrdefi /images/pxeboot/initrd.img
+grub&amp;gt; boot&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;This note &lt;strong&gt;demonstrates&lt;/strong&gt; some of what &lt;a href=&quot;https://daringfireball.net/projects/markdown/&quot;&gt;Markdown&lt;/a&gt; is &lt;em&gt;capable of doing&lt;/em&gt;.&lt;/p&gt;
 

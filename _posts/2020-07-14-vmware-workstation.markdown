@@ -109,10 +109,115 @@ python-iniparse-0.4-9.el7.noarch.rpm
 >>>$ rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 {% endhighlight %}
 
+修改yum源配置文件。先看看现有的配置：
 
+{% highlight raw %}
+>>>$ ls /etc/yum.repos.d/  # 空白目录，说明未有配置
+{% endhighlight %}
 
+接着下载阿里镜像到/etc/yum.repos.d/ 目录下：
+
+{% highlight raw %}
+>>>$wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+{% endhighlight %}
+
+如果wget命令不可用，则可以在另外的机子下载好，然后通过sftp上载至服务器上。修改刚刚下载的文件 /etc/yum.repos.d/CentOS-Base.repo，将所有的$releasever 替换成7:
+
+{% highlight raw %}
+>>> vi /etc/yum.repos.d/CentOS-Base.repo
+
+:%s/$releasever/7/g
+{% endhighlight %}
+
+最后，运行以下命令进行更新源
+{% highlight raw %}
+>>>$ yum clean all
+>>>$ yum makecache
+>>>$ yum update # 【注意】不要跑这句，yum update之后会mess up /boot/efi/EFI 里面的启动项
+{% endhighlight %}
 
 ### 安装GUI
+
+首先，经过上面更换yum源之后，应该已经可以通过以下命令查看可用的package groups：
+{% highlight raw %}
+>>>$ yum group list
+Loaded plugins: fastestmirror, ...
+...
+Available Environment Groups
+ ...
+ Server with GUI
+ GNOME Desktop
+ ...
+Available Groups:
+ ...
+ Graphical Administration Tools
+ ...
+Done
+
+# 如果是Centos 7:
+>>>$ yum groupinstall "GNOME Desktop" "Graphical Adminstration Tools"
+
+# 如果是RHEL 7:
+>>>$ yum groupinstall "Server with GUI"
+
+# 令系统在启动后启用GUI（level5是图形界面，原来文字界面应该是level3）
+>>>$ ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
+
+# 千万不要重启电脑！
+【！！】>>>$ reboot
+{% endhighlight %}
+
+重启电脑之前，先检查以下启动项是否已经被污染了：
+
+{% highlight raw %}
+>>>$ ls /etc/efi/EFI
+BOOT redhat CentOS # 多了一个CentOS，grub已经mess up，如果此时reboot，会导致不能进入系统
+>>>$ ls /etc/efi/EFI/redhat
+fonts grub.cfg grubenv grubx64.efi
+>>>$ ls /etc/efi/EFI/centos
+BOOT.CSV BOOTX64.CSV fw fwupia32.efi fwupx64.efi MokManager.efi shim.efi shimx64-cemtps.efi shimx64.efi
+# grub.cfg文件在redhat下，但其实系统需要到/etc/efi/EFI/centos目录下面进行启动，所以要在该目录重建grub
+>>>$ grub-mkconfig -o /boot/efi/EFI/centos/grub.cfg
+>>>$ ls /etc/efi/EFI/centos
+... grub.cfg # 已经生成grub.cfg文件
+{% endhighlight %}
+
+现在，试一试重启
+
+
+
+
+我们需要修复grub
+
+{% highlight raw %}
+# 进入grub
+grub> ls (hd1,1)/efi  # 找到efi文件夹
+./ ../ redhat/ boot/ centos/
+grub> ls (hd1,2)/     # 找到kernel镜像所在位置
+... vmlinuz-3.10.0-1127.13.1.el7.x86_64 initramfs-3.10.0-1127.13.1.el7.x86_64.img...
+grub> set pager=1
+grub> cat (hd1,1)/efi/redhat/grub.cfg
+(找出以下两句话：)
+linuxefi /vmlinuz-3.10.0-1127.13.1.el7.x86_64 root=/dev/mapper/rehel-root ro crashkernel=auto rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet LANG=en_US.UTF-8
+initrdefi /initramfs-3.10.0-1127.13.1.el7.x86_64.img
+
+grub> GRUB_PRELOAD_MODULES="lvm"
+grub> set root=(hd1,2)  # kernel镜像所在位置
+grub> linuxefi /vmlinuz-3.10.0-1127.13.1.el7.x86_64 # 通过tab键补全
+grub> initrdefi /initramfs-3.10.0-1127.13.1.el7.x86_64.img
+grub> boot
+{% endhighlight %}
+
+如果此方法不能正常启动linux，则可以找到u盘镜像所在位置，然后重装系统了：
+{% highlight raw %}
+grub> ls (hd0,4)/
+... images/ ...
+grub> GRUB_PRELOAD_MODULES="lvm"
+grub> set root=(hd0,4)
+grub> linuxefi /images/pxeboot/vmlinuz inst.stage2=hd:/dev/sdb4 quiet # 注意这里要指定根目录
+grub> initrdefi /images/pxeboot/initrd.img
+grub> boot
+{% endhighlight %}
 
 
 This note **demonstrates** some of what [Markdown][1] is *capable of doing*.
