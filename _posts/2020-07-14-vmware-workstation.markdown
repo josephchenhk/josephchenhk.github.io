@@ -94,10 +94,10 @@ python-iniparse-0.4-9.el7.noarch.rpm
 >>>$ sudo rpm -ivh python-iniparse-0.4-9.el7.noarch.rpm
 >>>$ sudo rpm -ivh python-urlgrabber-3.10-10.el7.noarch.rpm
 >>>$ sudo rpm -ivh yum-metadata-parser-1.1.4-10.el7.x86_64.rpm
->>>$ sudo rpm -ivh yum-plugin-fastestmirror-1.1.31-53.el7.noarch.rpm
->>>$ sudo rpm -ivh yum-utils-1.1.31-53.el7.noarch.rpm
->>>$ sudo rpm -ivh yum-rhn-plugin-2.0.1-10.el7.noarch.rpm
->>>$ sudo rpm -ivh yum-3.4.3-167.el7.centos.noarch.rpm
+>>>$ sudo rpm -ivh yum-plugin-fastestmirror-1.1.31-53.el7.noarch.rpm (--force --nodeps)
+>>>$ sudo rpm -ivh yum-utils-1.1.31-53.el7.noarch.rpm (--force --nodeps)
+>>>$ sudo rpm -ivh yum-rhn-plugin-2.0.1-10.el7.noarch.rpm (--force --nodeps)
+>>>$ sudo rpm -ivh yum-3.4.3-167.el7.centos.noarch.rpm (--force --nodeps)
 {% endhighlight %}
 
 通常直接这样会遇到报错"**.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY ..."，可以在上述命令后面加上 `--force --nodeps` 进行强制安装.
@@ -182,7 +182,14 @@ BOOT.CSV BOOTX64.CSV fw fwupia32.efi fwupx64.efi MokManager.efi shim.efi shimx64
 ... grub.cfg # 已经生成grub.cfg文件
 {% endhighlight %}
 
-现在，试一试重启
+现在，需要对grub进行修复（注意：在确认修复前，不要随便reboot，否则可能开不了机）
+{% highlight raw %}
+>>>$ yum update
+>>>$ grubby --bootloader-probe
+>>>$ ls /usr/lib/grub
+>>>$ grub2-install --boot-directory=/boot --efi-directory=/boot/efi /dev/sda target=i386-pc
+>>>$ grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
+{% endhighlight %}
 
 
 

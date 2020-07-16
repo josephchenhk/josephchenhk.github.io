@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-16T18:55:28+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">Vmware Workstation</title><link href="http://localhost:4000/vmware-workstation/" rel="alternate" type="text/html" title="Vmware Workstation" /><published>2020-07-14T22:44:00+08:00</published><updated>2020-07-14T22:44:00+08:00</updated><id>http://localhost:4000/vmware-workstation</id><content type="html" xml:base="http://localhost:4000/vmware-workstation/">&lt;h2 id=&quot;准备&quot;&gt;准备&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-16T19:16:14+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">Vmware Workstation</title><link href="http://localhost:4000/vmware-workstation/" rel="alternate" type="text/html" title="Vmware Workstation" /><published>2020-07-14T22:44:00+08:00</published><updated>2020-07-14T22:44:00+08:00</updated><id>http://localhost:4000/vmware-workstation</id><content type="html" xml:base="http://localhost:4000/vmware-workstation/">&lt;h2 id=&quot;准备&quot;&gt;准备&lt;/h2&gt;
 
 &lt;p&gt;在装好的RHEL7.5上安装Vmware Workstation，需要提前做好如下准备：&lt;/p&gt;
 
@@ -75,10 +75,10 @@ python-iniparse-0.4-9.el7.noarch.rpm&lt;/p&gt;
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt;$ sudo rpm -ivh python-iniparse-0.4-9.el7.noarch.rpm
 &amp;gt;&amp;gt;&amp;gt;$ sudo rpm -ivh python-urlgrabber-3.10-10.el7.noarch.rpm
 &amp;gt;&amp;gt;&amp;gt;$ sudo rpm -ivh yum-metadata-parser-1.1.4-10.el7.x86_64.rpm
-&amp;gt;&amp;gt;&amp;gt;$ sudo rpm -ivh yum-plugin-fastestmirror-1.1.31-53.el7.noarch.rpm
-&amp;gt;&amp;gt;&amp;gt;$ sudo rpm -ivh yum-utils-1.1.31-53.el7.noarch.rpm
-&amp;gt;&amp;gt;&amp;gt;$ sudo rpm -ivh yum-rhn-plugin-2.0.1-10.el7.noarch.rpm
-&amp;gt;&amp;gt;&amp;gt;$ sudo rpm -ivh yum-3.4.3-167.el7.centos.noarch.rpm&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&amp;gt;&amp;gt;&amp;gt;$ sudo rpm -ivh yum-plugin-fastestmirror-1.1.31-53.el7.noarch.rpm (--force --nodeps)
+&amp;gt;&amp;gt;&amp;gt;$ sudo rpm -ivh yum-utils-1.1.31-53.el7.noarch.rpm (--force --nodeps)
+&amp;gt;&amp;gt;&amp;gt;$ sudo rpm -ivh yum-rhn-plugin-2.0.1-10.el7.noarch.rpm (--force --nodeps)
+&amp;gt;&amp;gt;&amp;gt;$ sudo rpm -ivh yum-3.4.3-167.el7.centos.noarch.rpm (--force --nodeps)&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;通常直接这样会遇到报错”**.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY …“，可以在上述命令后面加上 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--force --nodeps&lt;/code&gt; 进行强制安装.&lt;/p&gt;
 
@@ -151,7 +151,13 @@ BOOT.CSV BOOTX64.CSV fw fwupia32.efi fwupx64.efi MokManager.efi shim.efi shimx64
 &amp;gt;&amp;gt;&amp;gt;$ ls /etc/efi/EFI/centos
 ... grub.cfg # 已经生成grub.cfg文件&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;现在，试一试重启&lt;/p&gt;
+&lt;p&gt;现在，需要对grub进行修复（注意：在确认修复前，不要随便reboot，否则可能开不了机）&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt;$ yum update
+&amp;gt;&amp;gt;&amp;gt;$ grubby --bootloader-probe
+&amp;gt;&amp;gt;&amp;gt;$ ls /usr/lib/grub
+&amp;gt;&amp;gt;&amp;gt;$ grub2-install --boot-directory=/boot --efi-directory=/boot/efi /dev/sda target=i386-pc
+&amp;gt;&amp;gt;&amp;gt;$ grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;我们需要修复grub&lt;/p&gt;
 
