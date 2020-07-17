@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-16T19:16:14+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">Vmware Workstation</title><link href="http://localhost:4000/vmware-workstation/" rel="alternate" type="text/html" title="Vmware Workstation" /><published>2020-07-14T22:44:00+08:00</published><updated>2020-07-14T22:44:00+08:00</updated><id>http://localhost:4000/vmware-workstation</id><content type="html" xml:base="http://localhost:4000/vmware-workstation/">&lt;h2 id=&quot;准备&quot;&gt;准备&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-17T18:49:16+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">Vmware Workstation</title><link href="http://localhost:4000/vmware-workstation/" rel="alternate" type="text/html" title="Vmware Workstation" /><published>2020-07-14T22:44:00+08:00</published><updated>2020-07-14T22:44:00+08:00</updated><id>http://localhost:4000/vmware-workstation</id><content type="html" xml:base="http://localhost:4000/vmware-workstation/">&lt;h2 id=&quot;准备&quot;&gt;准备&lt;/h2&gt;
 
 &lt;p&gt;在装好的RHEL7.5上安装Vmware Workstation，需要提前做好如下准备：&lt;/p&gt;
 
@@ -155,9 +155,26 @@ BOOT.CSV BOOTX64.CSV fw fwupia32.efi fwupx64.efi MokManager.efi shim.efi shimx64
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt;$ yum update
 &amp;gt;&amp;gt;&amp;gt;$ grubby --bootloader-probe
+error opening /boot/grub/grub.cfg for read: no such file or directory
 &amp;gt;&amp;gt;&amp;gt;$ ls /usr/lib/grub
-&amp;gt;&amp;gt;&amp;gt;$ grub2-install --boot-directory=/boot --efi-directory=/boot/efi /dev/sda target=i386-pc
+i386-pc
+&amp;gt;&amp;gt;&amp;gt;$ grub2-install --boot-directory=/boot --efi-directory=/boot/efi /dev/sda --target=i386-pc
+...
+grub2-install: error: will not proceed with blocklists.
+&amp;gt;&amp;gt;&amp;gt;$ ls /boot/grub
+splash.xpm.gz
+&amp;gt;&amp;gt;&amp;gt;$ grub2-mkconfig -o /boot/grub/grub.cfg
+....
+done
+&amp;gt;&amp;gt;&amp;gt;$ ls /boot/grub/
+grub.cfg splash.xpm.gz
+&amp;gt;&amp;gt;&amp;gt;$ groupby --bootloader-probe
+grub2
 &amp;gt;&amp;gt;&amp;gt;$ grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;如果幸运的话，就试试重启电脑吧：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt;$ reboot&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;我们需要修复grub&lt;/p&gt;
 
@@ -174,7 +191,7 @@ initrdefi /initramfs-3.10.0-1127.13.1.el7.x86_64.img
 
 grub&amp;gt; GRUB_PRELOAD_MODULES=&quot;lvm&quot;
 grub&amp;gt; set root=(hd1,2)  # kernel镜像所在位置
-grub&amp;gt; linuxefi /vmlinuz-3.10.0-1127.13.1.el7.x86_64 # 通过tab键补全
+grub&amp;gt; linuxefi /vmlinuz-3.10.0-1127.13.1.el7.x86_64 root=/dev/mapper/rhel-root # 通过tab键补全
 grub&amp;gt; initrdefi /initramfs-3.10.0-1127.13.1.el7.x86_64.img
 grub&amp;gt; boot&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
@@ -187,6 +204,26 @@ grub&amp;gt; set root=(hd0,4)
 grub&amp;gt; linuxefi /images/pxeboot/vmlinuz inst.stage2=hd:/dev/sdb4 quiet # 注意这里要指定根目录
 grub&amp;gt; initrdefi /images/pxeboot/initrd.img
 grub&amp;gt; boot&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;安装vmware-workstation&quot;&gt;安装Vmware Workstation&lt;/h2&gt;
+&lt;p&gt;下载：&lt;a href=&quot;https://www.macxin.com/archives/3156.html&quot;&gt;WMware Workstation Pro 14.1.0 Linux 完美破解版 多语言版&lt;/a&gt;
+注册码：VMware 2017 v14.x FF31K-AHZD1-H8ETZ-8WWEZ-WUUVA / CV7T2-6WY5Q-48EWP-ZXY7X-QGUWD&lt;/p&gt;
+
+&lt;p&gt;上传至服务器之后，解压，得到&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt;$ chmod o+x VMware-Workstation-Full-14.1.0-7370693.x86_64.bundle
+&amp;gt;&amp;gt;&amp;gt;$ ./WMware-Workstation-Full-14.1.0-7370693.x86_64.bundle
+(填上上面的注册码)
+# 安装好后打开，会提示安装gcc
+&amp;gt;&amp;gt;&amp;gt;$ yum install gcc
+# 装好gcc之后再次尝试打开，会提示Kernel Headers 3.10.0-1127.13.el7.x86_64 not found，查看现有kernels headers，如果没有的话安装
+&amp;gt;&amp;gt;&amp;gt;$ ls /usr/src/kernels/
+&amp;gt;&amp;gt;&amp;gt;$ yum install kernel-devel
+# 装好kernel-devel之后再次尝试打开，会提示还有several packages need to compile，点击install，安装之后会提示失败，不要管它，点击cancel，之后再次打开，就ok了&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;下载CentOS-7-x86_64-Minimal-2003.iso并上传至服务器，打开vmware workstation，安装镜像。当安装完成之后，会提示说”Could not open /dev/vmmon: No such file or direcotry. Please make sure that the kernel module &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmmon&lt;/code&gt; is loaded.”&lt;/p&gt;
+
+&lt;p&gt;这个错误大概是说vmmonitor和vmnet这两个模块没有经过签名认证，所以vmware出于安全的考虑，无法built。解决方案之一是重启系统，进入bios修改secure boot，将之改为disable，再重新尝试即可。&lt;/p&gt;
 
 &lt;p&gt;This note &lt;strong&gt;demonstrates&lt;/strong&gt; some of what &lt;a href=&quot;https://daringfireball.net/projects/markdown/&quot;&gt;Markdown&lt;/a&gt; is &lt;em&gt;capable of doing&lt;/em&gt;.&lt;/p&gt;
 
