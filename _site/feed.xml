@@ -1,4 +1,215 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-17T18:49:16+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">Vmware Workstation</title><link href="http://localhost:4000/vmware-workstation/" rel="alternate" type="text/html" title="Vmware Workstation" /><published>2020-07-14T22:44:00+08:00</published><updated>2020-07-14T22:44:00+08:00</updated><id>http://localhost:4000/vmware-workstation</id><content type="html" xml:base="http://localhost:4000/vmware-workstation/">&lt;h2 id=&quot;准备&quot;&gt;准备&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-18T17:19:06+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">RHEL 7.5（一）替换yum源以及安装GUI</title><link href="http://localhost:4000/install-redhat7.5/" rel="alternate" type="text/html" title="RHEL 7.5（一）替换yum源以及安装GUI" /><published>2020-07-14T22:44:00+08:00</published><updated>2020-07-14T22:44:00+08:00</updated><id>http://localhost:4000/install-redhat7.5</id><content type="html" xml:base="http://localhost:4000/install-redhat7.5/">&lt;h2 id=&quot;准备&quot;&gt;准备&lt;/h2&gt;
+
+&lt;p&gt;要在新安装好的RHEL7.5上安装Vmware Workstation，需要提前做好如下准备：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;设置上网&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;替换yum源（Redhat的yum需要付费，切换成CentOS的源）&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;安装GUI&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;设置上网&quot;&gt;设置上网&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /etc/sysconfig/network-scripts/
+ifcfg-enp0s31f6 &lt;span class=&quot;c&quot;&gt;# 这个就是我们网卡的名字&lt;/span&gt;
+ifcfg-lo
+...
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
+&lt;span class=&quot;nt&quot;&gt;-rw-r--r--&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chmod &lt;/span&gt;o+w /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
+&lt;span class=&quot;nt&quot;&gt;-rw-r--rw-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;修改ifcfg-enp0s31f6:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;vi /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
+&lt;span class=&quot;nv&quot;&gt;TYPE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;Ethernet
+...
+&lt;span class=&quot;c&quot;&gt;# 以下为修改项&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;BOOTPROTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;static     &lt;span class=&quot;c&quot;&gt;# dhcp为动态分配ip&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;ONBOOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;yes&lt;/span&gt;           &lt;span class=&quot;c&quot;&gt;# 设置电脑启动时开启&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;IPADDR0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;192.168.1.20 &lt;span class=&quot;c&quot;&gt;# fixed局域网ip，0可省略&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;GATEWAY0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;192.168.1.1 &lt;span class=&quot;c&quot;&gt;# 网关，0可省略&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;PREFIX0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;24           &lt;span class=&quot;c&quot;&gt;# 子网掩码，0可省略（也可以是NETMASK=255.255.255.0，换算成2进制是24个1）&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;DNS1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;192.168.1.1     &lt;span class=&quot;c&quot;&gt;# DNS解释地址（通常与网关一致），不要忘记DNS后面有个1&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;ZONE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;public          &lt;span class=&quot;c&quot;&gt;# 可能是optional的&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;按wq保存之后，记得将权限改回来：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chmod &lt;/span&gt;o-w /etc/sysconfig/network-scripts/ifcfg-enp0s31f6&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;之后reboot电脑，让ip生效。重启电脑后&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ip address   &lt;span class=&quot;c&quot;&gt;# 查看ip地址，看到刚刚的配置已经生效&lt;/span&gt;
+1: lo: ...
+2: enp0s31f6: ...
+   ...
+   inet 192.168.1.20/24 ...
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ping www.baidu.com &lt;span class=&quot;c&quot;&gt;# 试一试连外网，收到数据的话即ok&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;替换yum源&quot;&gt;替换yum源&lt;/h3&gt;
+
+&lt;p&gt;Redhat自带的yum需要付费，而CentOS的yum是免费使用的，Redhat和CentOS的内核是非常接近的，我们可以将其替换成CentOS的源（&lt;em&gt;注意&lt;/em&gt;：这一步操作有一点危险，操作不当可能导致不能开机）&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;-qa&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;yum &lt;span class=&quot;c&quot;&gt;# 查询rpm库中的yum文件&lt;/span&gt;
+yum-3.4.3-158.e17.noarch
+yum-metadata-parser-1.1.4-10.e17.x86_64
+yum-rhn-plugin-2.0.1-10.e17.noarch
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;-qa&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;yum | xargs rpm &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--nodeps&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 切换到root用户，通过以下命令删除yum文件&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;去mirrors.aliyun.com/centos/7/os/x86_64/Packages/ 下载以下几个文件&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;yum-3.4.3-167.el7.centos.noarch.rpm&lt;/li&gt;
+  &lt;li&gt;yum-metadata-parser-1.1.4-10.el7.x86_64.rpm&lt;/li&gt;
+  &lt;li&gt;yum-plugin-fastestmirror-1.1.31-53.el7.noarch.rpm&lt;/li&gt;
+  &lt;li&gt;yum-utils-1.1.31-53.el7.noarch.rpm&lt;/li&gt;
+  &lt;li&gt;yum-rhn-plugin-2.0.1-10.el7.noarch.rpm&lt;/li&gt;
+  &lt;li&gt;python-urlgrabber-3.10-10.el7.noarch.rpm&lt;/li&gt;
+  &lt;li&gt;python-iniparse-0.4-9.el7.noarch.rpm&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;上传至RHEL服务器，按顺序进行安装&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;-ivh&lt;/span&gt; python-iniparse-0.4-9.el7.noarch.rpm
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;-ivh&lt;/span&gt; python-urlgrabber-3.10-10.el7.noarch.rpm
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;-ivh&lt;/span&gt; yum-metadata-parser-1.1.4-10.el7.x86_64.rpm
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;-ivh&lt;/span&gt; yum-plugin-fastestmirror-1.1.31-53.el7.noarch.rpm &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--force&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--nodeps&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;-ivh&lt;/span&gt; yum-utils-1.1.31-53.el7.noarch.rpm &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--force&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--nodeps&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;-ivh&lt;/span&gt; yum-rhn-plugin-2.0.1-10.el7.noarch.rpm &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--force&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--nodeps&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;-ivh&lt;/span&gt; yum-3.4.3-167.el7.centos.noarch.rpm &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--force&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--nodeps&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;通常直接这样会遇到报错”**.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY …“，可以在上述命令后面加上 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--force --nodeps&lt;/code&gt; 进行强制安装.&lt;/p&gt;
+
+&lt;p&gt;另一种方法是[用CentOS的签名去注册][6]&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /etc/pki/rpm-gpg/
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget http://mirrors.163.com/centos/RPM-GPG-KEY-CentOS-7
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;--import&lt;/span&gt; /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;修改yum源配置文件。先看看现有的配置：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /etc/yum.repos.d/  &lt;span class=&quot;c&quot;&gt;# 空白目录，说明未有配置&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;接着下载阿里镜像到/etc/yum.repos.d/ 目录下：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$wget&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-O&lt;/span&gt; /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;如果wget命令不可用，则可以在另外的机子下载好，然后通过sftp上载至服务器上。修改刚刚下载的文件 /etc/yum.repos.d/CentOS-Base.repo，将所有的$releasever 替换成7:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; vi /etc/yum.repos.d/CentOS-Base.repo
+
+:%s/&lt;span class=&quot;nv&quot;&gt;$releasever&lt;/span&gt;/7/g&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;最后，运行以下命令进行更新源&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum clean all
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum makecache
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum update &lt;span class=&quot;c&quot;&gt;# 【注意】不要跑这句，yum update之后会mess up /boot/efi/EFI 里面的启动项&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;安装gui&quot;&gt;安装GUI&lt;/h3&gt;
+
+&lt;p&gt;首先，经过上面更换yum源之后，应该已经可以通过以下命令查看可用的package groups：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum group list
+Loaded plugins: fastestmirror, ...
+...
+Available Environment Groups
+ ...
+ Server with GUI
+ GNOME Desktop
+ ...
+Available Groups:
+ ...
+ Graphical Administration Tools
+ ...
+Done
+
+&lt;span class=&quot;c&quot;&gt;# 如果是Centos 7:&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum groupinstall &lt;span class=&quot;s2&quot;&gt;&quot;GNOME Desktop&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Graphical Adminstration Tools&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# 如果是RHEL 7:&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum groupinstall &lt;span class=&quot;s2&quot;&gt;&quot;Server with GUI&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# 令系统在启动后启用GUI（level5是图形界面，原来文字界面应该是level3）&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ln&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-sf&lt;/span&gt; /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
+
+&lt;span class=&quot;c&quot;&gt;# 千万不要重启电脑！&lt;/span&gt;
+【！！】&amp;gt;&amp;gt;&amp;gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;reboot&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;重启电脑之前，先检查以下启动项是否已经被污染了：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /etc/efi/EFI
+BOOT redhat CentOS &lt;span class=&quot;c&quot;&gt;# 多了一个CentOS，grub已经mess up，如果此时reboot，会导致不能进入系统&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /etc/efi/EFI/redhat
+fonts grub.cfg grubenv grubx64.efi
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /etc/efi/EFI/centos
+BOOT.CSV BOOTX64.CSV fw fwupia32.efi fwupx64.efi MokManager.efi shim.efi shimx64-cemtps.efi shimx64.efi
+&lt;span class=&quot;c&quot;&gt;# grub.cfg文件在redhat下，但其实系统需要到/etc/efi/EFI/centos目录下面进行启动，所以要在该目录重建grub&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;grub-mkconfig &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; /boot/efi/EFI/centos/grub.cfg
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /etc/efi/EFI/centos
+... grub.cfg &lt;span class=&quot;c&quot;&gt;# 已经生成grub.cfg文件&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;现在，需要对grub进行修复（注意：在确认修复前，不要随便reboot，否则可能开不了机）&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum update
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;grubby &lt;span class=&quot;nt&quot;&gt;--bootloader-probe&lt;/span&gt;
+error opening /boot/grub/grub.cfg &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;read&lt;/span&gt;: no such file or directory
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /usr/lib/grub
+i386-pc
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;grub2-install &lt;span class=&quot;nt&quot;&gt;--boot-directory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/boot &lt;span class=&quot;nt&quot;&gt;--efi-directory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/boot/efi /dev/sda &lt;span class=&quot;nt&quot;&gt;--target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;i386-pc
+...
+grub2-install: error: will not proceed with blocklists.
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /boot/grub
+splash.xpm.gz
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;grub2-mkconfig &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; /boot/grub/grub.cfg
+....
+&lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /boot/grub/
+grub.cfg splash.xpm.gz
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;groupby &lt;span class=&quot;nt&quot;&gt;--bootloader-probe&lt;/span&gt;
+grub2
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;grub2-mkconfig &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; /boot/efi/EFI/centos/grub.cfg&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;如果幸运的话，就试试重启电脑吧：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt;$ reboot&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;我们需要修复grub&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;# 进入grub
+grub&amp;gt; ls (hd1,1)/efi  # 找到efi文件夹
+./ ../ redhat/ boot/ centos/
+grub&amp;gt; ls (hd1,2)/     # 找到kernel镜像所在位置
+... vmlinuz-3.10.0-1127.13.1.el7.x86_64 initramfs-3.10.0-1127.13.1.el7.x86_64.img...
+grub&amp;gt; set pager=1
+grub&amp;gt; cat (hd1,1)/efi/redhat/grub.cfg
+(找出以下两句话：)
+linuxefi /vmlinuz-3.10.0-1127.13.1.el7.x86_64 root=/dev/mapper/rehel-root ro crashkernel=auto rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet LANG=en_US.UTF-8
+initrdefi /initramfs-3.10.0-1127.13.1.el7.x86_64.img
+
+grub&amp;gt; GRUB_PRELOAD_MODULES=&quot;lvm&quot;
+grub&amp;gt; set root=(hd1,2)  # kernel镜像所在位置
+grub&amp;gt; linuxefi /vmlinuz-3.10.0-1127.13.1.el7.x86_64 root=/dev/mapper/rhel-root # 通过tab键补全
+grub&amp;gt; initrdefi /initramfs-3.10.0-1127.13.1.el7.x86_64.img
+grub&amp;gt; boot&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;如果此方法不能正常启动linux，则可以找到u盘镜像所在位置，然后重装系统了：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;grub&amp;gt; ls (hd0,4)/
+... images/ ...
+grub&amp;gt; GRUB_PRELOAD_MODULES=&quot;lvm&quot;
+grub&amp;gt; set root=(hd0,4)
+grub&amp;gt; linuxefi /images/pxeboot/vmlinuz inst.stage2=hd:/dev/sdb4 quiet # 注意这里要指定根目录
+grub&amp;gt; initrdefi /images/pxeboot/initrd.img
+grub&amp;gt; boot&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Reboot之后如果能够正常开机，显示图形界面的登陆界面，就说明一切已经ok了。下一篇将讲如何安装Vmware Workstation。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="markdown" /><category term="elements" /><summary type="html">准备</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Vmware Workstation</title><link href="http://localhost:4000/vmware-workstation/" rel="alternate" type="text/html" title="Vmware Workstation" /><published>2020-07-14T22:44:00+08:00</published><updated>2020-07-14T22:44:00+08:00</updated><id>http://localhost:4000/vmware-workstation</id><content type="html" xml:base="http://localhost:4000/vmware-workstation/">&lt;h2 id=&quot;准备&quot;&gt;准备&lt;/h2&gt;
 
 &lt;p&gt;在装好的RHEL7.5上安装Vmware Workstation，需要提前做好如下准备：&lt;/p&gt;
 
