@@ -9,21 +9,21 @@
     <meta name=author content="Joseph Chen">
 
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Vmware Workstation | Joseph Chen</title>
+<title>RHEL 7.5（二）安装Vmware Workstation | Joseph Chen</title>
 <meta name="generator" content="Jekyll v3.8.7" />
-<meta property="og:title" content="Vmware Workstation" />
+<meta property="og:title" content="RHEL 7.5（二）安装Vmware Workstation" />
 <meta name="author" content="joseph" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Install vmware workstation in Linux" />
-<meta property="og:description" content="Install vmware workstation in Linux" />
+<meta name="description" content="Install vmware workstation in Linux Redhat 7.5" />
+<meta property="og:description" content="Install vmware workstation in Linux Redhat 7.5" />
 <link rel="canonical" href="http://localhost:4000/vmware-workstation/" />
 <meta property="og:url" content="http://localhost:4000/vmware-workstation/" />
 <meta property="og:site_name" content="Joseph Chen" />
 <meta property="og:image" content="http://localhost:4000/assets/images/markdown.jpg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-07-14T22:44:00+08:00" />
+<meta property="article:published_time" content="2020-07-18T17:39:00+08:00" />
 <script type="application/ld+json">
-{"dateModified":"2020-07-14T22:44:00+08:00","datePublished":"2020-07-14T22:44:00+08:00","url":"http://localhost:4000/vmware-workstation/","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/vmware-workstation/"},"author":{"@type":"Person","name":"joseph"},"description":"Install vmware workstation in Linux","image":"http://localhost:4000/assets/images/markdown.jpg","@type":"BlogPosting","headline":"Vmware Workstation","@context":"https://schema.org"}</script>
+{"dateModified":"2020-07-18T17:39:00+08:00","datePublished":"2020-07-18T17:39:00+08:00","url":"http://localhost:4000/vmware-workstation/","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/vmware-workstation/"},"author":{"@type":"Person","name":"joseph"},"description":"Install vmware workstation in Linux Redhat 7.5","image":"http://localhost:4000/assets/images/markdown.jpg","@type":"BlogPosting","headline":"RHEL 7.5（二）安装Vmware Workstation","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -503,15 +503,15 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
 
 
-<h1 class="title">Vmware Workstation</h1>
+<h1 class="title">RHEL 7.5（二）安装Vmware Workstation</h1>
 
 <span class="date">
-    <time datetime="14-07-2020">Tuesday. July 14, 2020</time>
+    <time datetime="18-07-2020">Saturday. July 18, 2020</time>
      - <span class="reading-time" title="Estimated read time">
     
 
     
-        6 mins
+        1 min
     
 </span>
 
@@ -527,395 +527,27 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
     </div>
 
 
-<h2 id="准备">准备</h2>
-
-<p>在装好的RHEL7.5上安装Vmware Workstation，需要提前做好如下准备：</p>
-
-<ol>
-  <li>
-    <p>设置上网</p>
-  </li>
-  <li>
-    <p>替换yum源（Redhat的yum需要付费，切换成CentOS的源）</p>
-  </li>
-  <li>
-    <p>安装GUI</p>
-  </li>
-</ol>
-
-<h3 id="设置上网">设置上网</h3>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">&gt;&gt;&gt;$ ls /etc/sysconfig/network-scripts/
-ifcfg-enp0s31f6
-ifcfg-lo
-...
-&gt;&gt;&gt;$ ls -l /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
--rw-r--r--
-&gt;&gt;&gt;$ sudo chmod o+w /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
-&gt;&gt;&gt;$ ls -l /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
--rw-r--rw-</code></pre></figure>
-
-<p>修改ifcfg-enp0s31f6:</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">&gt;&gt;&gt;$ vi /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
-TYPE=Ethernet
-...
-# 以下为修改项
-BOOTPROTO=static     # dhcp为动态分配ip
-ONBOOT=yes
-IPADDR0=192.168.1.20 # fixed局域网ip，0可省略
-GATEWAY0=192.168.1.1 # 网关，0可省略
-PREFIX0=24           # 子网掩码，0可省略（也可以是NETMASK=255.255.255.0，换算成2进制是24个1）
-DNS1=192.168.1.1     # DNS解释地址（通常与网关一致），不要忘记DNS后面有个1
-ZONE=public          # 可能是optional的</code></pre></figure>
-
-<p>按wq保存之后，记得将权限改回来：</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">&gt;&gt;&gt;$ sudo chmod o-w /etc/sysconfig/network-scripts/ifcfg-enp0s31f6</code></pre></figure>
-
-<p>之后reboot电脑，让ip生效。重启电脑后</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">&gt;&gt;&gt;$ ip address   # 查看ip地址，看到刚刚的配置已经生效
-1: lo: ...
-2: enp0s31f6: ...
-   ...
-   inet 192.168.1.20/24 ...
-&gt;&gt;&gt;$ ping www.baidu.com # 试一试连外网，收到数据的话即ok</code></pre></figure>
-
-<h3 id="替换yum源">替换yum源</h3>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">&gt;&gt;&gt;$ rpm -qa | grep yum # 查询rpm库中的yum文件
-yum-3.4.3-158.e17.noarch
-yum-metadata-parser-1.1.4-10.e17.x86_64
-yum-rhn-plugin-2.0.1-10.e17.noarch
-&gt;&gt;&gt;$ rpm -qa | grep yum | xargs rpm -e --nodeps # 切换到root用户，通过以下命令删除yum文件</code></pre></figure>
-
-<p>去mirrors.aliyun.com/centos/7/os/x86_64/Packages/ 下载以下几个文件
-yum-3.4.3-167.el7.centos.noarch.rpm
-yum-metadata-parser-1.1.4-10.el7.x86_64.rpm
-yum-plugin-fastestmirror-1.1.31-53.el7.noarch.rpm
-yum-utils-1.1.31-53.el7.noarch.rpm
-yum-rhn-plugin-2.0.1-10.el7.noarch.rpm
-python-urlgrabber-3.10-10.el7.noarch.rpm
-python-iniparse-0.4-9.el7.noarch.rpm</p>
-
-<p>上传至RHEL服务器，按顺序进行安装</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">&gt;&gt;&gt;$ sudo rpm -ivh python-iniparse-0.4-9.el7.noarch.rpm
-&gt;&gt;&gt;$ sudo rpm -ivh python-urlgrabber-3.10-10.el7.noarch.rpm
-&gt;&gt;&gt;$ sudo rpm -ivh yum-metadata-parser-1.1.4-10.el7.x86_64.rpm
-&gt;&gt;&gt;$ sudo rpm -ivh yum-plugin-fastestmirror-1.1.31-53.el7.noarch.rpm (--force --nodeps)
-&gt;&gt;&gt;$ sudo rpm -ivh yum-utils-1.1.31-53.el7.noarch.rpm (--force --nodeps)
-&gt;&gt;&gt;$ sudo rpm -ivh yum-rhn-plugin-2.0.1-10.el7.noarch.rpm (--force --nodeps)
-&gt;&gt;&gt;$ sudo rpm -ivh yum-3.4.3-167.el7.centos.noarch.rpm (--force --nodeps)</code></pre></figure>
-
-<p>通常直接这样会遇到报错”**.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY …“，可以在上述命令后面加上 <code class="language-plaintext highlighter-rouge">--force --nodeps</code> 进行强制安装.</p>
-
-<p>另一种方法是<a href="https://www.cnblogs.com/code1992/p/10735725.html">用CentOS的签名去注册</a></p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">&gt;&gt;&gt;$ cd /etc/pki/rpm-gpg/
-&gt;&gt;&gt;$ wget http://mirrors.163.com/centos/RPM-GPG-KEY-CentOS-7
-&gt;&gt;&gt;$ rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</code></pre></figure>
-
-<p>修改yum源配置文件。先看看现有的配置：</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">&gt;&gt;&gt;$ ls /etc/yum.repos.d/  # 空白目录，说明未有配置</code></pre></figure>
-
-<p>接着下载阿里镜像到/etc/yum.repos.d/ 目录下：</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">&gt;&gt;&gt;$wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</code></pre></figure>
-
-<p>如果wget命令不可用，则可以在另外的机子下载好，然后通过sftp上载至服务器上。修改刚刚下载的文件 /etc/yum.repos.d/CentOS-Base.repo，将所有的$releasever 替换成7:</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">&gt;&gt;&gt; vi /etc/yum.repos.d/CentOS-Base.repo
-
-:%s/$releasever/7/g</code></pre></figure>
-
-<p>最后，运行以下命令进行更新源</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">&gt;&gt;&gt;$ yum clean all
-&gt;&gt;&gt;$ yum makecache
-&gt;&gt;&gt;$ yum update # 【注意】不要跑这句，yum update之后会mess up /boot/efi/EFI 里面的启动项</code></pre></figure>
-
-<h3 id="安装gui">安装GUI</h3>
-
-<p>首先，经过上面更换yum源之后，应该已经可以通过以下命令查看可用的package groups：</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">&gt;&gt;&gt;$ yum group list
-Loaded plugins: fastestmirror, ...
-...
-Available Environment Groups
- ...
- Server with GUI
- GNOME Desktop
- ...
-Available Groups:
- ...
- Graphical Administration Tools
- ...
-Done
-
-# 如果是Centos 7:
-&gt;&gt;&gt;$ yum groupinstall "GNOME Desktop" "Graphical Adminstration Tools"
-
-# 如果是RHEL 7:
-&gt;&gt;&gt;$ yum groupinstall "Server with GUI"
-
-# 令系统在启动后启用GUI（level5是图形界面，原来文字界面应该是level3）
-&gt;&gt;&gt;$ ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
-
-# 千万不要重启电脑！
-【！！】&gt;&gt;&gt;$ reboot</code></pre></figure>
-
-<p>重启电脑之前，先检查以下启动项是否已经被污染了：</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">&gt;&gt;&gt;$ ls /etc/efi/EFI
-BOOT redhat CentOS # 多了一个CentOS，grub已经mess up，如果此时reboot，会导致不能进入系统
-&gt;&gt;&gt;$ ls /etc/efi/EFI/redhat
-fonts grub.cfg grubenv grubx64.efi
-&gt;&gt;&gt;$ ls /etc/efi/EFI/centos
-BOOT.CSV BOOTX64.CSV fw fwupia32.efi fwupx64.efi MokManager.efi shim.efi shimx64-cemtps.efi shimx64.efi
-# grub.cfg文件在redhat下，但其实系统需要到/etc/efi/EFI/centos目录下面进行启动，所以要在该目录重建grub
-&gt;&gt;&gt;$ grub-mkconfig -o /boot/efi/EFI/centos/grub.cfg
-&gt;&gt;&gt;$ ls /etc/efi/EFI/centos
-... grub.cfg # 已经生成grub.cfg文件</code></pre></figure>
-
-<p>现在，需要对grub进行修复（注意：在确认修复前，不要随便reboot，否则可能开不了机）</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">&gt;&gt;&gt;$ yum update
-&gt;&gt;&gt;$ grubby --bootloader-probe
-error opening /boot/grub/grub.cfg for read: no such file or directory
-&gt;&gt;&gt;$ ls /usr/lib/grub
-i386-pc
-&gt;&gt;&gt;$ grub2-install --boot-directory=/boot --efi-directory=/boot/efi /dev/sda --target=i386-pc
-...
-grub2-install: error: will not proceed with blocklists.
-&gt;&gt;&gt;$ ls /boot/grub
-splash.xpm.gz
-&gt;&gt;&gt;$ grub2-mkconfig -o /boot/grub/grub.cfg
-....
-done
-&gt;&gt;&gt;$ ls /boot/grub/
-grub.cfg splash.xpm.gz
-&gt;&gt;&gt;$ groupby --bootloader-probe
-grub2
-&gt;&gt;&gt;$ grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg</code></pre></figure>
-
-<p>如果幸运的话，就试试重启电脑吧：</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">&gt;&gt;&gt;$ reboot</code></pre></figure>
-
-<p>我们需要修复grub</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw"># 进入grub
-grub&gt; ls (hd1,1)/efi  # 找到efi文件夹
-./ ../ redhat/ boot/ centos/
-grub&gt; ls (hd1,2)/     # 找到kernel镜像所在位置
-... vmlinuz-3.10.0-1127.13.1.el7.x86_64 initramfs-3.10.0-1127.13.1.el7.x86_64.img...
-grub&gt; set pager=1
-grub&gt; cat (hd1,1)/efi/redhat/grub.cfg
-(找出以下两句话：)
-linuxefi /vmlinuz-3.10.0-1127.13.1.el7.x86_64 root=/dev/mapper/rehel-root ro crashkernel=auto rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet LANG=en_US.UTF-8
-initrdefi /initramfs-3.10.0-1127.13.1.el7.x86_64.img
-
-grub&gt; GRUB_PRELOAD_MODULES="lvm"
-grub&gt; set root=(hd1,2)  # kernel镜像所在位置
-grub&gt; linuxefi /vmlinuz-3.10.0-1127.13.1.el7.x86_64 root=/dev/mapper/rhel-root # 通过tab键补全
-grub&gt; initrdefi /initramfs-3.10.0-1127.13.1.el7.x86_64.img
-grub&gt; boot</code></pre></figure>
-
-<p>如果此方法不能正常启动linux，则可以找到u盘镜像所在位置，然后重装系统了：</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">grub&gt; ls (hd0,4)/
-... images/ ...
-grub&gt; GRUB_PRELOAD_MODULES="lvm"
-grub&gt; set root=(hd0,4)
-grub&gt; linuxefi /images/pxeboot/vmlinuz inst.stage2=hd:/dev/sdb4 quiet # 注意这里要指定根目录
-grub&gt; initrdefi /images/pxeboot/initrd.img
-grub&gt; boot</code></pre></figure>
-
 <h2 id="安装vmware-workstation">安装Vmware Workstation</h2>
-<p>下载：<a href="https://www.macxin.com/archives/3156.html">WMware Workstation Pro 14.1.0 Linux 完美破解版 多语言版</a>
-注册码：VMware 2017 v14.x FF31K-AHZD1-H8ETZ-8WWEZ-WUUVA / CV7T2-6WY5Q-48EWP-ZXY7X-QGUWD</p>
+<ul>
+  <li>下载：<a href="https://www.macxin.com/archives/3156.html">WMware Workstation Pro 14.1.0 Linux 完美破解版 多语言版</a></li>
+  <li>注册码：(适合VMware 2017 v14.x) FF31K-AHZD1-H8ETZ-8WWEZ-WUUVA / CV7T2-6WY5Q-48EWP-ZXY7X-QGUWD</li>
+</ul>
 
 <p>上传至服务器之后，解压，得到</p>
 
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">&gt;&gt;&gt;$ chmod o+x VMware-Workstation-Full-14.1.0-7370693.x86_64.bundle
-&gt;&gt;&gt;$ ./WMware-Workstation-Full-14.1.0-7370693.x86_64.bundle
-(填上上面的注册码)
-# 安装好后打开，会提示安装gcc
-&gt;&gt;&gt;$ yum install gcc
-# 装好gcc之后再次尝试打开，会提示Kernel Headers 3.10.0-1127.13.el7.x86_64 not found，查看现有kernels headers，如果没有的话安装
-&gt;&gt;&gt;$ ls /usr/src/kernels/
-&gt;&gt;&gt;$ yum install kernel-devel
-# 装好kernel-devel之后再次尝试打开，会提示还有several packages need to compile，点击install，安装之后会提示失败，不要管它，点击cancel，之后再次打开，就ok了</code></pre></figure>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">chmod </span>o+x VMware-Workstation-Full-14.1.0-7370693.x86_64.bundle
+<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>./WMware-Workstation-Full-14.1.0-7370693.x86_64.bundle
+<span class="o">(</span>填上上面的注册码<span class="o">)</span>
+<span class="c"># 安装好后打开，会提示安装gcc</span>
+<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>yum <span class="nb">install </span>gcc
+<span class="c"># 装好gcc之后再次尝试打开，会提示Kernel Headers 3.10.0-1127.13.el7.x86_64 not found，查看现有kernels headers，如果没有的话安装</span>
+<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">ls</span> /usr/src/kernels/
+<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>yum <span class="nb">install </span>kernel-devel
+<span class="c"># 装好kernel-devel之后再次尝试打开，会提示还有several packages need to compile，点击install，安装之后会提示失败，不要管它，点击cancel，之后再次打开，就ok了</span></code></pre></figure>
 
 <p>下载CentOS-7-x86_64-Minimal-2003.iso并上传至服务器，打开vmware workstation，安装镜像。当安装完成之后，会提示说”Could not open /dev/vmmon: No such file or direcotry. Please make sure that the kernel module <code class="language-plaintext highlighter-rouge">vmmon</code> is loaded.”</p>
 
 <p>这个错误大概是说vmmonitor和vmnet这两个模块没有经过签名认证，所以vmware出于安全的考虑，无法built。解决方案之一是重启系统，进入bios修改secure boot，将之改为disable，再重新尝试即可。</p>
-
-<p>This note <strong>demonstrates</strong> some of what <a href="https://daringfireball.net/projects/markdown/">Markdown</a> is <em>capable of doing</em>.</p>
-
-<p>And that’s how to do it.</p>
-
-<figure class="highlight"><pre><code class="language-html" data-lang="html">This note **demonstrates** some of what [Markdown][some/link] is *capable of doing*.</code></pre></figure>
-
-<hr />
-
-<h2 id="headings">Headings</h2>
-
-<p>There are six levels of headings. They correspond with the six levels of HTML headings. You’ve probably noticed them already in the page. Each level down uses one more hash character. But we are using just 4 of them.</p>
-
-<h1 id="headings-can-be-small">Headings can be small</h1>
-
-<h2 id="headings-can-be-small-1">Headings can be small</h2>
-
-<h3 id="headings-can-be-small-2">Headings can be small</h3>
-
-<h4 id="headings-can-be-small-3">Headings can be small</h4>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw"># Heading
-## Heading
-### Heading
-#### Heading</code></pre></figure>
-
-<hr />
-
-<h2 id="lists">Lists</h2>
-
-<h3 id="ordered-list">Ordered list</h3>
-
-<ol>
-  <li>Item 1</li>
-  <li>A second item</li>
-  <li>Number 3</li>
-</ol>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">1. Item 1
-2. A second item
-3. Number 3</code></pre></figure>
-
-<h3 id="unordered-list">Unordered list</h3>
-
-<ul>
-  <li>An item</li>
-  <li>Another item</li>
-  <li>Yet another item</li>
-  <li>And there’s more…</li>
-</ul>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">* An item
-* Another item
-* Yet another item
-* And there's more...</code></pre></figure>
-
-<hr />
-
-<h2 id="paragraph-modifiers">Paragraph modifiers</h2>
-
-<h3 id="quote">Quote</h3>
-
-<blockquote>
-  <p>Here is a quote. What this is should be self explanatory. Quotes are automatically indented when they are used.</p>
-</blockquote>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">&gt; Here is a quote. What this is should be self explanatory.</code></pre></figure>
-
-<hr />
-
-<h2 id="urls">URLs</h2>
-
-<p>URLs can be made in a handful of ways:</p>
-
-<ul>
-  <li>A named link to <a href="https://daringfireball.net/projects/markdown/basics">Mark It Down</a>.</li>
-  <li>Another named link to <a href="https://google.com/">Mark It Down</a></li>
-  <li>Sometimes you just want a URL like <a href="https://google.com/">https://google.com/</a>.</li>
-</ul>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">* A named link to [MarkItDown][3].
-* Another named link to [MarkItDown](https://google.com/)
-* Sometimes you just want a URL like &lt;https://google.com/&gt;.</code></pre></figure>
-
-<hr />
-
-<h2 id="horizontal-rule">Horizontal rule</h2>
-
-<p>A horizontal rule is a line that goes across the middle of the page.
-It’s sometimes handy for breaking things up.</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">---</code></pre></figure>
-
-<hr />
-
-<h2 id="images">Images</h2>
-
-<p>Markdown can also contain images. I’ll need to add something here sometime.</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">![Markdowm Image][/image/url]</code></pre></figure>
-
-<p><img src="https://kune.fr/wp-content/uploads/2013/10/ghost-blog.jpg" alt="Markdowm Image" /></p>
-
-<p><em>Figure Caption</em>?</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">![Markdowm Image][/image/url]
-&lt;figcaption class="caption"&gt;Photo by John Doe&lt;/figcaption&gt;</code></pre></figure>
-
-<p><img src="https://kune.fr/wp-content/uploads/2013/10/ghost-blog.jpg" alt="Markdowm Image" /></p>
-<figcaption class="caption">Photo by John Doe</figcaption>
-
-<p><em>Bigger Images</em>?</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">![Markdowm Image][/image/url]{: class="bigger-image" }</code></pre></figure>
-
-<p><img src="https://kune.fr/wp-content/uploads/2013/10/ghost-blog.jpg" alt="Markdowm Image" class="bigger-image" /></p>
-
-<hr />
-
-<h2 id="code">Code</h2>
-
-<p>A HTML Example:</p>
-
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;head&gt;</span>
-    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;title&gt;</span>Document<span class="nt">&lt;/title&gt;</span>
-<span class="nt">&lt;/head&gt;</span>
-<span class="nt">&lt;body&gt;</span>
-    <span class="nt">&lt;h1&gt;</span>Just a test<span class="nt">&lt;/h1&gt;</span>
-<span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span></code></pre></figure>
-
-<p>A CSS Example:</p>
-
-<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nt">pre</span> <span class="p">{</span>
-    <span class="nl">padding</span><span class="p">:</span> <span class="m">10px</span><span class="p">;</span>
-    <span class="nl">font-size</span><span class="p">:</span> <span class="m">.8em</span><span class="p">;</span>
-    <span class="nl">white-space</span><span class="p">:</span> <span class="n">pre</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="nt">pre</span><span class="o">,</span> <span class="nt">table</span> <span class="p">{</span>
-    <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="nt">code</span><span class="o">,</span> <span class="nt">pre</span><span class="o">,</span> <span class="nt">tt</span> <span class="p">{</span>
-    <span class="nl">font-family</span><span class="p">:</span> <span class="n">Monaco</span><span class="p">,</span> <span class="n">Consolas</span><span class="p">,</span> <span class="n">Inconsolata</span><span class="p">,</span> <span class="nb">monospace</span><span class="p">,</span> <span class="nb">sans-serif</span><span class="p">;</span>
-    <span class="nl">background</span><span class="p">:</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">0</span><span class="p">,</span><span class="m">.05</span><span class="p">);</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>A JS Example:</p>
-
-<figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="c1">// Sticky Header</span>
-<span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">scroll</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-
-    <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">scrollTop</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">900</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">body</span><span class="dl">"</span><span class="p">).</span><span class="nx">hasClass</span><span class="p">(</span><span class="dl">'</span><span class="s1">show-menu</span><span class="dl">'</span><span class="p">))</span> <span class="p">{</span>
-        <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#hamburguer__open</span><span class="dl">'</span><span class="p">).</span><span class="nx">fadeOut</span><span class="p">(</span><span class="dl">'</span><span class="s1">fast</span><span class="dl">'</span><span class="p">);</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">body</span><span class="dl">"</span><span class="p">).</span><span class="nx">hasClass</span><span class="p">(</span><span class="dl">'</span><span class="s1">show-menu</span><span class="dl">'</span><span class="p">))</span> <span class="p">{</span>
-        <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">#hamburguer__open</span><span class="dl">'</span><span class="p">).</span><span class="nx">fadeIn</span><span class="p">(</span><span class="dl">'</span><span class="s1">fast</span><span class="dl">'</span><span class="p">);</span>
-    <span class="p">}</span>
-
-<span class="p">});</span></code></pre></figure>
 
 
 
@@ -1063,7 +695,7 @@ It’s sometimes handy for breaking things up.</p>
             <!-- If site width is set to normal, you may choose any two share links -->
             <a
                 class="twitter"
-                href="https://twitter.com/intent/tweet?text=http://localhost:4000/vmware-workstation/ - Vmware Workstation by @"
+                href="https://twitter.com/intent/tweet?text=http://localhost:4000/vmware-workstation/ - RHEL 7.5（二）安装Vmware Workstation by @"
             >
                 <svg class="icon icon-twitter">
                     <use xlink:href="#icon-twitter"></use></svg
@@ -1080,11 +712,11 @@ It’s sometimes handy for breaking things up.</p>
                 ><span class="icon-facebook-rect">Share</span>
             </a>
 
-            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/vmware-workstation/&amp;title=Vmware Workstation&amp;summary=Install vmware workstation in Linux&amp;source=http://localhost:4000" target="_blank">
+            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/vmware-workstation/&amp;title=RHEL 7.5（二）安装Vmware Workstation&amp;summary=Install vmware workstation in Linux Redhat 7.5&amp;source=http://localhost:4000" target="_blank">
                 <svg class="icon icon-linkedin"><use xlink:href="#icon-linkedin"></use></svg><span class="icon-linkedin">Share</span>
             </a> -->
 
-            <!-- <a class="reddit" href="https://reddit.com/submit?url=http://localhost:4000/vmware-workstation/&amp;title=Vmware Workstation" target="_blank">
+            <!-- <a class="reddit" href="https://reddit.com/submit?url=http://localhost:4000/vmware-workstation/&amp;title=RHEL 7.5（二）安装Vmware Workstation" target="_blank">
                 <svg class="icon icon-reddit"><use xlink:href="#icon-reddit"></use></svg><span class="icon-reddit">Share</span>
             </a> -->
         </div>

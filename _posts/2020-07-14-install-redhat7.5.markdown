@@ -104,7 +104,7 @@ yum-rhn-plugin-2.0.1-10.e17.noarch
 
 通常直接这样会遇到报错"**.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY ..."，可以在上述命令后面加上 `--force --nodeps` 进行强制安装.
 
-另一种方法是[用CentOS的签名去注册][6]
+另一种方法是[用CentOS的签名去注册][1]
 {% highlight shell %}
 >>>$ cd /etc/pki/rpm-gpg/
 >>>$ wget http://mirrors.163.com/centos/RPM-GPG-KEY-CentOS-7
@@ -247,3 +247,4 @@ grub> boot
 
 Reboot之后如果能够正常开机，显示图形界面的登陆界面，就说明一切已经ok了。下一篇将讲如何安装Vmware Workstation。
 
+[1]: https://www.cnblogs.com/code1992/p/10735725.html
