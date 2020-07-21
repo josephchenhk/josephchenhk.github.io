@@ -9,21 +9,21 @@
     <meta name=author content="Joseph Chen">
 
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>RHEL 7.5（二）安装Vmware Workstation | Joseph Chen</title>
+<title>GitLab服务器搭建 | Joseph Chen</title>
 <meta name="generator" content="Jekyll v3.8.7" />
-<meta property="og:title" content="RHEL 7.5（二）安装Vmware Workstation" />
+<meta property="og:title" content="GitLab服务器搭建" />
 <meta name="author" content="joseph" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Install vmware workstation in Linux Redhat 7.5" />
-<meta property="og:description" content="Install vmware workstation in Linux Redhat 7.5" />
-<link rel="canonical" href="http://localhost:4000/vmware-workstation/" />
-<meta property="og:url" content="http://localhost:4000/vmware-workstation/" />
+<meta name="description" content="Install Gitlab server in Centos 7" />
+<meta property="og:description" content="Install Gitlab server in Centos 7" />
+<link rel="canonical" href="http://localhost:4000/gitlab-server/" />
+<meta property="og:url" content="http://localhost:4000/gitlab-server/" />
 <meta property="og:site_name" content="Joseph Chen" />
 <meta property="og:image" content="http://localhost:4000/assets/images/markdown.jpg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-07-18T17:39:00+08:00" />
+<meta property="article:published_time" content="2020-07-21T12:41:00+08:00" />
 <script type="application/ld+json">
-{"dateModified":"2020-07-18T17:39:00+08:00","datePublished":"2020-07-18T17:39:00+08:00","url":"http://localhost:4000/vmware-workstation/","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/vmware-workstation/"},"author":{"@type":"Person","name":"joseph"},"description":"Install vmware workstation in Linux Redhat 7.5","image":"http://localhost:4000/assets/images/markdown.jpg","@type":"BlogPosting","headline":"RHEL 7.5（二）安装Vmware Workstation","@context":"https://schema.org"}</script>
+{"dateModified":"2020-07-21T12:41:00+08:00","datePublished":"2020-07-21T12:41:00+08:00","url":"http://localhost:4000/gitlab-server/","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/gitlab-server/"},"author":{"@type":"Person","name":"joseph"},"description":"Install Gitlab server in Centos 7","image":"http://localhost:4000/assets/images/markdown.jpg","@type":"BlogPosting","headline":"GitLab服务器搭建","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -49,7 +49,7 @@
 <meta name="msapplication-square310x310logo" content="mstile-310x310.png" />
 
 
-    <link rel="canonical" href="http://localhost:4000/vmware-workstation/">
+    <link rel="canonical" href="http://localhost:4000/gitlab-server/">
     <link rel="alternate" type="application/rss+xml" title="" href="http://localhost:4000/feed.xml" />
 
     <style>
@@ -503,10 +503,10 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
 
 
-<h1 class="title">RHEL 7.5（二）安装Vmware Workstation</h1>
+<h1 class="title">GitLab服务器搭建</h1>
 
 <span class="date">
-    <time datetime="18-07-2020">Saturday. July 18, 2020</time>
+    <time datetime="21-07-2020">Tuesday. July 21, 2020</time>
      - <span class="reading-time" title="Estimated read time">
     
 
@@ -520,44 +520,111 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
     <div class="post-tags">
         
-            <a class="item" href="http://localhost:4000/tags/#markdown">markdown</a>
+            <a class="item" href="http://localhost:4000/tags/#gitlab">GitLab</a>
         
-            <a class="item" href="http://localhost:4000/tags/#elements">elements</a>
+            <a class="item" href="http://localhost:4000/tags/#server">server</a>
         
     </div>
 
 
-<h2 id="安装vmware-workstation">安装Vmware Workstation</h2>
-<ul>
-  <li>下载：<a href="https://www.macxin.com/archives/3156.html">WMware Workstation Pro 14.1.0 Linux 完美破解版 多语言版</a></li>
-  <li>注册码：(适合VMware 2017 v14.x) FF31K-AHZD1-H8ETZ-8WWEZ-WUUVA / CV7T2-6WY5Q-48EWP-ZXY7X-QGUWD</li>
-</ul>
+<p>我们上一篇介绍了搭建Git服务器。要使用一个更现代、功能更全的Git服务器，我们可以试试GitLab</p>
+<h1 id="准备工作">准备工作</h1>
 
-<p>上传至服务器之后，解压，得到</p>
+<ol>
+  <li>安装基础依赖</li>
+</ol>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">chmod </span>o+x VMware-Workstation-Full-14.1.0-7370693.x86_64.bundle
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>./WMware-Workstation-Full-14.1.0-7370693.x86_64.bundle
-<span class="o">(</span>填上上面的注册码<span class="o">)</span>
-<span class="c"># 安装好后打开，会提示安装gcc</span>
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>yum <span class="nb">install </span>gcc
-<span class="c"># 装好gcc之后再次尝试打开，会提示Kernel Headers 3.10.0-1127.13.el7.x86_64 not found，查看现有kernels headers，如果没有的话安装</span>
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">ls</span> /usr/src/kernels/
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>yum <span class="nb">install </span>kernel-devel
-<span class="c"># 装好kernel-devel之后再次尝试打开，会提示还有several packages need to compile，点击install，安装之后会提示失败，不要管它，点击cancel，之后再次打开，就ok了</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="c"># 安装技术依赖</span>
+<span class="nv">$ </span>yum <span class="nb">install</span> <span class="nt">-y</span> curl policycoreutils-python openssh-server
 
-<p>下载CentOS-7-x86_64-Minimal-2003.iso并上传至服务器，打开vmware workstation，安装镜像。当安装完成之后，会提示说”Could not open /dev/vmmon: No such file or direcotry. Please make sure that the kernel module <code class="language-plaintext highlighter-rouge">vmmon</code> is loaded.”</p>
+<span class="c"># 启动ssh服务 &amp; 设置为开机启动</span>
+<span class="nv">$ </span>systemctl enabale sshd
+<span class="nv">$ </span>systemctl start sshd</code></pre></figure>
 
-<p>这个错误大概是说vmmonitor和vmnet这两个模块没有经过签名认证，所以vmware出于安全的考虑，无法built。解决方案之一是重启系统，进入bios修改secure boot，将之改为disable，再重新尝试即可。</p>
+<ol>
+  <li>安装Postfix</li>
+</ol>
 
+<p>Postfix是一个邮件服务器，GitLab发送邮件需要用到</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="c"># 安装postfix</span>
+<span class="nv">$ </span>yum <span class="nb">install</span> <span class="nt">-y</span> postfix
+
+<span class="c"># 启动postfix并设置为开机启动</span>
+<span class="nv">$ </span>systemctl <span class="nb">enable </span>postfix
+<span class="nv">$ </span>systemctl start postfix</code></pre></figure>
+
+<ol>
+  <li>开放ssh以及http服务（80端口）</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="c"># 开放ssh、http服务</span>
+<span class="nv">$ </span><span class="nb">sudo </span>firewall-cmd <span class="nt">--add-service</span><span class="o">=</span>ssh <span class="nt">--permanent</span>
+<span class="nv">$ </span><span class="nb">sudo </span>firewall-cmd <span class="nt">--add-service</span><span class="o">=</span>http <span class="nt">--permanent</span>
+
+<span class="c"># 重载防火墙规则</span>
+<span class="nv">$ </span><span class="nb">sudo </span>firewall-cmd <span class="nt">--reload</span></code></pre></figure>
+
+<h1 id="部署过程">部署过程</h1>
+
+<p>我们这里部署社区版gitlab-ce，如果要部署商业版可以把关键字替换成gitlab-ee</p>
+
+<ol>
+  <li>yum安装gitlab</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | <span class="nb">sudo </span>bash 
+<span class="nv">$ </span>yum <span class="nb">install</span> <span class="nt">-y</span> gitlab-ce</code></pre></figure>
+
+<ol>
+  <li>配置GitLab站点Url</li>
+</ol>
+
+<p>将external_url修改为ip地址或域名：</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="c"># 修改配置文件</span>
+<span class="nv">$ </span>vi /etc/gitlab/gitlab.rb
+
+<span class="c"># 配置首页地址 (注意有个等号=)</span>
+<span class="nv">external_url</span><span class="o">=</span><span class="s1">'10.10.10.82'</span></code></pre></figure>
+
+<ol>
+  <li>启动并访问GitLab</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="c"># 重新配置并启动</span>
+<span class="nv">$ </span>gitlab-ctl reconfigure
+
+<span class="c"># 完成后将会看到如下输出</span>
+Running handlers <span class="nb">complete
+</span>Chef Client finished, 556/1522 resources updated <span class="k">in </span>05 minutes 34 seconds
+gitlab Reconfigured!</code></pre></figure>
+
+<p>直接在浏览器输入ip地址”10.10.10.82”，可以访问gitlab。也可以通过修改本地host将域名指向服务器ip：</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>vi /etc/hosts
+
+10.10.10.82 www.algo-git.com</code></pre></figure>
+
+<p>以上修改后，重启network</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>systemctl restart network
+
+<span class="c"># 或者通过nscd清除dns缓存</span>
+<span class="nv">$ </span>yum <span class="nt">-y</span> <span class="nb">install </span>nscd
+<span class="nv">$ </span>systemctl status nscd
+<span class="nv">$ </span>systemctl start nscd
+
+<span class="nv">$ </span>nscd <span class="nt">-i</span> hosts</code></pre></figure>
+
+<p>注意：以上修改/etc/hosts 只能对修改的本机生效。如果要对所有机器生效，还是要老老实实地去注册一个域名，然后通过dns解析吧。</p>
 
 
 
     <div class="blog-navigation">
         
-            <a class="prev" href="http://localhost:4000/install-redhat7.5/">&laquo; RHEL 7.5（一）替换yum源以及安装GUI</a>
+            <a class="prev" href="http://localhost:4000/git-server/">&laquo; Git服务器搭建</a>
         
-        
-            <a class="next" href="http://localhost:4000/remote-access-to-local-network/">远程连接至局域网 &raquo;</a>
         
     </div>
 
@@ -593,24 +660,39 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
                 
             
                 
-            
-        
-    
-        
-        
-            
-                
                     
                     <h4>Related Posts</h4>
                     <ul>
                     
                     <li class="relatedPost">
-                        <a href="http://localhost:4000/remote-access-to-local-network/">远程连接至局域网
+                        <a href="http://localhost:4000/git-server/">Git服务器搭建
                         
                         </a>
                     </li>
                     
                     
+                
+            
+        
+    
+        
+        
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+        
+    
+        
+        
+            
                 
             
                 
@@ -642,15 +724,6 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
         
             
                 
-                    
-                    <li class="relatedPost">
-                        <a href="http://localhost:4000/install-redhat7.5/">RHEL 7.5（一）替换yum源以及安装GUI
-                        
-                        </a>
-                    </li>
-                    
-                    
-                
             
                 
             
@@ -665,39 +738,6 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
         
         
             
-                
-                    
-                    <li class="relatedPost">
-                        <a href="http://localhost:4000/markdown-common-elements/">Markdown Common Elements
-                        
-                        </a>
-                    </li>
-                    
-                    
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-        
-    
-        
-        
-            
-                
-                    
-                    <li class="relatedPost">
-                        <a href="http://localhost:4000/markdown-extra-components/">Markdown Extra Components
-                        
-                        </a>
-                    </li>
-                    
-                    
                 
             
                 
@@ -751,7 +791,7 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
             <!-- If site width is set to normal, you may choose any two share links -->
             <a
                 class="twitter"
-                href="https://twitter.com/intent/tweet?text=http://localhost:4000/vmware-workstation/ - RHEL 7.5（二）安装Vmware Workstation by @"
+                href="https://twitter.com/intent/tweet?text=http://localhost:4000/gitlab-server/ - GitLab服务器搭建 by @"
             >
                 <svg class="icon icon-twitter">
                     <use xlink:href="#icon-twitter"></use></svg
@@ -768,11 +808,11 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
                 ><span class="icon-facebook-rect">Share</span>
             </a>
 
-            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/vmware-workstation/&amp;title=RHEL 7.5（二）安装Vmware Workstation&amp;summary=Install vmware workstation in Linux Redhat 7.5&amp;source=http://localhost:4000" target="_blank">
+            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/gitlab-server/&amp;title=GitLab服务器搭建&amp;summary=Install Gitlab server in Centos 7&amp;source=http://localhost:4000" target="_blank">
                 <svg class="icon icon-linkedin"><use xlink:href="#icon-linkedin"></use></svg><span class="icon-linkedin">Share</span>
             </a> -->
 
-            <!-- <a class="reddit" href="https://reddit.com/submit?url=http://localhost:4000/vmware-workstation/&amp;title=RHEL 7.5（二）安装Vmware Workstation" target="_blank">
+            <!-- <a class="reddit" href="https://reddit.com/submit?url=http://localhost:4000/gitlab-server/&amp;title=GitLab服务器搭建" target="_blank">
                 <svg class="icon icon-reddit"><use xlink:href="#icon-reddit"></use></svg><span class="icon-reddit">Share</span>
             </a> -->
         </div>
@@ -787,8 +827,8 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
     <script type="text/javascript">
 
         var disqus_config = function () {
-            this.page.url = 'http://localhost:4000/vmware-workstation/';
-            this.page.identifier = '/vmware-workstation';
+            this.page.url = 'http://localhost:4000/gitlab-server/';
+            this.page.identifier = '/gitlab-server';
         };
         var disqus_shortname = 'mydisqus';
         var disqus_developer = 0;
