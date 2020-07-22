@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-21T15:44:06+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">GitLab服务器搭建</title><link href="http://localhost:4000/gitlab-server/" rel="alternate" type="text/html" title="GitLab服务器搭建" /><published>2020-07-21T12:41:00+08:00</published><updated>2020-07-21T12:41:00+08:00</updated><id>http://localhost:4000/gitlab-server</id><content type="html" xml:base="http://localhost:4000/gitlab-server/">&lt;p&gt;我们上一篇介绍了搭建Git服务器。要使用一个更现代、功能更全的Git服务器，我们可以试试GitLab&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-22T15:45:27+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">GitLab服务器搭建</title><link href="http://localhost:4000/gitlab-server/" rel="alternate" type="text/html" title="GitLab服务器搭建" /><published>2020-07-21T12:41:00+08:00</published><updated>2020-07-21T12:41:00+08:00</updated><id>http://localhost:4000/gitlab-server</id><content type="html" xml:base="http://localhost:4000/gitlab-server/">&lt;p&gt;我们上一篇介绍了搭建Git服务器。要使用一个更现代、功能更全的Git服务器，我们可以试试GitLab&lt;/p&gt;
 &lt;h1 id=&quot;准备工作&quot;&gt;准备工作&lt;/h1&gt;
 
 &lt;ol&gt;
@@ -88,7 +88,46 @@ gitlab Reconfigured!&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nscd &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; hosts&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;注意：以上修改/etc/hosts 只能对修改的本机生效。如果要对所有机器生效，还是要老老实实地去注册一个域名，然后通过dns解析吧。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="GitLab" /><category term="server" /><summary type="html">我们上一篇介绍了搭建Git服务器。要使用一个更现代、功能更全的Git服务器，我们可以试试GitLab 准备工作</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Git服务器搭建</title><link href="http://localhost:4000/git-server/" rel="alternate" type="text/html" title="Git服务器搭建" /><published>2020-07-21T09:41:00+08:00</published><updated>2020-07-21T09:41:00+08:00</updated><id>http://localhost:4000/git-server</id><content type="html" xml:base="http://localhost:4000/git-server/">&lt;h1 id=&quot;安装git&quot;&gt;安装Git&lt;/h1&gt;
+&lt;p&gt;注意：以上修改/etc/hosts 只能对修改的本机生效。如果要对所有机器生效，还是要老老实实地去注册一个域名，然后通过dns解析吧。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="GitLab" /><category term="server" /><summary type="html">我们上一篇介绍了搭建Git服务器。要使用一个更现代、功能更全的Git服务器，我们可以试试GitLab 准备工作</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Git服务器搭建</title><link href="http://localhost:4000/jira-server/" rel="alternate" type="text/html" title="Git服务器搭建" /><published>2020-07-21T09:41:00+08:00</published><updated>2020-07-21T09:41:00+08:00</updated><id>http://localhost:4000/jira-server</id><content type="html" xml:base="http://localhost:4000/jira-server/">&lt;h1 id=&quot;安装git&quot;&gt;安装Git&lt;/h1&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;git&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;接下来我们创建一个git用户组和git用户，用来运行git服务&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;groupadd git
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;useradd git &lt;span class=&quot;nt&quot;&gt;-g&lt;/span&gt; git&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h1 id=&quot;创建证书登陆&quot;&gt;创建证书登陆&lt;/h1&gt;
+
+&lt;p&gt;收集需要登陆的用户的公钥，公钥位于id_rsa.pub文件中，把我们的公钥导入到/home/git/.ssh/authorized_keys文件里，一行一个。如果没有该文件就创建一个：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /home/git/
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; .ssh
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;755 .ssh
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;touch&lt;/span&gt; .ssh/authorized_keys
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;chomod 644 .ssh/authorized_keys&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h1 id=&quot;初始化git仓库&quot;&gt;初始化Git仓库&lt;/h1&gt;
+
+&lt;p&gt;首先我们选定一个目录作为Git仓库，假定是/home/git/gitrepo/algo.git，在/home/git/gitrepo目录下输入命令&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /home/git/
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;gitrepo
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chown &lt;/span&gt;git:git gitrepo/
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;gitrepo
+
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git init &lt;span class=&quot;nt&quot;&gt;--bare&lt;/span&gt; algo.git&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;以上命令创建了一个空仓库，服务器上的仓库通常以.git结尾。然后，把仓库所属用户改为git：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chown&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-R&lt;/span&gt; git:git algo.git&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h1 id=&quot;克隆仓库&quot;&gt;克隆仓库&lt;/h1&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git clone git@192.168.2.24:/home/git/gitrepo/algo.git&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;192.168.2.24为Git所在服务器ip，需要将其改为你自己的服务器ip。这样我们的Git服务器就安装完成了。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="Git" /><category term="server" /><summary type="html">安装Git</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Git服务器搭建</title><link href="http://localhost:4000/git-server/" rel="alternate" type="text/html" title="Git服务器搭建" /><published>2020-07-21T09:41:00+08:00</published><updated>2020-07-21T09:41:00+08:00</updated><id>http://localhost:4000/git-server</id><content type="html" xml:base="http://localhost:4000/git-server/">&lt;h1 id=&quot;安装git&quot;&gt;安装Git&lt;/h1&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel
 &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;git&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
