@@ -9,21 +9,21 @@
     <meta name=author content="Joseph Chen">
 
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Git服务器搭建 | Joseph Chen</title>
+<title>Jira服务器搭建 | Joseph Chen</title>
 <meta name="generator" content="Jekyll v3.8.7" />
-<meta property="og:title" content="Git服务器搭建" />
+<meta property="og:title" content="Jira服务器搭建" />
 <meta name="author" content="joseph" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Install Git server in Centos 7" />
-<meta property="og:description" content="Install Git server in Centos 7" />
+<meta name="description" content="Install Jira server in Centos 7" />
+<meta property="og:description" content="Install Jira server in Centos 7" />
 <link rel="canonical" href="http://localhost:4000/jira-server/" />
 <meta property="og:url" content="http://localhost:4000/jira-server/" />
 <meta property="og:site_name" content="Joseph Chen" />
 <meta property="og:image" content="http://localhost:4000/assets/images/markdown.jpg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-07-21T09:41:00+08:00" />
+<meta property="article:published_time" content="2020-07-22T15:41:00+08:00" />
 <script type="application/ld+json">
-{"dateModified":"2020-07-21T09:41:00+08:00","datePublished":"2020-07-21T09:41:00+08:00","url":"http://localhost:4000/jira-server/","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jira-server/"},"author":{"@type":"Person","name":"joseph"},"description":"Install Git server in Centos 7","image":"http://localhost:4000/assets/images/markdown.jpg","@type":"BlogPosting","headline":"Git服务器搭建","@context":"https://schema.org"}</script>
+{"dateModified":"2020-07-22T15:41:00+08:00","datePublished":"2020-07-22T15:41:00+08:00","url":"http://localhost:4000/jira-server/","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jira-server/"},"author":{"@type":"Person","name":"joseph"},"description":"Install Jira server in Centos 7","image":"http://localhost:4000/assets/images/markdown.jpg","@type":"BlogPosting","headline":"Jira服务器搭建","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -503,10 +503,10 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
 
 
-<h1 class="title">Git服务器搭建</h1>
+<h1 class="title">Jira服务器搭建</h1>
 
 <span class="date">
-    <time datetime="21-07-2020">Tuesday. July 21, 2020</time>
+    <time datetime="22-07-2020">Wednesday. July 22, 2020</time>
      - <span class="reading-time" title="Estimated read time">
     
 
@@ -520,62 +520,126 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
     <div class="post-tags">
         
-            <a class="item" href="http://localhost:4000/tags/#git">Git</a>
+            <a class="item" href="http://localhost:4000/tags/#jira">Jira</a>
         
             <a class="item" href="http://localhost:4000/tags/#server">server</a>
         
     </div>
 
 
-<h1 id="安装git">安装Git</h1>
+<h1 id="安装jdk">安装jdk</h1>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>yum <span class="nb">install </span>curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel
-<span class="nv">$ </span>yum <span class="nb">install </span>git</code></pre></figure>
+<p>去官网下载jdk-8u261-linux-x64.rpm</p>
 
-<p>接下来我们创建一个git用户组和git用户，用来运行git服务</p>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>yum localinstall jdk-8u261-linux-x64.rpm</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>groupadd git
-<span class="nv">$ </span>useradd git <span class="nt">-g</span> git</code></pre></figure>
+<p>装之前，如果系统已经有open-jdk，需要先卸装</p>
 
-<h1 id="创建证书登陆">创建证书登陆</h1>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>rpm <span class="nt">-qa</span> | <span class="nb">grep </span>java
+<span class="nv">$ </span>rpm <span class="nt">-e</span> <span class="nt">--nodeps</span> <span class="o">[</span>查看到的open-jdk] </code></pre></figure>
 
-<p>收集需要登陆的用户的公钥，公钥位于id_rsa.pub文件中，把我们的公钥导入到/home/git/.ssh/authorized_keys文件里，一行一个。如果没有该文件就创建一个：</p>
+<h1 id="安装mysql">安装mysql</h1>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span><span class="nb">cd</span> /home/git/
-<span class="nv">$ </span><span class="nb">mkdir</span> .ssh
-<span class="nv">$ </span><span class="nb">chmod </span>755 .ssh
-<span class="nv">$ </span><span class="nb">touch</span> .ssh/authorized_keys
-<span class="nv">$ </span>chomod 644 .ssh/authorized_keys</code></pre></figure>
+<p>先检查系统是否有安装mysql</p>
 
-<h1 id="初始化git仓库">初始化Git仓库</h1>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>rpm <span class="nt">-qa</span> | <span class="nb">grep </span>mysql</code></pre></figure>
 
-<p>首先我们选定一个目录作为Git仓库，假定是/home/git/gitrepo/algo.git，在/home/git/gitrepo目录下输入命令</p>
+<p>下载mysql的repo源</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span><span class="nb">cd</span> /home/git/
-<span class="nv">$ </span><span class="nb">mkdir </span>gitrepo
-<span class="nv">$ </span><span class="nb">chown </span>git:git gitrepo/
-<span class="nv">$ </span><span class="nb">cd </span>gitrepo
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm</code></pre></figure>
 
-<span class="nv">$ </span>git init <span class="nt">--bare</span> algo.git</code></pre></figure>
+<p>安装mysql-community-release-el7-5.noarch.rpm包：</p>
 
-<p>以上命令创建了一个空仓库，服务器上的仓库通常以.git结尾。然后，把仓库所属用户改为git：</p>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span><span class="nb">sudo </span>rpm <span class="nt">-ivh</span> mysql-community-release-el7-5.noarch.rpm</code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span><span class="nb">chown</span> <span class="nt">-R</span> git:git algo.git</code></pre></figure>
+<p>安装完这个包之后，会获得两个mysql的yum repo源：/etc/yum.repos.d/mysql-community.repo, /etc/yum.repos.d/mysql-community-source.repo</p>
 
-<h1 id="克隆仓库">克隆仓库</h1>
+<p>我们便可以运行下面命令去安装mysql</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>git clone git@192.168.2.24:/home/git/gitrepo/algo.git</code></pre></figure>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nb">install </span>mysql-server</code></pre></figure>
 
-<p>192.168.2.24为Git所在服务器ip，需要将其改为你自己的服务器ip。这样我们的Git服务器就安装完成了。</p>
+<p>安装完成后，再次查看mysql</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>rpm <span class="nt">-qa</span> | <span class="nb">grep </span>mysql
+mysql-community-libs-5.6.49-2.el7.x86_64
+mysql-community-release-el7-5.noarch
+mysql-community-common-5.6.49-2.el7.x86_64
+mysql-community-client-5.6.49-2.el7.x86_64
+mysql-community-server-5.6.49-2.el7.x86_64</code></pre></figure>
+
+<h1 id="启动mysqld">启动mysqld</h1>
+
+<p>在进行mysql配置之前，先要启动mysql server：</p>
+
+<figure class="highlight"><pre><code class="language-shelll" data-lang="shelll">$ service mysqld start</code></pre></figure>
+
+<h1 id="设置mysql">设置mysql</h1>
+
+<p>首先要重置密码</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>mysql <span class="nt">-u</span> root
+ERROR 2002 <span class="o">(</span>HY000<span class="o">)</span>: Can<span class="s1">'t connect to local MySQL server through socket '</span>/var/lib/mysql/mysql.sock<span class="s1">' (2)
+
+# 这个错误原因是/var/lib/mysql的访问权限问题，将/var/lib/mysql的拥有者改为mysql:mysql
+$ ls -l /var/lib/mysql
+drwxr-xr-x. 2 mysql mysql 6 Jun 2 02:13 mysql
+drwxr-x---. 2 mysql mysql 6 Jun 2 02:13 mysql-files
+
+# 修改子目录的用户组
+$ chown mysql:mysql /var/lib/mysql -R
+
+# 再试一次登陆mysql
+$ mysql -u root</span></code></pre></figure>
+
+<p>成功以root用户进入mysql</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="c"># 创建jira数据库</span>
+mysql&gt; CREATE DATABASE jira CHARACTER SET utf8 COLLATE utf8_bin<span class="p">;</span>
+Query OK, 1 row affected <span class="o">(</span>0.00 sec<span class="o">)</span>
+
+<span class="c"># 授予jira用户权限</span>
+mysql&gt; GRANT ALL PRIVILEGES ON jira.<span class="k">*</span> TO <span class="s1">'jira'</span>@<span class="s1">'localhost'</span> IDENTIFIED BY <span class="s1">'jirapass'</span><span class="p">;</span>
+Query OK, 0 rows affected <span class="o">(</span>0.00 sec<span class="o">)</span>
+
+<span class="c"># 测试jira连接mysql</span>
+<span class="nv">$ </span><span class="nb">exit</span>
+<span class="nv">$ </span>mysql <span class="nt">-ujira</span> <span class="nt">-pjirapass</span>
+mysql&gt;</code></pre></figure>
+
+<h1 id="安装jira">安装jira</h1>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>wget https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-7.4.1-x64.bin
+
+<span class="nv">$ </span>ll atlassian-jira-software-7.4.1-x64.bin
+<span class="nt">-rw-rw-r--</span>
+<span class="nv">$ </span><span class="nb">chmod </span>a+x atlassian-jira-software-7.4.1-x64.bin
+<span class="nv">$ </span><span class="nb">sudo</span> ./atlassian-jira-software-7.4.1-x64.bin <span class="c"># 记得要用sudo</span>
+Installation Directory: /opt/atlassian/jira
+Home directory: /var/atlassian/application-data/jira
+HTTP Port: 8080
+RMI Port:8005</code></pre></figure>
+
+<p>先关闭jira，将pojie文件atlassian-extras-3.2.jar 和 mysql-connector-java-5.1.39-bin.jar 两个文件复制至 /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/目录下</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>/etc/init.d/jira stop
+<span class="nv">$ </span>lsof <span class="nt">-i</span>:8080
+<span class="nv">$ </span><span class="nb">cp </span>atlassian-extras-3.2.jar /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/
+<span class="nv">$ </span><span class="nb">cp </span>mysql-connector-java-5.1.39-bin.jar /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/
+<span class="nv">$ </span>/etc/init.d/jira start</code></pre></figure>
+
+<p>装好后如果在非本地机，通过ip:8080访问打不开，可能是由于防火墙的缘故，作如下处理</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span><span class="nb">sudo </span>firewall-cmd <span class="nt">--zone</span><span class="o">=</span>public <span class="nt">--add-port</span><span class="o">=</span>8080/tcp <span class="nt">--permanent</span>
+<span class="nv">$ </span>service firewalld stop
+<span class="nv">$ </span>service firewalld start</code></pre></figure>
+
 
 
 
     <div class="blog-navigation">
         
-            <a class="prev" href="http://localhost:4000/git-server/">&laquo; Git服务器搭建</a>
+            <a class="prev" href="http://localhost:4000/gitlab-server/">&laquo; GitLab服务器搭建</a>
         
-        
-            <a class="next" href="http://localhost:4000/gitlab-server/">GitLab服务器搭建 &raquo;</a>
         
     </div>
 
@@ -583,6 +647,21 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
     <div class="related">
     
+    
+        
+        
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+        
     
         
         
@@ -623,13 +702,6 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
                 
             
                 
-            
-        
-    
-        
-        
-            
-                
                     
                     <li class="relatedPost">
                         <a href="http://localhost:4000/git-server/">Git服务器搭建
@@ -638,14 +710,6 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
                     </li>
                     
                     
-                
-            
-                
-            
-        
-            
-                
-            
                 
             
         
@@ -766,7 +830,7 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
             <!-- If site width is set to normal, you may choose any two share links -->
             <a
                 class="twitter"
-                href="https://twitter.com/intent/tweet?text=http://localhost:4000/jira-server/ - Git服务器搭建 by @"
+                href="https://twitter.com/intent/tweet?text=http://localhost:4000/jira-server/ - Jira服务器搭建 by @"
             >
                 <svg class="icon icon-twitter">
                     <use xlink:href="#icon-twitter"></use></svg
@@ -783,11 +847,11 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
                 ><span class="icon-facebook-rect">Share</span>
             </a>
 
-            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/jira-server/&amp;title=Git服务器搭建&amp;summary=Install Git server in Centos 7&amp;source=http://localhost:4000" target="_blank">
+            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/jira-server/&amp;title=Jira服务器搭建&amp;summary=Install Jira server in Centos 7&amp;source=http://localhost:4000" target="_blank">
                 <svg class="icon icon-linkedin"><use xlink:href="#icon-linkedin"></use></svg><span class="icon-linkedin">Share</span>
             </a> -->
 
-            <!-- <a class="reddit" href="https://reddit.com/submit?url=http://localhost:4000/jira-server/&amp;title=Git服务器搭建" target="_blank">
+            <!-- <a class="reddit" href="https://reddit.com/submit?url=http://localhost:4000/jira-server/&amp;title=Jira服务器搭建" target="_blank">
                 <svg class="icon icon-reddit"><use xlink:href="#icon-reddit"></use></svg><span class="icon-reddit">Share</span>
             </a> -->
         </div>

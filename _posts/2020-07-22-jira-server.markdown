@@ -40,7 +40,7 @@ $ rpm -qa | grep mysql
 
 {% highlight shell %}
 $ wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
-{% endhighlight % }
+{% endhighlight %}
 
 安装mysql-community-release-el7-5.noarch.rpm包：
 
@@ -83,7 +83,7 @@ $ service mysqld start
 $ mysql -u root
 ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)
 
-# 这个错误原因是/var/lib/mysql的访问权限问题，将/var/lib/mysql的拥有者改为others
+# 这个错误原因是/var/lib/mysql的访问权限问题，将/var/lib/mysql的拥有者改为mysql:mysql
 $ ls -l /var/lib/mysql
 drwxr-xr-x. 2 mysql mysql 6 Jun 2 02:13 mysql
 drwxr-x---. 2 mysql mysql 6 Jun 2 02:13 mysql-files
@@ -95,4 +95,51 @@ $ chown mysql:mysql /var/lib/mysql -R
 $ mysql -u root
 {% endhighlight %}
 
-192.168.2.24为Git所在服务器ip，需要将其改为你自己的服务器ip。这样我们的Git服务器就安装完成了。
+成功以root用户进入mysql
+{% highlight shell %}
+# 创建jira数据库
+mysql> CREATE DATABASE jira CHARACTER SET utf8 COLLATE utf8_bin;
+Query OK, 1 row affected (0.00 sec)
+
+# 授予jira用户权限
+mysql> GRANT ALL PRIVILEGES ON jira.* TO 'jira'@'localhost' IDENTIFIED BY 'jirapass';
+Query OK, 0 rows affected (0.00 sec)
+
+# 测试jira连接mysql
+$ exit
+$ mysql -ujira -pjirapass
+mysql>
+{% endhighlight %}
+
+# 安装jira
+
+{% highlight shell %}
+$ wget https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-7.4.1-x64.bin
+
+$ ll atlassian-jira-software-7.4.1-x64.bin
+-rw-rw-r--
+$ chmod a+x atlassian-jira-software-7.4.1-x64.bin
+$ sudo ./atlassian-jira-software-7.4.1-x64.bin # 记得要用sudo
+Installation Directory: /opt/atlassian/jira
+Home directory: /var/atlassian/application-data/jira
+HTTP Port: 8080
+RMI Port:8005
+{% endhighlight %}
+
+先关闭jira，将pojie文件atlassian-extras-3.2.jar 和 mysql-connector-java-5.1.39-bin.jar 两个文件复制至 /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/目录下
+
+{% highlight shell %}
+$ /etc/init.d/jira stop
+$ lsof -i:8080
+$ cp atlassian-extras-3.2.jar /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/
+$ cp mysql-connector-java-5.1.39-bin.jar /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/
+$ /etc/init.d/jira start
+{% endhighlight %}
+
+装好后如果在非本地机，通过ip:8080访问打不开，可能是由于防火墙的缘故，作如下处理
+
+{% highlight shell %}
+$ sudo firewall-cmd --zone=public --add-port=8080/tcp --permanent
+$ service firewalld stop
+$ service firewalld start
+{% endhighlight %}
