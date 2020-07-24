@@ -143,3 +143,27 @@ $ sudo firewall-cmd --zone=public --add-port=8080/tcp --permanent
 $ service firewalld stop
 $ service firewalld start
 {% endhighlight %}
+
+打开浏览器，输入ip:8080访问jira配置页面，按步骤操作如下：
+
+![Markdown Image][1]
+![Markdown Image][2]
+![Markdown Image][3]
+![Markdown Image][4]
+![Markdown Image][5]
+![Markdown Image][6]
+![Markdown Image][7]
+![Markdown Image][8]
+![Markdown Image][9]
+![Markdown Image][10]
+
+[1]: /assets/images_in_posts/jira1.png
+[1]: /assets/images_in_posts/jira2.png
+[1]: /assets/images_in_posts/jira3.png
+[1]: /assets/images_in_posts/jira4.png
+[1]: /assets/images_in_posts/jira5.png
+[1]: /assets/images_in_posts/jira6.png
+[1]: /assets/images_in_posts/jira7.png
+[1]: /assets/images_in_posts/jira8.png
+[1]: /assets/images_in_posts/jira9.png
+[1]: /assets/images_in_posts/jira10.png
