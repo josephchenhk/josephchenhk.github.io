@@ -158,12 +158,12 @@ $ service firewalld start
 ![Markdown Image][10]
 
 [1]: /assets/images_in_posts/jira1.png
-[1]: /assets/images_in_posts/jira2.png
-[1]: /assets/images_in_posts/jira3.png
-[1]: /assets/images_in_posts/jira4.png
-[1]: /assets/images_in_posts/jira5.png
-[1]: /assets/images_in_posts/jira6.png
-[1]: /assets/images_in_posts/jira7.png
-[1]: /assets/images_in_posts/jira8.png
-[1]: /assets/images_in_posts/jira9.png
-[1]: /assets/images_in_posts/jira10.png
+[2]: /assets/images_in_posts/jira2.png
+[3]: /assets/images_in_posts/jira3.png
+[4]: /assets/images_in_posts/jira4.png
+[5]: /assets/images_in_posts/jira5.png
+[6]: /assets/images_in_posts/jira6.png
+[7]: /assets/images_in_posts/jira7.png
+[8]: /assets/images_in_posts/jira8.png
+[9]: /assets/images_in_posts/jira9.png
+[10]: /assets/images_in_posts/jira10.png

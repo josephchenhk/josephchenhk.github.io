@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-24T15:11:31+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">Jira服务器搭建</title><link href="http://localhost:4000/jira-server/" rel="alternate" type="text/html" title="Jira服务器搭建" /><published>2020-07-22T15:41:00+08:00</published><updated>2020-07-22T15:41:00+08:00</updated><id>http://localhost:4000/jira-server</id><content type="html" xml:base="http://localhost:4000/jira-server/">&lt;h1 id=&quot;安装jdk&quot;&gt;安装jdk&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-24T15:13:23+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">Jira服务器搭建</title><link href="http://localhost:4000/jira-server/" rel="alternate" type="text/html" title="Jira服务器搭建" /><published>2020-07-22T15:41:00+08:00</published><updated>2020-07-22T15:41:00+08:00</updated><id>http://localhost:4000/jira-server</id><content type="html" xml:base="http://localhost:4000/jira-server/">&lt;h1 id=&quot;安装jdk&quot;&gt;安装jdk&lt;/h1&gt;
 
 &lt;p&gt;去官网下载jdk-8u261-linux-x64.rpm&lt;/p&gt;
 
@@ -106,16 +106,16 @@ RMI Port:8005&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;打开浏览器，输入ip:8080访问jira配置页面，按步骤操作如下：&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images_in_posts/jira10.png&quot; alt=&quot;Markdown Image&quot; /&gt;
-![Markdown Image][2]
-![Markdown Image][3]
-![Markdown Image][4]
-![Markdown Image][5]
-![Markdown Image][6]
-![Markdown Image][7]
-![Markdown Image][8]
-![Markdown Image][9]
-![Markdown Image][10]&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="Jira" /><category term="server" /><summary type="html">安装jdk</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">GitLab服务器搭建</title><link href="http://localhost:4000/gitlab-server/" rel="alternate" type="text/html" title="GitLab服务器搭建" /><published>2020-07-21T12:41:00+08:00</published><updated>2020-07-21T12:41:00+08:00</updated><id>http://localhost:4000/gitlab-server</id><content type="html" xml:base="http://localhost:4000/gitlab-server/">&lt;p&gt;我们上一篇介绍了搭建Git服务器。要使用一个更现代、功能更全的Git服务器，我们可以试试GitLab&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images_in_posts/jira1.png&quot; alt=&quot;Markdown Image&quot; /&gt;
+&lt;img src=&quot;/assets/images_in_posts/jira2.png&quot; alt=&quot;Markdown Image&quot; /&gt;
+&lt;img src=&quot;/assets/images_in_posts/jira3.png&quot; alt=&quot;Markdown Image&quot; /&gt;
+&lt;img src=&quot;/assets/images_in_posts/jira4.png&quot; alt=&quot;Markdown Image&quot; /&gt;
+&lt;img src=&quot;/assets/images_in_posts/jira5.png&quot; alt=&quot;Markdown Image&quot; /&gt;
+&lt;img src=&quot;/assets/images_in_posts/jira6.png&quot; alt=&quot;Markdown Image&quot; /&gt;
+&lt;img src=&quot;/assets/images_in_posts/jira7.png&quot; alt=&quot;Markdown Image&quot; /&gt;
+&lt;img src=&quot;/assets/images_in_posts/jira8.png&quot; alt=&quot;Markdown Image&quot; /&gt;
+&lt;img src=&quot;/assets/images_in_posts/jira9.png&quot; alt=&quot;Markdown Image&quot; /&gt;
+&lt;img src=&quot;/assets/images_in_posts/jira10.png&quot; alt=&quot;Markdown Image&quot; /&gt;&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="Jira" /><category term="server" /><summary type="html">安装jdk</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">GitLab服务器搭建</title><link href="http://localhost:4000/gitlab-server/" rel="alternate" type="text/html" title="GitLab服务器搭建" /><published>2020-07-21T12:41:00+08:00</published><updated>2020-07-21T12:41:00+08:00</updated><id>http://localhost:4000/gitlab-server</id><content type="html" xml:base="http://localhost:4000/gitlab-server/">&lt;p&gt;我们上一篇介绍了搭建Git服务器。要使用一个更现代、功能更全的Git服务器，我们可以试试GitLab&lt;/p&gt;
 &lt;h1 id=&quot;准备工作&quot;&gt;准备工作&lt;/h1&gt;
 
 &lt;ol&gt;
