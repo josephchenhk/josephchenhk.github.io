@@ -9,21 +9,21 @@
     <meta name=author content="Joseph Chen">
 
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>远程连接至局域网 | Joseph Chen</title>
+<title>Refinitiv Elektron SDK - Java 使用 | Joseph Chen</title>
 <meta name="generator" content="Jekyll v3.8.7" />
-<meta property="og:title" content="远程连接至局域网" />
+<meta property="og:title" content="Refinitiv Elektron SDK - Java 使用" />
 <meta name="author" content="joseph" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Install vmware workstation in Linux Redhat 7.5" />
-<meta property="og:description" content="Install vmware workstation in Linux Redhat 7.5" />
-<link rel="canonical" href="http://localhost:4000/remote-access-to-local-network/" />
-<meta property="og:url" content="http://localhost:4000/remote-access-to-local-network/" />
+<meta name="description" content="Refinitiv Elektron SDK - Java" />
+<meta property="og:description" content="Refinitiv Elektron SDK - Java" />
+<link rel="canonical" href="http://localhost:4000/elektron-sdk-java/" />
+<meta property="og:url" content="http://localhost:4000/elektron-sdk-java/" />
 <meta property="og:site_name" content="Joseph Chen" />
 <meta property="og:image" content="http://localhost:4000/assets/images/markdown.jpg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-07-20T19:23:00+08:00" />
+<meta property="article:published_time" content="2020-07-28T09:07:00+08:00" />
 <script type="application/ld+json">
-{"dateModified":"2020-07-20T19:23:00+08:00","datePublished":"2020-07-20T19:23:00+08:00","url":"http://localhost:4000/remote-access-to-local-network/","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/remote-access-to-local-network/"},"author":{"@type":"Person","name":"joseph"},"description":"Install vmware workstation in Linux Redhat 7.5","image":"http://localhost:4000/assets/images/markdown.jpg","@type":"BlogPosting","headline":"远程连接至局域网","@context":"https://schema.org"}</script>
+{"dateModified":"2020-07-28T09:07:00+08:00","datePublished":"2020-07-28T09:07:00+08:00","url":"http://localhost:4000/elektron-sdk-java/","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/elektron-sdk-java/"},"author":{"@type":"Person","name":"joseph"},"description":"Refinitiv Elektron SDK - Java","image":"http://localhost:4000/assets/images/markdown.jpg","@type":"BlogPosting","headline":"Refinitiv Elektron SDK - Java 使用","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -49,7 +49,7 @@
 <meta name="msapplication-square310x310logo" content="mstile-310x310.png" />
 
 
-    <link rel="canonical" href="http://localhost:4000/remote-access-to-local-network/">
+    <link rel="canonical" href="http://localhost:4000/elektron-sdk-java/">
     <link rel="alternate" type="application/rss+xml" title="" href="http://localhost:4000/feed.xml" />
 
     <style>
@@ -503,10 +503,10 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
 
 
-<h1 class="title">远程连接至局域网</h1>
+<h1 class="title">Refinitiv Elektron SDK - Java 使用</h1>
 
 <span class="date">
-    <time datetime="20-07-2020">Monday. July 20, 2020</time>
+    <time datetime="28-07-2020">Tuesday. July 28, 2020</time>
      - <span class="reading-time" title="Estimated read time">
     
 
@@ -520,44 +520,66 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
     <div class="post-tags">
         
-            <a class="item" href="http://localhost:4000/tags/#markdown">markdown</a>
+            <a class="item" href="http://localhost:4000/tags/#refinitv">Refinitv</a>
         
-            <a class="item" href="http://localhost:4000/tags/#elements">elements</a>
+            <a class="item" href="http://localhost:4000/tags/#elektron">Elektron</a>
+        
+            <a class="item" href="http://localhost:4000/tags/#data">Data</a>
+        
+            <a class="item" href="http://localhost:4000/tags/#finance">Finance</a>
         
     </div>
 
 
-<h2 id="安装vmware-workstation">安装Vmware Workstation</h2>
-<ul>
-  <li>下载：<a href="https://www.macxin.com/archives/3156.html">WMware Workstation Pro 14.1.0 Linux 完美破解版 多语言版</a></li>
-  <li>注册码：(适合VMware 2017 v14.x) FF31K-AHZD1-H8ETZ-8WWEZ-WUUVA / CV7T2-6WY5Q-48EWP-ZXY7X-QGUWD</li>
-</ul>
+<h1 id="安装gradle-build-tool">安装Gradle Build Tool</h1>
+<p>先安装openjdk</p>
 
-<p>上传至服务器之后，解压，得到</p>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nb">install </span>java-1.8.0-openjdk-devel
+...
+Complete!
+<span class="nv">$ </span>java <span class="nt">-version</span>
+openjdk version <span class="s2">"1.8.0_262"</span>
+OpenJDK Runtime Environment <span class="o">(</span>build 1.8.0_262-b10<span class="o">)</span>
+OpenJDK 64-Bit Server VM <span class="o">(</span>build 25.262-b10, mixed mode<span class="o">)</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">chmod </span>o+x VMware-Workstation-Full-14.1.0-7370693.x86_64.bundle
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>./WMware-Workstation-Full-14.1.0-7370693.x86_64.bundle
-<span class="o">(</span>填上上面的注册码<span class="o">)</span>
-<span class="c"># 安装好后打开，会提示安装gcc</span>
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>yum <span class="nb">install </span>gcc
-<span class="c"># 装好gcc之后再次尝试打开，会提示Kernel Headers 3.10.0-1127.13.el7.x86_64 not found，查看现有kernels headers，如果没有的话安装</span>
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">ls</span> /usr/src/kernels/
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>yum <span class="nb">install </span>kernel-devel
-<span class="c"># 装好kernel-devel之后再次尝试打开，会提示还有several packages need to compile，点击install，安装之后会提示失败，不要管它，点击cancel，之后再次打开，就ok了</span></code></pre></figure>
+<p>去https://gradle.org/releases/查询gradle的最新版本，本文写作时最新版本是v6.5.1，这里我们用稳定版本v6.5</p>
 
-<p>下载CentOS-7-x86_64-Minimal-2003.iso并上传至服务器，打开vmware workstation，安装镜像。当安装完成之后，会提示说”Could not open /dev/vmmon: No such file or direcotry. Please make sure that the kernel module <code class="language-plaintext highlighter-rouge">vmmon</code> is loaded.”</p>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span><span class="nb">ls</span> | <span class="nb">grep </span>gradle
+gradle-6.5-bin.zip
+<span class="nv">$ </span><span class="nb">sudo </span>unzip <span class="nt">-d</span> /opt/gradle gradle-6.5-bin.zip <span class="c"># 将当前zip文件解压至/opt/gradle</span>
+<span class="nv">$ </span><span class="nb">ls</span> /opt/gradle/gradle-6.5
+LICENSE NOTICE README bin init.d lib</code></pre></figure>
 
-<p>这个错误大概是说vmmonitor和vmnet这两个模块没有经过签名认证，所以vmware出于安全的考虑，无法built。解决方案之一是重启系统，进入bios修改secure boot，将之改为disable，再重新尝试即可。</p>
+<p>设置环境变量，将path环境变量设置为包括Gradle bin目录。在/etc/profile.d/目录下创建一个名为gradle.sh的新文件：</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span><span class="nb">sudo touch</span> /etc/profile.d/gradle.sh
+<span class="nv">$ </span><span class="nb">sudo </span>vi /etc/profile.d/gradle.sh
+
+<span class="c"># 写入如下配置</span>
+<span class="nb">export </span><span class="nv">GRADLE_HOME</span><span class="o">=</span>/opt/gradle/gradle-6.5
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="k">${</span><span class="nv">GRADLE_HOME</span><span class="k">}</span>/bin:<span class="k">${</span><span class="nv">PATH</span><span class="k">}</span>
+
+wq
+
+<span class="c"># 通过chmod命令使脚本可执行</span>
+<span class="nv">$ </span><span class="nb">sudo chmod</span> +x /etc/profile.d/gradle.sh
+
+<span class="c"># 使用source命令加载环境变量</span>
+<span class="nv">$ </span><span class="nb">source</span> /etc/profile.d/gradle.sh
+
+<span class="c"># 验证gradle已经成功安装</span>
+<span class="nv">$ </span>gradle <span class="nt">-v</span>
+Welcome to Gradle 6.5!</code></pre></figure>
+
+<h1 id="esdk-build-system">ESDK Build System</h1>
 
 
 
 
     <div class="blog-navigation">
         
-            <a class="prev" href="http://localhost:4000/vmware-workstation/">&laquo; RHEL 7.5（二）安装Vmware Workstation</a>
+            <a class="prev" href="http://localhost:4000/jira-server/">&laquo; Jira服务器搭建</a>
         
-        
-            <a class="next" href="http://localhost:4000/git-server/">Git服务器搭建 &raquo;</a>
         
     </div>
 
@@ -573,8 +595,6 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
             
                 
             
-        
-            
                 
             
                 
@@ -584,17 +604,6 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
                 
             
                 
-            
-        
-            
-                
-            
-                
-            
-        
-    
-        
-        
             
                 
             
@@ -606,16 +615,15 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
             
                 
             
-        
-    
-        
-        
-            
                 
             
                 
             
         
+            
+                
+            
+                
             
                 
             
@@ -630,17 +638,6 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
             
                 
             
-        
-            
-                
-            
-                
-            
-        
-    
-        
-        
-            
                 
             
                 
@@ -650,107 +647,6 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
                 
             
                 
-            
-        
-    
-        
-        
-            
-                
-                    
-                    <h4>Related Posts</h4>
-                    <ul>
-                    
-                    <li class="relatedPost">
-                        <a href="http://localhost:4000/vmware-workstation/">RHEL 7.5（二）安装Vmware Workstation
-                        
-                        </a>
-                    </li>
-                    
-                    
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-        
-    
-        
-        
-            
-                
-                    
-                    <li class="relatedPost">
-                        <a href="http://localhost:4000/install-redhat7.5/">RHEL 7.5（一）替换yum源以及安装GUI
-                        
-                        </a>
-                    </li>
-                    
-                    
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-        
-    
-        
-        
-            
-                
-                    
-                    <li class="relatedPost">
-                        <a href="http://localhost:4000/markdown-common-elements/">Markdown Common Elements
-                        
-                        </a>
-                    </li>
-                    
-                    
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-        
-    
-        
-        
-            
-                
-                    
-                    <li class="relatedPost">
-                        <a href="http://localhost:4000/markdown-extra-components/">Markdown Extra Components
-                        
-                        </a>
-                    </li>
-                    
-                    
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-        
             
                 
             
@@ -765,10 +661,183 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
             
                 
             
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
         
     
+        
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
     
-        </ul>
+        
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        
+    
     
 </div>
 
@@ -793,7 +862,7 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
             <!-- If site width is set to normal, you may choose any two share links -->
             <a
                 class="twitter"
-                href="https://twitter.com/intent/tweet?text=http://localhost:4000/remote-access-to-local-network/ - 远程连接至局域网 by @"
+                href="https://twitter.com/intent/tweet?text=http://localhost:4000/elektron-sdk-java/ - Refinitiv Elektron SDK - Java 使用 by @"
             >
                 <svg class="icon icon-twitter">
                     <use xlink:href="#icon-twitter"></use></svg
@@ -810,11 +879,11 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
                 ><span class="icon-facebook-rect">Share</span>
             </a>
 
-            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/remote-access-to-local-network/&amp;title=远程连接至局域网&amp;summary=Install vmware workstation in Linux Redhat 7.5&amp;source=http://localhost:4000" target="_blank">
+            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/elektron-sdk-java/&amp;title=Refinitiv Elektron SDK - Java 使用&amp;summary=Refinitiv Elektron SDK - Java&amp;source=http://localhost:4000" target="_blank">
                 <svg class="icon icon-linkedin"><use xlink:href="#icon-linkedin"></use></svg><span class="icon-linkedin">Share</span>
             </a> -->
 
-            <!-- <a class="reddit" href="https://reddit.com/submit?url=http://localhost:4000/remote-access-to-local-network/&amp;title=远程连接至局域网" target="_blank">
+            <!-- <a class="reddit" href="https://reddit.com/submit?url=http://localhost:4000/elektron-sdk-java/&amp;title=Refinitiv Elektron SDK - Java 使用" target="_blank">
                 <svg class="icon icon-reddit"><use xlink:href="#icon-reddit"></use></svg><span class="icon-reddit">Share</span>
             </a> -->
         </div>
@@ -829,8 +898,8 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
     <script type="text/javascript">
 
         var disqus_config = function () {
-            this.page.url = 'http://localhost:4000/remote-access-to-local-network/';
-            this.page.identifier = '/remote-access-to-local-network';
+            this.page.url = 'http://localhost:4000/elektron-sdk-java/';
+            this.page.identifier = '/elektron-sdk-java';
         };
         var disqus_shortname = 'mydisqus';
         var disqus_developer = 0;

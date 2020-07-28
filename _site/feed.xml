@@ -1,4 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-24T15:21:03+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">Jira服务器搭建</title><link href="http://localhost:4000/jira-server/" rel="alternate" type="text/html" title="Jira服务器搭建" /><published>2020-07-22T15:41:00+08:00</published><updated>2020-07-22T15:41:00+08:00</updated><id>http://localhost:4000/jira-server</id><content type="html" xml:base="http://localhost:4000/jira-server/">&lt;h1 id=&quot;安装jdk&quot;&gt;安装jdk&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-28T11:39:59+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">Refinitiv Elektron SDK - Java 使用</title><link href="http://localhost:4000/elektron-sdk-java/" rel="alternate" type="text/html" title="Refinitiv Elektron SDK - Java 使用" /><published>2020-07-28T09:07:00+08:00</published><updated>2020-07-28T09:07:00+08:00</updated><id>http://localhost:4000/elektron-sdk-java</id><content type="html" xml:base="http://localhost:4000/elektron-sdk-java/">&lt;h1 id=&quot;安装gradle-build-tool&quot;&gt;安装Gradle Build Tool&lt;/h1&gt;
+&lt;p&gt;先安装openjdk&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;java-1.8.0-openjdk-devel
+...
+Complete!
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;java &lt;span class=&quot;nt&quot;&gt;-version&lt;/span&gt;
+openjdk version &lt;span class=&quot;s2&quot;&gt;&quot;1.8.0_262&quot;&lt;/span&gt;
+OpenJDK Runtime Environment &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;build 1.8.0_262-b10&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+OpenJDK 64-Bit Server VM &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;build 25.262-b10, mixed mode&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;去https://gradle.org/releases/查询gradle的最新版本，本文写作时最新版本是v6.5.1，这里我们用稳定版本v6.5&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;gradle
+gradle-6.5-bin.zip
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;unzip &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; /opt/gradle gradle-6.5-bin.zip &lt;span class=&quot;c&quot;&gt;# 将当前zip文件解压至/opt/gradle&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /opt/gradle/gradle-6.5
+LICENSE NOTICE README bin init.d lib&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;设置环境变量，将path环境变量设置为包括Gradle bin目录。在/etc/profile.d/目录下创建一个名为gradle.sh的新文件：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo touch&lt;/span&gt; /etc/profile.d/gradle.sh
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;vi /etc/profile.d/gradle.sh
+
+&lt;span class=&quot;c&quot;&gt;# 写入如下配置&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GRADLE_HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/opt/gradle/gradle-6.5
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GRADLE_HOME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;/bin:&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+
+wq
+
+&lt;span class=&quot;c&quot;&gt;# 通过chmod命令使脚本可执行&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chmod&lt;/span&gt; +x /etc/profile.d/gradle.sh
+
+&lt;span class=&quot;c&quot;&gt;# 使用source命令加载环境变量&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; /etc/profile.d/gradle.sh
+
+&lt;span class=&quot;c&quot;&gt;# 验证gradle已经成功安装&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;gradle &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt;
+Welcome to Gradle 6.5!&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h1 id=&quot;esdk-build-system&quot;&gt;ESDK Build System&lt;/h1&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="Refinitv" /><category term="Elektron" /><category term="Data" /><category term="Finance" /><summary type="html">安装Gradle Build Tool 先安装openjdk $ sudo yum install java-1.8.0-openjdk-devel ... Complete! $ java -version openjdk version &quot;1.8.0_262&quot; OpenJDK Runtime Environment (build 1.8.0_262-b10) OpenJDK 64-Bit Server VM (build 25.262-b10, mixed mode)</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Jira服务器搭建</title><link href="http://localhost:4000/jira-server/" rel="alternate" type="text/html" title="Jira服务器搭建" /><published>2020-07-22T15:41:00+08:00</published><updated>2020-07-22T15:41:00+08:00</updated><id>http://localhost:4000/jira-server</id><content type="html" xml:base="http://localhost:4000/jira-server/">&lt;h1 id=&quot;安装jdk&quot;&gt;安装jdk&lt;/h1&gt;
 
 &lt;p&gt;去官网下载jdk-8u261-linux-x64.rpm&lt;/p&gt;
 
