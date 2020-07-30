@@ -1,4 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-28T11:39:59+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">Refinitiv Elektron SDK - Java 使用</title><link href="http://localhost:4000/elektron-sdk-java/" rel="alternate" type="text/html" title="Refinitiv Elektron SDK - Java 使用" /><published>2020-07-28T09:07:00+08:00</published><updated>2020-07-28T09:07:00+08:00</updated><id>http://localhost:4000/elektron-sdk-java</id><content type="html" xml:base="http://localhost:4000/elektron-sdk-java/">&lt;h1 id=&quot;安装gradle-build-tool&quot;&gt;安装Gradle Build Tool&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-30T14:48:02+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">机器学习预测赛马（一）</title><link href="http://localhost:4000/horse-racing/" rel="alternate" type="text/html" title=" 机器学习预测赛马（一）" /><published>2020-07-30T14:26:00+08:00</published><updated>2020-07-30T14:26:00+08:00</updated><id>http://localhost:4000/horse-racing</id><content type="html" xml:base="http://localhost:4000/horse-racing/">&lt;h1 id=&quot;预测什么&quot;&gt;预测什么&lt;/h1&gt;
+&lt;p&gt;赛马预测是一个较少被公开研究的话题（成功的话早就闷声发大财了），这里做一些总结。首先，我们要预测什么？其实，以下几种预测都是常见的：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;预测每匹马的完成时间&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;预测每匹马是“赢”还是“输”（binary classification）&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;预测每匹马的最终排名（multi-class classification）&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;其中，第2和第3种预测都是各自明显的缺陷：对于二元分类，一个显著的问题是，赛马的数据是imbalanced的，即赢的马匹是少数，输的是大多数；对于多元分类，则会有难以解释的地方，比如对一场比赛的排名预测如下：&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="Machine learning" /><category term="horse racing" /><category term="hkjc" /><category term="Neural network" /><summary type="html">预测什么 赛马预测是一个较少被公开研究的话题（成功的话早就闷声发大财了），这里做一些总结。首先，我们要预测什么？其实，以下几种预测都是常见的：</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Refinitiv Elektron SDK - Java 使用</title><link href="http://localhost:4000/elektron-sdk-java/" rel="alternate" type="text/html" title="Refinitiv Elektron SDK - Java 使用" /><published>2020-07-28T09:07:00+08:00</published><updated>2020-07-28T09:07:00+08:00</updated><id>http://localhost:4000/elektron-sdk-java</id><content type="html" xml:base="http://localhost:4000/elektron-sdk-java/">&lt;h1 id=&quot;安装gradle-build-tool&quot;&gt;安装Gradle Build Tool&lt;/h1&gt;
 &lt;p&gt;先安装openjdk&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;java-1.8.0-openjdk-devel
@@ -855,25 +870,4 @@ It’s sometimes handy for breaking things up.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;iframe&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;560&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;310&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://www.youtube.com/embed/r7XhWUDj-Ts&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;frameborder=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;allowfullscreen&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/iframe&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;iframe width=&quot;560&quot; height=&quot;310&quot; src=&quot;https://www.youtube.com/embed/r7XhWUDj-Ts&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content><author><name>jamesfoster</name></author><category term="blog" /><category term="markdown" /><category term="components" /><category term="extra" /><summary type="html">Summary:</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">:ramen: Indigo, minimalist jekyll theme</title><link href="http://localhost:4000/indigo-jekyll-theme/" rel="alternate" type="text/html" title=":ramen: Indigo, minimalist jekyll theme" /><published>2016-01-23T22:10:00+08:00</published><updated>2016-01-23T22:10:00+08:00</updated><id>http://localhost:4000/indigo-jekyll-theme</id><content type="html" xml:base="http://localhost:4000/indigo-jekyll-theme/">&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/sergiokopplin/indigo/gh-pages/assets/screen-shot.png&quot; alt=&quot;Screenshot&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Example of project - Indigo Minimalist Jekyll Template - &lt;a href=&quot;https://sergiokopplin.github.io/indigo/&quot;&gt;Demo&lt;/a&gt;. This is a simple and minimalist template for Jekyll for those who likes to eat noodles.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;What has inside?&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Gulp&lt;/li&gt;
-  &lt;li&gt;BrowserSync&lt;/li&gt;
-  &lt;li&gt;Stylus&lt;/li&gt;
-  &lt;li&gt;SVG&lt;/li&gt;
-  &lt;li&gt;Travis&lt;/li&gt;
-  &lt;li&gt;No JS&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://developers.google.com/speed/pagespeed/insights/?url=http%3A%2F%2Fsergiokopplin.github.io%2Findigo%2F&quot;&gt;98/100&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://sergiokopplin.github.io/indigo/&quot;&gt;Check it out&lt;/a&gt; here.
-If you need some help, just &lt;a href=&quot;https://github.com/sergiokopplin/indigo/issues&quot;&gt;tell me&lt;/a&gt;.&lt;/p&gt;</content><author><name>johndoe</name></author><category term="project" /><category term="jekyll" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://sergiokopplin.github.io/indigo/assets/images/jekyll-logo-light-solid.png" /><media:content medium="image" url="https://sergiokopplin.github.io/indigo/assets/images/jekyll-logo-light-solid.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;iframe width=&quot;560&quot; height=&quot;310&quot; src=&quot;https://www.youtube.com/embed/r7XhWUDj-Ts&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content><author><name>jamesfoster</name></author><category term="blog" /><category term="markdown" /><category term="components" /><category term="extra" /><summary type="html">Summary:</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
