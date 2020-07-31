@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-30T14:48:02+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">机器学习预测赛马（一）</title><link href="http://localhost:4000/horse-racing/" rel="alternate" type="text/html" title=" 机器学习预测赛马（一）" /><published>2020-07-30T14:26:00+08:00</published><updated>2020-07-30T14:26:00+08:00</updated><id>http://localhost:4000/horse-racing</id><content type="html" xml:base="http://localhost:4000/horse-racing/">&lt;h1 id=&quot;预测什么&quot;&gt;预测什么&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-31T18:23:12+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">机器学习预测赛马（一）</title><link href="http://localhost:4000/horse-racing/" rel="alternate" type="text/html" title=" 机器学习预测赛马（一）" /><published>2020-07-30T14:26:00+08:00</published><updated>2020-07-30T14:26:00+08:00</updated><id>http://localhost:4000/horse-racing</id><content type="html" xml:base="http://localhost:4000/horse-racing/">&lt;h1 id=&quot;预测什么&quot;&gt;预测什么&lt;/h1&gt;
 &lt;p&gt;赛马预测是一个较少被公开研究的话题（成功的话早就闷声发大财了），这里做一些总结。首先，我们要预测什么？其实，以下几种预测都是常见的：&lt;/p&gt;
 
 &lt;ol&gt;
@@ -13,7 +13,38 @@
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;其中，第2和第3种预测都是各自明显的缺陷：对于二元分类，一个显著的问题是，赛马的数据是imbalanced的，即赢的马匹是少数，输的是大多数；对于多元分类，则会有难以解释的地方，比如对一场比赛的排名预测如下：&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="Machine learning" /><category term="horse racing" /><category term="hkjc" /><category term="Neural network" /><summary type="html">预测什么 赛马预测是一个较少被公开研究的话题（成功的话早就闷声发大财了），这里做一些总结。首先，我们要预测什么？其实，以下几种预测都是常见的：</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Refinitiv Elektron SDK - Java 使用</title><link href="http://localhost:4000/elektron-sdk-java/" rel="alternate" type="text/html" title="Refinitiv Elektron SDK - Java 使用" /><published>2020-07-28T09:07:00+08:00</published><updated>2020-07-28T09:07:00+08:00</updated><id>http://localhost:4000/elektron-sdk-java</id><content type="html" xml:base="http://localhost:4000/elektron-sdk-java/">&lt;h1 id=&quot;安装gradle-build-tool&quot;&gt;安装Gradle Build Tool&lt;/h1&gt;
+&lt;p&gt;其中，第2和第3种预测都是各自明显的缺陷：对于二元分类，一个显著的问题是，赛马的数据是imbalanced的，即赢的马匹是少数，输的是大多数；对于多元分类，则会有难以解释的地方，比如对一场比赛的排名预测如下：&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Horse\Place&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;1st&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;2nd&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;3rd&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;#1&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;60%&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;40%&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;20%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;#2&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;30%&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;60%&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;50%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;#3&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;50%&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;40%&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;60%&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="Machine learning" /><category term="horse racing" /><category term="hkjc" /><category term="Neural network" /><summary type="html">预测什么 赛马预测是一个较少被公开研究的话题（成功的话早就闷声发大财了），这里做一些总结。首先，我们要预测什么？其实，以下几种预测都是常见的：</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Refinitiv Elektron SDK - Java 使用</title><link href="http://localhost:4000/elektron-sdk-java/" rel="alternate" type="text/html" title="Refinitiv Elektron SDK - Java 使用" /><published>2020-07-28T09:07:00+08:00</published><updated>2020-07-28T09:07:00+08:00</updated><id>http://localhost:4000/elektron-sdk-java</id><content type="html" xml:base="http://localhost:4000/elektron-sdk-java/">&lt;h1 id=&quot;安装gradle-build-tool&quot;&gt;安装Gradle Build Tool&lt;/h1&gt;
 &lt;p&gt;先安装openjdk&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;java-1.8.0-openjdk-devel

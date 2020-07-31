@@ -548,6 +548,36 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
 <p>其中，第2和第3种预测都是各自明显的缺陷：对于二元分类，一个显著的问题是，赛马的数据是imbalanced的，即赢的马匹是少数，输的是大多数；对于多元分类，则会有难以解释的地方，比如对一场比赛的排名预测如下：</p>
 
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Horse\Place</th>
+      <th style="text-align: center">1st</th>
+      <th style="text-align: center">2nd</th>
+      <th style="text-align: center">3rd</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">#1</td>
+      <td style="text-align: center">60%</td>
+      <td style="text-align: center">40%</td>
+      <td style="text-align: center">20%</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">#2</td>
+      <td style="text-align: center">30%</td>
+      <td style="text-align: center">60%</td>
+      <td style="text-align: center">50%</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">#3</td>
+      <td style="text-align: center">50%</td>
+      <td style="text-align: center">40%</td>
+      <td style="text-align: center">60%</td>
+    </tr>
+  </tbody>
+</table>
 
 
 
