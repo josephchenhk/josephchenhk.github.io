@@ -31,3 +31,4 @@ description: Use machine learning techniques to predict horse racing
 |  #1         | 60% | 40% | 20% |
 |  #2         | 30% | 60% | 50% |
 |  #3         | 50% | 40% | 60% |
+
