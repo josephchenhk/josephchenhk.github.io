@@ -26,7 +26,7 @@ Lender --(bond)--> seller --(bond)--> market counterparty [seller receives proce
 Lender <--(bond)-- seller <--(bond)-- market counterparty [seller buys back the bond (hopefully at a lower price) and returns it to the lender]
 
 # Credit Default Swaps (CDS)
-
+abc
 # Total Return Swaps (TRS)
 
 
