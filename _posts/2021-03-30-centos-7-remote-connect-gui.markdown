@@ -1,5 +1,10 @@
 ---
 title: CentOS 7 远程连接GUI界面
+layout: post
+date: '2021-03-30 17:15:18'
+category: blog
+author: joseph
+description: remote connect to gui in centos 7
 ---
 
 # 安装vnc-server
