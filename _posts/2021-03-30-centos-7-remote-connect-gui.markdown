@@ -5,6 +5,11 @@ date: '2021-03-30 17:15:18'
 category: blog
 author: joseph
 description: remote connect to gui in centos 7
+tag:
+- vncserver
+star: true
+image: "/assets/images/markdown.jpg"
+headerImage: false
 ---
 
 # 安装vnc-server
