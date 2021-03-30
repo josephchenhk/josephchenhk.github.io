@@ -1,5 +1,5 @@
 ---
-title: "Install Docker in CentOS"
+title: "在CentOS安装docker"
 layout: post
 date: 2021-02-04 22:48
 image: /assets/images/markdown.jpg
@@ -14,7 +14,7 @@ description: docker in centos
 
 # centos7安装Docker详细步骤
 
-centos7安装Docker全过程记录（无坑版教程）
+centos7安装Docker全过程记录（无坑版教程）：
 
 ## 一、安装前必读
 在安装 Docker 之前，先说一下配置，我这里是Centos7
@@ -83,4 +83,4 @@ systemctl enable docker
 
 ### Ref
 
-![centos7安装Docker详细步骤（无坑版教程）](https://cloud.tencent.com/developer/article/1701451)
+[centos7安装Docker详细步骤（无坑版教程）](https://cloud.tencent.com/developer/article/1701451)

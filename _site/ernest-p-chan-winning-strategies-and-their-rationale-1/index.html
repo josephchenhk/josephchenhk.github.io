@@ -9,21 +9,21 @@
     <meta name=author content="Joseph Chen">
 
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>机器学习预测赛马（一） | Joseph Chen</title>
+<title>Ernest P. Chan: Winning Strategies and Their Rationale (1) | Joseph Chen</title>
 <meta name="generator" content="Jekyll v3.8.7" />
-<meta property="og:title" content="机器学习预测赛马（一）" />
+<meta property="og:title" content="Ernest P. Chan: Winning Strategies and Their Rationale (1)" />
 <meta name="author" content="joseph" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Use machine learning techniques to predict horse racing" />
-<meta property="og:description" content="Use machine learning techniques to predict horse racing" />
-<link rel="canonical" href="http://localhost:4000/horse-racing/" />
-<meta property="og:url" content="http://localhost:4000/horse-racing/" />
+<meta name="description" content="读书笔记" />
+<meta property="og:description" content="读书笔记" />
+<link rel="canonical" href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1/" />
+<meta property="og:url" content="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1/" />
 <meta property="og:site_name" content="Joseph Chen" />
 <meta property="og:image" content="http://localhost:4000/assets/images/markdown.jpg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-07-30T14:26:00+08:00" />
+<meta property="article:published_time" content="2021-02-08T16:26:00+08:00" />
 <script type="application/ld+json">
-{"dateModified":"2020-07-30T14:26:00+08:00","datePublished":"2020-07-30T14:26:00+08:00","url":"http://localhost:4000/horse-racing/","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/horse-racing/"},"author":{"@type":"Person","name":"joseph"},"description":"Use machine learning techniques to predict horse racing","image":"http://localhost:4000/assets/images/markdown.jpg","@type":"BlogPosting","headline":"机器学习预测赛马（一）","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1/","headline":"Ernest P. Chan: Winning Strategies and Their Rationale (1)","dateModified":"2021-02-08T16:26:00+08:00","datePublished":"2021-02-08T16:26:00+08:00","image":"http://localhost:4000/assets/images/markdown.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1/"},"author":{"@type":"Person","name":"joseph"},"description":"读书笔记","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -49,7 +49,7 @@
 <meta name="msapplication-square310x310logo" content="mstile-310x310.png" />
 
 
-    <link rel="canonical" href="http://localhost:4000/horse-racing/">
+    <link rel="canonical" href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1/">
     <link rel="alternate" type="application/rss+xml" title="" href="http://localhost:4000/feed.xml" />
 
     <style>
@@ -493,7 +493,7 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
         
             <li class="item">
-                <a class="link" href="https://google.com/?q=my+resume">Résumé</a>
+                <a class="link" href="https://google.com/?q=joseph+chen">Résumé</a>
             </li>
         
     </ul>
@@ -503,10 +503,10 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
 
 
-<h1 class="title"> 机器学习预测赛马（一）</h1>
+<h1 class="title">Ernest P. Chan: Winning Strategies and Their Rationale (1)</h1>
 
 <span class="date">
-    <time datetime="30-07-2020">Thursday. July 30, 2020</time>
+    <time datetime="08-02-2021">Monday. February 08, 2021</time>
      - <span class="reading-time" title="Estimated read time">
     
 
@@ -520,74 +520,155 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
     <div class="post-tags">
         
-            <a class="item" href="http://localhost:4000/tags/#machine-learning">Machine learning</a>
+            <a class="item" href="http://localhost:4000/tags/#算法交易">算法交易</a>
         
-            <a class="item" href="http://localhost:4000/tags/#horse-racing">horse racing</a>
-        
-            <a class="item" href="http://localhost:4000/tags/#hkjc">hkjc</a>
-        
-            <a class="item" href="http://localhost:4000/tags/#neural-network">Neural network</a>
+            <a class="item" href="http://localhost:4000/tags/#qtrader">qtrader</a>
         
     </div>
 
 
-<h1 id="预测什么">预测什么</h1>
-<p>赛马预测是一个较少被公开研究的话题（成功的话早就闷声发大财了），这里做一些总结。首先，我们要预测什么？其实，以下几种预测都是常见的：</p>
+<p>A brief note of Ernest Chan’s book.</p>
 
-<ol>
+<h1 id="backtesting-and-automated-execution">Backtesting and Automated Execution</h1>
+
+<ul>
   <li>
-    <p>预测每匹马的完成时间</p>
+    <p>backtest要做对，否则不如不做</p>
   </li>
   <li>
-    <p>预测每匹马是“赢”还是“输”（binary classification）</p>
+    <p>好的回测平台 (backtesting platform)，应该与好的自动化执行平台 (automated execution platform)相一致 (容易从回测过渡至实盘交易)</p>
+  </li>
+</ul>
+
+<h2 id="the-importance-of-backtesting">The Importance of Backtesting</h2>
+
+<p>为什么别人的策略，到你这就很难重复 (backtest a published strategy)?</p>
+
+<ul>
+  <li>
+    <p>别人的细节不会告诉你，只有自己亲自backtest一遍，踩了所有的坑，才算pick up了别人的strategy</p>
   </li>
   <li>
-    <p>预测每匹马的最终排名（multi-class classification）</p>
+    <p>自己实现backtesting，能够让你将别人的策略，跑在真正的out-of-sample的数据集上；如果不work，你很可能可以判断这是一篇水文</p>
   </li>
-</ol>
+  <li>
+    <p>自己实现backtesting，也是一个改进策略 (refine and improve the strategy)的过程</p>
+  </li>
+</ul>
 
-<p>其中，第2和第3种预测都是各自明显的缺陷：对于二元分类，一个显著的问题是，赛马的数据是imbalanced的，即赢的马匹是少数，输的是大多数；对于多元分类，则会有难以解释的地方，比如对一场比赛的排名预测如下：</p>
+<h2 id="common-pitfalls-of-backtesting">Common Pitfalls of Backtesting</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">Horse\Place</th>
-      <th style="text-align: center">1st</th>
-      <th style="text-align: center">2nd</th>
-      <th style="text-align: center">3rd</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">#1</td>
-      <td style="text-align: center">60%</td>
-      <td style="text-align: center">40%</td>
-      <td style="text-align: center">20%</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">#2</td>
-      <td style="text-align: center">30%</td>
-      <td style="text-align: center">60%</td>
-      <td style="text-align: center">50%</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">#3</td>
-      <td style="text-align: center">50%</td>
-      <td style="text-align: center">40%</td>
-      <td style="text-align: center">60%</td>
-    </tr>
-  </tbody>
-</table>
+<h3 id="look-ahead-bias">Look-ahead Bias</h3>
 
+<p>任何时候，一个正确的backtesting，都不应该用到未来的数据</p>
+
+<h3 id="data-snooping-bias-and-the-beauty-of-linearity">Data-Snooping Bias and the Beauty of Linearity</h3>
+
+<p>Data-snooping：用太多参数去过拟合历史数据。怎么解决？</p>
+
+<ul>
+  <li>
+    <p>严格执行out-of-sample一票否决权（另一种不那么好的方法是：进行cross validation）</p>
+  </li>
+  <li>
+    <p>尽可能减少参数（parameter）。【注意】如果你的策略参数不多，但有很复杂的交易规则，也可能导致data-snooping</p>
+  </li>
+</ul>
+
+<h3 id="linear-model-or-nonlinear-model">Linear Model or Nonlinear Model</h3>
+
+<p>不要迷信非线性模型，很多时候简单的线性模型，反而更好</p>
+
+<h3 id="stock-splits-and-dividend-adjustments">Stock Splits and Dividend Adjustments</h3>
+
+<ul>
+  <li>
+    <p>拆股N-to-1，股票价格会被稀释N倍：回测时将除权日前的价格除以N（在实盘时也要做类似的处理）</p>
+  </li>
+  <li>
+    <p>派息每股¥d，股票价格会降低¥d：回测时将除权日前的价格减去¥d（在实盘时也要做类似的处理）</p>
+  </li>
+</ul>
+
+<p>自己做一次前复权/后复权</p>
+
+<h3 id="survivorship-bias-in-stock-database">Survivorship Bias in Stock Database</h3>
+
+<p>如果回测的数据里，不包括除牌（delisted）的公司，就存在survivorship bias了。对于mean-reverting long-only的策略而言，这种幸存者偏差的影响尤其重要；对momentum策略而言，影响相对没那么大。</p>
+
+<p>mean-reverting策略更依赖长期的数据，filter掉退市的股票，变相等于避免了一部分可能不盈利的策略，从而导致回测结果inflated；momentum策略更依赖短期的数据，filter掉退市的股票，变相等于放弃了一部分可能短期内盈利的股票，从而导致回测结果deflated。</p>
+
+<h3 id="primary-versus-consolidated-stock-prices">Primary versus Consolidated Stock Prices</h3>
+
+<p>一只股票在多个交易所上市，在回测时要留意你用到的是哪个交易所的数据。如果使用consolidated prices做回测，很容易搞不清楚实际交易时到底应该用哪个交易所的价格。</p>
+
+<p>Bar data某程度上就是一种consolidated data，使用OHLC数据进行回测时，要留意与真实的price feed的区别。</p>
+
+<p>Tick data可以通过订阅实时数据，自行进行收录（如果技术上做得到的话）。</p>
+
+<h3 id="venue-dependence-of-currency-quotes">Venue Dependence of Currency Quotes</h3>
+
+<p>外汇市场，不同的venue有不同的报价，如果我们打算在A venue进行交易，那就必须用A venue的历史数据进行回测；如果用B venue的历史数据，那就是一个伪回测，
+不具备实际意义。</p>
+
+<p>如果用quote aggregator做回测的historical data，将来打算交易的venue，一定要在这个aggregator里面，否则也是一个无效的回测。</p>
+
+<p>外汇市场数据还有一个特点：通常bid/ask quotes数据相对容易获得，但trade price/volume较难获得（因为没有监管要求上报trade数据，大家都会倾向将trade
+数据看作是自己的私有财产）</p>
+
+<h2 id="short-sale-constraints">Short-Sale Constraints</h2>
+
+<p>通常，你的经纪商（broker）未必支持short sale。</p>
+
+<p>如果short interest足够多，会导致borrow share的成本很高。</p>
+
+<ul>
+  <li>“uptick rule”：short sale的价格要比最近成交价更高。</li>
+</ul>
+
+<h2 id="futures-continuous-contracts">Futures Continuous Contracts</h2>
+
+<p>期货需要考虑roll over</p>
+
+<h2 id="futures-close-versus-settlement-prices">Futures Close versus Settlement Prices</h2>
+
+<p>Settlement prices由exchange提供，即使当天没有交易，也会有一个settlement prices。用actural transaction prices去做回测比较好，如果用
+settlement prices，要小心。</p>
+
+<h2 id="statistical-significance-of-backtesting-hypothesis-testing">Statistical Significance of Backtesting: Hypothesis Testing</h2>
+
+<h2 id="choosing-a-backtesting-and-automated-execution-platform">Choosing a Backtesting and Automated Execution Platform</h2>
+
+<p>买一个系统还是自己build一个系统？</p>
+
+<h2 id="can-backtesting-and-execution-use-the-same-program">Can Backtesting and Execution Use the Same Program?</h2>
+
+<p>应该要一致：</p>
+
+<p>（1）方便将backtest strategy 迁移至实盘live trading（尽可能少的改动代码）</p>
+
+<p>（2）避免look-ahead bias</p>
+
+<h2 id="what-type-of-asset-classes-or-strategies-does-the-platform-support">What Type of Asset Classes or Strategies Does the Platform Support?</h2>
+
+<p>市面上已有的平台，通常只能trade一种或几种资产。<strong>自己写会有足够的灵活性</strong> （例如<a href="https://github.com/josephchenhk/qtrader">Qtrader</a>）。</p>
+
+<h2 id="does-the-platform-have-complex-event-processing">Does the Platform Have Complex Event Processing?</h2>
+
+<blockquote>
+  <p>For an algorithmic trader, one important point is that the program is event driven, and not bar driven.That is, the program does not go poll prices or news items at the end of each bar and then decide what to do. Because CEP is event driven, there is no delay between the occurrence of an event and the response to it.</p>
+</blockquote>
+
+<p>Jospeh：这未必是一条金科玉律。很多中低频的systematic trading strategies其实也是由bar驱动的。</p>
 
 
 
     <div class="blog-navigation">
         
-            <a class="prev" href="http://localhost:4000/elektron-sdk-java/">&laquo; Refinitiv Elektron SDK - Java 使用</a>
+            <a class="prev" href="http://localhost:4000/centos-install-docker/">&laquo; 在CentOS安装docker</a>
         
         
-            <a class="next" href="http://localhost:4000/short-corporate-bond/">Short Corporate Bonds &raquo;</a>
+            <a class="next" href="http://localhost:4000/centos-7-remote-connect-gui/">CentOS 7 远程连接GUI界面 &raquo;</a>
         
     </div>
 
@@ -598,30 +679,15 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
     
         
         
-            
-                
-            
-                
-            
-                
-            
-                
-            
+    
+        
         
             
                 
             
                 
             
-                
-            
-                
-            
         
-            
-                
-            
-                
             
                 
             
@@ -636,35 +702,7 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
             
                 
             
-                
-            
-                
-            
         
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        
-            
-                
-            
-                
             
                 
             
@@ -679,35 +717,7 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
             
                 
             
-                
-            
-                
-            
         
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        
-            
-                
-            
-                
             
                 
             
@@ -722,15 +732,7 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
             
                 
             
-                
-            
-                
-            
         
-            
-                
-            
-                
             
                 
             
@@ -745,15 +747,7 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
             
                 
             
-                
-            
-                
-            
         
-            
-                
-            
-                
             
                 
             
@@ -768,15 +762,7 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
             
                 
             
-                
-            
-                
-            
         
-            
-                
-            
-                
             
                 
             
@@ -791,15 +777,7 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
             
                 
             
-                
-            
-                
-            
         
-            
-                
-            
-                
             
                 
             
@@ -814,15 +792,7 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
             
                 
             
-                
-            
-                
-            
         
-            
-                
-            
-                
             
                 
             
@@ -836,42 +806,17 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
                 
             
                 
-            
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        
-    
-        
-        
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-                
-            
+                    
+                    <h4>Related Posts</h4>
+                    <ul>
+                    
+                    <li class="relatedPost">
+                        <a href="http://localhost:4000/qtrader-a-light-event-driven-algorithmic-trading-engine/">QTrader: A Light Event-Driven Algorithmic Trading Engine
+                        
+                        </a>
+                    </li>
+                    
+                    
                 
             
         
@@ -883,25 +828,7 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
             
                 
             
-                
-            
-                
-            
         
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        
-            
-                
-            
-                
             
                 
             
@@ -909,19 +836,8 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
             
         
     
-        
-        
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        
     
+        </ul>
     
 </div>
 
@@ -939,14 +855,14 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
     <div class="toright">
         <h4 class="name">Joseph Chen</h4>
-        <p class="bio">A theoretical physicist who works in quantitative finance</p>
+        <p class="bio">physicist /trader /player</p>
 
         <div class="share">
             <!-- Note: Only use three share links if your site width is set to large -->
             <!-- If site width is set to normal, you may choose any two share links -->
             <a
                 class="twitter"
-                href="https://twitter.com/intent/tweet?text=http://localhost:4000/horse-racing/ -  机器学习预测赛马（一） by @"
+                href="https://twitter.com/intent/tweet?text=http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1/ - Ernest P. Chan: Winning Strategies and Their Rationale (1) by @"
             >
                 <svg class="icon icon-twitter">
                     <use xlink:href="#icon-twitter"></use></svg
@@ -963,11 +879,11 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
                 ><span class="icon-facebook-rect">Share</span>
             </a>
 
-            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/horse-racing/&amp;title= 机器学习预测赛马（一）&amp;summary=Use machine learning techniques to predict horse racing&amp;source=http://localhost:4000" target="_blank">
+            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1/&amp;title=Ernest P. Chan: Winning Strategies and Their Rationale (1)&amp;summary=读书笔记&amp;source=http://localhost:4000" target="_blank">
                 <svg class="icon icon-linkedin"><use xlink:href="#icon-linkedin"></use></svg><span class="icon-linkedin">Share</span>
             </a> -->
 
-            <!-- <a class="reddit" href="https://reddit.com/submit?url=http://localhost:4000/horse-racing/&amp;title= 机器学习预测赛马（一）" target="_blank">
+            <!-- <a class="reddit" href="https://reddit.com/submit?url=http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1/&amp;title=Ernest P. Chan: Winning Strategies and Their Rationale (1)" target="_blank">
                 <svg class="icon icon-reddit"><use xlink:href="#icon-reddit"></use></svg><span class="icon-reddit">Share</span>
             </a> -->
         </div>
@@ -982,8 +898,8 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
     <script type="text/javascript">
 
         var disqus_config = function () {
-            this.page.url = 'http://localhost:4000/horse-racing/';
-            this.page.identifier = '/horse-racing';
+            this.page.url = 'http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1/';
+            this.page.identifier = '/ernest-p-chan-winning-strategies-and-their-rationale-1';
         };
         var disqus_shortname = 'mydisqus';
         var disqus_developer = 0;
@@ -1001,7 +917,7 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
 
 <footer class="footer-main">
-    Joseph Chen © 2020
+    Joseph Chen © 2021
 
     <a class="link" href="http://localhost:4000/feed.xml" target="_blank">
         <svg class="icon icon-rss">

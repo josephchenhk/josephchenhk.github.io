@@ -9,21 +9,19 @@
     <meta name=author content="Joseph Chen">
 
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Refinitiv Elektron SDK - Java 使用 | Joseph Chen</title>
+<title>CentOS 7 远程连接GUI界面 | Joseph Chen</title>
 <meta name="generator" content="Jekyll v3.8.7" />
-<meta property="og:title" content="Refinitiv Elektron SDK - Java 使用" />
-<meta name="author" content="joseph" />
+<meta property="og:title" content="CentOS 7 远程连接GUI界面" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Refinitiv Elektron SDK - Java" />
-<meta property="og:description" content="Refinitiv Elektron SDK - Java" />
-<link rel="canonical" href="http://localhost:4000/elektron-sdk-java/" />
-<meta property="og:url" content="http://localhost:4000/elektron-sdk-java/" />
+<meta name="description" content="安装vnc-server 有了桌面环境，一般可以通过云服务器厂商提供的web终端远程连接进入桌面。用web终端每次都需要打开浏览器，然后登陆云管理后台再连接，比较麻烦。我们采取直接从桌面客户端远程连接的方式，省去打开浏览器和登录云管理后台的操作。" />
+<meta property="og:description" content="安装vnc-server 有了桌面环境，一般可以通过云服务器厂商提供的web终端远程连接进入桌面。用web终端每次都需要打开浏览器，然后登陆云管理后台再连接，比较麻烦。我们采取直接从桌面客户端远程连接的方式，省去打开浏览器和登录云管理后台的操作。" />
+<link rel="canonical" href="http://localhost:4000/centos-7-remote-connect-gui/" />
+<meta property="og:url" content="http://localhost:4000/centos-7-remote-connect-gui/" />
 <meta property="og:site_name" content="Joseph Chen" />
-<meta property="og:image" content="http://localhost:4000/assets/images/markdown.jpg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-07-28T09:07:00+08:00" />
+<meta property="article:published_time" content="2021-03-30T00:00:00+08:00" />
 <script type="application/ld+json">
-{"dateModified":"2020-07-28T09:07:00+08:00","datePublished":"2020-07-28T09:07:00+08:00","url":"http://localhost:4000/elektron-sdk-java/","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/elektron-sdk-java/"},"author":{"@type":"Person","name":"joseph"},"description":"Refinitiv Elektron SDK - Java","image":"http://localhost:4000/assets/images/markdown.jpg","@type":"BlogPosting","headline":"Refinitiv Elektron SDK - Java 使用","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/centos-7-remote-connect-gui/","headline":"CentOS 7 远程连接GUI界面","dateModified":"2021-03-30T00:00:00+08:00","datePublished":"2021-03-30T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/centos-7-remote-connect-gui/"},"description":"安装vnc-server 有了桌面环境，一般可以通过云服务器厂商提供的web终端远程连接进入桌面。用web终端每次都需要打开浏览器，然后登陆云管理后台再连接，比较麻烦。我们采取直接从桌面客户端远程连接的方式，省去打开浏览器和登录云管理后台的操作。","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -49,7 +47,7 @@
 <meta name="msapplication-square310x310logo" content="mstile-310x310.png" />
 
 
-    <link rel="canonical" href="http://localhost:4000/elektron-sdk-java/">
+    <link rel="canonical" href="http://localhost:4000/centos-7-remote-connect-gui/">
     <link rel="alternate" type="application/rss+xml" title="" href="http://localhost:4000/feed.xml" />
 
     <style>
@@ -452,7 +450,9 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
     <div class="wrapper-large">
         
-            <div class="post">
+            
+                <div class="page centos 7 远程连接gui界面">
+            
         
 
             
@@ -493,7 +493,7 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
         
             <li class="item">
-                <a class="link" href="https://google.com/?q=my+resume">Résumé</a>
+                <a class="link" href="https://google.com/?q=joseph+chen">Résumé</a>
             </li>
         
     </ul>
@@ -503,10 +503,10 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
 
 
-<h1 class="title">Refinitiv Elektron SDK - Java 使用</h1>
+<h1 class="title">CentOS 7 远程连接GUI界面</h1>
 
 <span class="date">
-    <time datetime="28-07-2020">Tuesday. July 28, 2020</time>
+    <time datetime="30-03-2021">Tuesday. March 30, 2021</time>
      - <span class="reading-time" title="Estimated read time">
     
 
@@ -520,70 +520,66 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
     <div class="post-tags">
         
-            <a class="item" href="http://localhost:4000/tags/#refinitv">Refinitv</a>
-        
-            <a class="item" href="http://localhost:4000/tags/#elektron">Elektron</a>
-        
-            <a class="item" href="http://localhost:4000/tags/#data">Data</a>
-        
-            <a class="item" href="http://localhost:4000/tags/#finance">Finance</a>
-        
     </div>
 
 
-<h1 id="安装gradle-build-tool">安装Gradle Build Tool</h1>
-<p>先安装openjdk</p>
+<h1 id="安装vnc-server">安装vnc-server</h1>
+<p>有了桌面环境，一般可以通过云服务器厂商提供的web终端远程连接进入桌面。用web终端每次都需要打开浏览器，然后登陆云管理后台再连接，比较麻烦。我们采取直接从桌面客户端远程连接的方式，省去打开浏览器和登录云管理后台的操作。</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nb">install </span>java-1.8.0-openjdk-devel
-...
-Complete!
-<span class="nv">$ </span>java <span class="nt">-version</span>
-openjdk version <span class="s2">"1.8.0_262"</span>
-OpenJDK Runtime Environment <span class="o">(</span>build 1.8.0_262-b10<span class="o">)</span>
-OpenJDK 64-Bit Server VM <span class="o">(</span>build 25.262-b10, mixed mode<span class="o">)</span></code></pre></figure>
+<p>远程桌面技术有多种，例如VNC, TeamViewer, RDP等，本文使用免费且广泛使用的VNC。</p>
 
-<p>去https://gradle.org/releases/查询gradle的最新版本，本文写作时最新版本是v6.5.1，这里我们用稳定版本v6.5</p>
+<p>在服务器上先安装服务端(tigervnc是tightvnc的分支)：</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span><span class="nb">ls</span> | <span class="nb">grep </span>gradle
-gradle-6.5-bin.zip
-<span class="nv">$ </span><span class="nb">sudo </span>unzip <span class="nt">-d</span> /opt/gradle gradle-6.5-bin.zip <span class="c"># 将当前zip文件解压至/opt/gradle</span>
-<span class="nv">$ </span><span class="nb">ls</span> /opt/gradle/gradle-6.5
-LICENSE NOTICE README bin init.d lib</code></pre></figure>
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;</span> yum <span class="nb">install</span> <span class="nt">-y</span> tigervnc-server</code></pre></figure>
 
-<p>设置环境变量，将path环境变量设置为包括Gradle bin目录。在/etc/profile.d/目录下创建一个名为gradle.sh的新文件：</p>
+<p>接着复制一份VNC配置：</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span><span class="nb">sudo touch</span> /etc/profile.d/gradle.sh
-<span class="nv">$ </span><span class="nb">sudo </span>vi /etc/profile.d/gradle.sh
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;</span> <span class="nb">cp</span> /lib/systemd/system/vncserver@.service /etc/systemd/system/vncserver@:1.service</code></pre></figure>
 
-<span class="c"># 写入如下配置</span>
-<span class="nb">export </span><span class="nv">GRADLE_HOME</span><span class="o">=</span>/opt/gradle/gradle-6.5
-<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="k">${</span><span class="nv">GRADLE_HOME</span><span class="k">}</span>/bin:<span class="k">${</span><span class="nv">PATH</span><span class="k">}</span>
+<p>注意上述命令参数重的“@:1”，可以将数字1换成30000内的任意数字，“5900+数字”即为程序的显示（监听）端口，如”@:1”表示监听5901端口。</p>
 
-wq
+<p>编辑该配置文件(<code class="language-plaintext highlighter-rouge">/etc/systemd/system/vncserver@:1.service</code>)，将文件内的<USER>替换成远程连接时的登录用户名（如果是root，注意将第二个<USER>所在行的"/home"移除掉）。配置示例：</USER></USER></p>
 
-<span class="c"># 通过chmod命令使脚本可执行</span>
-<span class="nv">$ </span><span class="nb">sudo chmod</span> +x /etc/profile.d/gradle.sh
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">[</span>Unit]
+<span class="nv">Description</span><span class="o">=</span>Remote desktop service <span class="o">(</span>VNC<span class="o">)</span>
+<span class="nv">After</span><span class="o">=</span>syslog.target network.target
 
-<span class="c"># 使用source命令加载环境变量</span>
-<span class="nv">$ </span><span class="nb">source</span> /etc/profile.d/gradle.sh
+<span class="o">[</span>Service]
+<span class="nv">Type</span><span class="o">=</span>simple
 
-<span class="c"># 验证gradle已经成功安装</span>
-<span class="nv">$ </span>gradle <span class="nt">-v</span>
-Welcome to Gradle 6.5!</code></pre></figure>
+<span class="c"># Clean any existing files in /tmp/.X11-unix environment</span>
+<span class="nv">ExecStartPre</span><span class="o">=</span>/bin/sh <span class="nt">-c</span> <span class="s1">'/usr/bin/vncserver -kill %i &gt; /dev/null 2&gt;&amp;1 || :'</span>
+<span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/vncserver_wrapper &lt;USER&gt; %i
+<span class="nv">ExecStop</span><span class="o">=</span>/bin/sh <span class="nt">-c</span> <span class="s1">'/usr/bin/vncserver -kill %i &gt; /dev/null 2&gt;&amp;1 || :'</span>
 
-<h1 id="esdk-build-system">ESDK Build System</h1>
+<span class="o">[</span>Install]
+<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target</code></pre></figure>
+
+<p>接下来设置vnc连接密码：</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;</span> vncpasswd</code></pre></figure>
+
+<p>注意连接密码与登录密码不同：连接密码用于显示远程桌面，登录密码用于用户登录系统。</p>
+
+<p>设置好后，启动vnc服务：</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;</span> systemctl daemon-reload
+<span class="o">&gt;</span> systemctl start vncserver@:1
+<span class="o">&gt;</span> systemctl <span class="nb">enable </span>vncserver@:1
+	</code></pre></figure>
+
+<p>如果开启了防火墙，注意放行相应端口（阿里云的话在安全管理控制组进行设置）。</p>
+
+<h1 id="客户端连接">客户端连接</h1>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>服务端配置完毕，接下来用客户端连接。
+</code></pre></div></div>
+
+<p>vnc是免费技术，许多客户端都支持该协议。本文采用App Store上免费的“Remote Desktop - VNC”软件进行连接。</p>
+
+<p>在输入框填写服务器地址：<strong>ip:port</strong>，其中ip是服务器的ip或域名，port是监听的端口，例如<strong>5901</strong>。输入后按回车，弹出密码输入框，输入vncpasswd设置的密码。密码正确的话就可以看到服务器的图形桌面。</p>
 
 
-
-
-    <div class="blog-navigation">
-        
-            <a class="prev" href="http://localhost:4000/jira-server/">&laquo; Jira服务器搭建</a>
-        
-        
-            <a class="next" href="http://localhost:4000/horse-racing/"> 机器学习预测赛马（一） &raquo;</a>
-        
-    </div>
 
 
 
@@ -592,344 +588,75 @@ Welcome to Gradle 6.5!</code></pre></figure>
     
         
         
-            
-                
-            
-                
-            
-                
-            
-                
-            
+    
+        
         
             
-                
-            
-                
-            
-                
-            
-                
-            
         
-            
-                
-            
-                
-            
-                
-            
-                
-                    
-                    <h4>Related Posts</h4>
-                    <ul>
-                    
-                    <li class="relatedPost">
-                        <a href="http://localhost:4000/short-corporate-bond/">Short Corporate Bonds
-                        
-                        </a>
-                    </li>
-                    
-                    
-                
             
         
     
         
         
             
-                
-            
-                
-            
-                
-            
-                
-            
         
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-                
-            
-                
             
         
     
         
         
             
-                
-            
-                
-            
-                
-            
-                
-            
         
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-                
-            
-                
             
         
     
         
         
             
-                
-            
-                
-            
-                
-            
-                
-            
         
-            
-                
-            
-                
-            
-                
-            
-                
             
         
     
         
         
             
-                
-            
-                
-            
-                
-            
-                
-            
         
-            
-                
-            
-                
-            
-                
-            
-                
             
         
     
         
         
             
-                
-            
-                
-            
-                
-            
-                
-            
         
-            
-                
-            
-                
-            
-                
-            
-                
             
         
     
         
         
             
-                
-            
-                
-            
-                
-            
-                
-            
         
-            
-                
-            
-                
-            
-                
-            
-                
             
         
     
         
         
             
-                
-            
-                
-            
-                
-            
-                
-            
         
-            
-                
-            
-                
-            
-                
-            
-                
             
         
     
         
         
             
-                
-            
-                
-            
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-                
-            
-                
-            
         
     
         
         
             
-                
-            
-                
-            
-                
-            
-                
-            
         
-            
-                
-            
-                
-            
-                
-            
-                
             
         
     
-        
-        
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        
-    
-        
-        
-            
-                
-            
-                
-            
-                
-            
-                
-            
-        
-    
-    
-        </ul>
     
 </div>
 
@@ -940,21 +667,21 @@ Welcome to Gradle 6.5!</code></pre></figure>
     <div class="toleft">
         <img
             class="selfie"
-            src="http://localhost:4000/assets/images/joseph_profile.png"
-            alt="Joseph Chen"
+            src="http://localhost:4000/"
+            alt=""
         />
     </div>
 
     <div class="toright">
-        <h4 class="name">Joseph Chen</h4>
-        <p class="bio">A theoretical physicist who works in quantitative finance</p>
+        <h4 class="name"></h4>
+        <p class="bio"></p>
 
         <div class="share">
             <!-- Note: Only use three share links if your site width is set to large -->
             <!-- If site width is set to normal, you may choose any two share links -->
             <a
                 class="twitter"
-                href="https://twitter.com/intent/tweet?text=http://localhost:4000/elektron-sdk-java/ - Refinitiv Elektron SDK - Java 使用 by @"
+                href="https://twitter.com/intent/tweet?text=http://localhost:4000/centos-7-remote-connect-gui/ - CentOS 7 远程连接GUI界面 by @"
             >
                 <svg class="icon icon-twitter">
                     <use xlink:href="#icon-twitter"></use></svg
@@ -971,11 +698,11 @@ Welcome to Gradle 6.5!</code></pre></figure>
                 ><span class="icon-facebook-rect">Share</span>
             </a>
 
-            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/elektron-sdk-java/&amp;title=Refinitiv Elektron SDK - Java 使用&amp;summary=Refinitiv Elektron SDK - Java&amp;source=http://localhost:4000" target="_blank">
+            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/centos-7-remote-connect-gui/&amp;title=CentOS 7 远程连接GUI界面&amp;summary=&amp;source=http://localhost:4000" target="_blank">
                 <svg class="icon icon-linkedin"><use xlink:href="#icon-linkedin"></use></svg><span class="icon-linkedin">Share</span>
             </a> -->
 
-            <!-- <a class="reddit" href="https://reddit.com/submit?url=http://localhost:4000/elektron-sdk-java/&amp;title=Refinitiv Elektron SDK - Java 使用" target="_blank">
+            <!-- <a class="reddit" href="https://reddit.com/submit?url=http://localhost:4000/centos-7-remote-connect-gui/&amp;title=CentOS 7 远程连接GUI界面" target="_blank">
                 <svg class="icon icon-reddit"><use xlink:href="#icon-reddit"></use></svg><span class="icon-reddit">Share</span>
             </a> -->
         </div>
@@ -985,31 +712,10 @@ Welcome to Gradle 6.5!</code></pre></figure>
 
 
 
-    <section class="disqus">
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-
-        var disqus_config = function () {
-            this.page.url = 'http://localhost:4000/elektron-sdk-java/';
-            this.page.identifier = '/elektron-sdk-java';
-        };
-        var disqus_shortname = 'mydisqus';
-        var disqus_developer = 0;
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-
 
 
 <footer class="footer-main">
-    Joseph Chen © 2020
+    Joseph Chen © 2021
 
     <a class="link" href="http://localhost:4000/feed.xml" target="_blank">
         <svg class="icon icon-rss">

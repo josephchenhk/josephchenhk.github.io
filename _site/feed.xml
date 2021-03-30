@@ -1,108 +1,245 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-08-06T18:56:03+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about technology and stuff related</subtitle><entry><title type="html">Short Corporate Bonds</title><link href="http://localhost:4000/short-corporate-bond/" rel="alternate" type="text/html" title="Short Corporate Bonds" /><published>2020-08-03T14:26:00+08:00</published><updated>2020-08-03T14:26:00+08:00</updated><id>http://localhost:4000/short-corporate-bond</id><content type="html" xml:base="http://localhost:4000/short-corporate-bond/">&lt;h1 id=&quot;sell-shortborrow-cash-bonds&quot;&gt;Sell short/borrow cash bonds&lt;/h1&gt;
-&lt;p&gt;This way is similar to shorting a stock.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-03-30T16:56:01+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about Joseph</subtitle><entry><title type="html">CentOS 7 远程连接GUI界面</title><link href="http://localhost:4000/centos-7-remote-connect-gui/" rel="alternate" type="text/html" title="CentOS 7 远程连接GUI界面" /><published>2021-03-30T00:00:00+08:00</published><updated>2021-03-30T00:00:00+08:00</updated><id>http://localhost:4000/centos-7-remote-connect-gui</id><content type="html" xml:base="http://localhost:4000/centos-7-remote-connect-gui/">&lt;h1 id=&quot;安装vnc-server&quot;&gt;安装vnc-server&lt;/h1&gt;
+&lt;p&gt;有了桌面环境，一般可以通过云服务器厂商提供的web终端远程连接进入桌面。用web终端每次都需要打开浏览器，然后登陆云管理后台再连接，比较麻烦。我们采取直接从桌面客户端远程连接的方式，省去打开浏览器和登录云管理后台的操作。&lt;/p&gt;
+
+&lt;p&gt;远程桌面技术有多种，例如VNC, TeamViewer, RDP等，本文使用免费且广泛使用的VNC。&lt;/p&gt;
+
+&lt;p&gt;在服务器上先安装服务端(tigervnc是tightvnc的分支)：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; yum &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; tigervnc-server&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;接着复制一份VNC配置：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;cp&lt;/span&gt; /lib/systemd/system/vncserver@.service /etc/systemd/system/vncserver@:1.service&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;注意上述命令参数重的“@:1”，可以将数字1换成30000内的任意数字，“5900+数字”即为程序的显示（监听）端口，如”@:1”表示监听5901端口。&lt;/p&gt;
+
+&lt;p&gt;编辑该配置文件(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/systemd/system/vncserver@:1.service&lt;/code&gt;)，将文件内的&lt;USER&gt;替换成远程连接时的登录用户名（如果是root，注意将第二个&lt;USER&gt;所在行的&quot;/home&quot;移除掉）。配置示例：&lt;/USER&gt;&lt;/USER&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;Unit]
+&lt;span class=&quot;nv&quot;&gt;Description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;Remote desktop service &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;VNC&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;After&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;syslog.target network.target
+
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;Service]
+&lt;span class=&quot;nv&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;simple
+
+&lt;span class=&quot;c&quot;&gt;# Clean any existing files in /tmp/.X11-unix environment&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;ExecStartPre&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/bin/sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'/usr/bin/vncserver -kill %i &amp;gt; /dev/null 2&amp;gt;&amp;amp;1 || :'&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;ExecStart&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/bin/vncserver_wrapper &amp;lt;USER&amp;gt; %i
+&lt;span class=&quot;nv&quot;&gt;ExecStop&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/bin/sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'/usr/bin/vncserver -kill %i &amp;gt; /dev/null 2&amp;gt;&amp;amp;1 || :'&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;Install]
+&lt;span class=&quot;nv&quot;&gt;WantedBy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;multi-user.target&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;接下来设置vnc连接密码：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; vncpasswd&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;注意连接密码与登录密码不同：连接密码用于显示远程桌面，登录密码用于用户登录系统。&lt;/p&gt;
+
+&lt;p&gt;设置好后，启动vnc服务：&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; systemctl daemon-reload
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; systemctl start vncserver@:1
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;vncserver@:1
+	&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;如果开启了防火墙，注意放行相应端口（阿里云的话在安全管理控制组进行设置）。&lt;/p&gt;
+
+&lt;h1 id=&quot;客户端连接&quot;&gt;客户端连接&lt;/h1&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;服务端配置完毕，接下来用客户端连接。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;vnc是免费技术，许多客户端都支持该协议。本文采用App Store上免费的“Remote Desktop - VNC”软件进行连接。&lt;/p&gt;
+
+&lt;p&gt;在输入框填写服务器地址：&lt;strong&gt;ip:port&lt;/strong&gt;，其中ip是服务器的ip或域名，port是监听的端口，例如&lt;strong&gt;5901&lt;/strong&gt;。输入后按回车，弹出密码输入框，输入vncpasswd设置的密码。密码正确的话就可以看到服务器的图形桌面。&lt;/p&gt;</content><author><name></name></author><summary type="html">安装vnc-server 有了桌面环境，一般可以通过云服务器厂商提供的web终端远程连接进入桌面。用web终端每次都需要打开浏览器，然后登陆云管理后台再连接，比较麻烦。我们采取直接从桌面客户端远程连接的方式，省去打开浏览器和登录云管理后台的操作。</summary></entry><entry><title type="html">Ernest P. Chan: Winning Strategies and Their Rationale (1)</title><link href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1/" rel="alternate" type="text/html" title="Ernest P. Chan: Winning Strategies and Their Rationale (1)" /><published>2021-02-08T16:26:00+08:00</published><updated>2021-02-08T16:26:00+08:00</updated><id>http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1</id><content type="html" xml:base="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1/">&lt;p&gt;A brief note of Ernest Chan’s book.&lt;/p&gt;
+
+&lt;h1 id=&quot;backtesting-and-automated-execution&quot;&gt;Backtesting and Automated Execution&lt;/h1&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;At t=0,&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;backtest要做对，否则不如不做&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;好的回测平台 (backtesting platform)，应该与好的自动化执行平台 (automated execution platform)相一致 (容易从回测过渡至实盘交易)&lt;/p&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Lender –(bond)–&amp;gt; seller –(bond)–&amp;gt; market counterparty [seller receives proceeds of the bond]&lt;/p&gt;
+&lt;h2 id=&quot;the-importance-of-backtesting&quot;&gt;The Importance of Backtesting&lt;/h2&gt;
+
+&lt;p&gt;为什么别人的策略，到你这就很难重复 (backtest a published strategy)?&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;At t=1,&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;别人的细节不会告诉你，只有自己亲自backtest一遍，踩了所有的坑，才算pick up了别人的strategy&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;自己实现backtesting，能够让你将别人的策略，跑在真正的out-of-sample的数据集上；如果不work，你很可能可以判断这是一篇水文&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;自己实现backtesting，也是一个改进策略 (refine and improve the strategy)的过程&lt;/p&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Lender &amp;lt;–(bond)– seller &amp;lt;–(bond)– market counterparty [seller buys back the bond (hopefully at a lower price) and returns it to the lender]&lt;/p&gt;
+&lt;h2 id=&quot;common-pitfalls-of-backtesting&quot;&gt;Common Pitfalls of Backtesting&lt;/h2&gt;
 
-&lt;h1 id=&quot;credit-default-swaps-cds&quot;&gt;Credit Default Swaps (CDS)&lt;/h1&gt;
-&lt;p&gt;abc&lt;/p&gt;
-&lt;h1 id=&quot;total-return-swaps-trs&quot;&gt;Total Return Swaps (TRS)&lt;/h1&gt;
-&lt;p&gt;def&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="Corporate bonds" /><category term="Short sell" /><category term="Finance" /><summary type="html">Sell short/borrow cash bonds This way is similar to shorting a stock.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">机器学习预测赛马（一）</title><link href="http://localhost:4000/horse-racing/" rel="alternate" type="text/html" title=" 机器学习预测赛马（一）" /><published>2020-07-30T14:26:00+08:00</published><updated>2020-07-30T14:26:00+08:00</updated><id>http://localhost:4000/horse-racing</id><content type="html" xml:base="http://localhost:4000/horse-racing/">&lt;h1 id=&quot;预测什么&quot;&gt;预测什么&lt;/h1&gt;
-&lt;p&gt;赛马预测是一个较少被公开研究的话题（成功的话早就闷声发大财了），这里做一些总结。首先，我们要预测什么？其实，以下几种预测都是常见的：&lt;/p&gt;
+&lt;h3 id=&quot;look-ahead-bias&quot;&gt;Look-ahead Bias&lt;/h3&gt;
 
-&lt;ol&gt;
+&lt;p&gt;任何时候，一个正确的backtesting，都不应该用到未来的数据&lt;/p&gt;
+
+&lt;h3 id=&quot;data-snooping-bias-and-the-beauty-of-linearity&quot;&gt;Data-Snooping Bias and the Beauty of Linearity&lt;/h3&gt;
+
+&lt;p&gt;Data-snooping：用太多参数去过拟合历史数据。怎么解决？&lt;/p&gt;
+
+&lt;ul&gt;
   &lt;li&gt;
-    &lt;p&gt;预测每匹马的完成时间&lt;/p&gt;
+    &lt;p&gt;严格执行out-of-sample一票否决权（另一种不那么好的方法是：进行cross validation）&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;预测每匹马是“赢”还是“输”（binary classification）&lt;/p&gt;
+    &lt;p&gt;尽可能减少参数（parameter）。【注意】如果你的策略参数不多，但有很复杂的交易规则，也可能导致data-snooping&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;linear-model-or-nonlinear-model&quot;&gt;Linear Model or Nonlinear Model&lt;/h3&gt;
+
+&lt;p&gt;不要迷信非线性模型，很多时候简单的线性模型，反而更好&lt;/p&gt;
+
+&lt;h3 id=&quot;stock-splits-and-dividend-adjustments&quot;&gt;Stock Splits and Dividend Adjustments&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;拆股N-to-1，股票价格会被稀释N倍：回测时将除权日前的价格除以N（在实盘时也要做类似的处理）&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;预测每匹马的最终排名（multi-class classification）&lt;/p&gt;
+    &lt;p&gt;派息每股¥d，股票价格会降低¥d：回测时将除权日前的价格减去¥d（在实盘时也要做类似的处理）&lt;/p&gt;
   &lt;/li&gt;
-&lt;/ol&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;其中，第2和第3种预测都是各自明显的缺陷：对于二元分类，一个显著的问题是，赛马的数据是imbalanced的，即赢的马匹是少数，输的是大多数；对于多元分类，则会有难以解释的地方，比如对一场比赛的排名预测如下：&lt;/p&gt;
+&lt;p&gt;自己做一次前复权/后复权&lt;/p&gt;
 
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: left&quot;&gt;Horse\Place&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;1st&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;2nd&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;3rd&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;#1&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;60%&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;40%&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;20%&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;#2&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;30%&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;60%&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;50%&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;#3&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;50%&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;40%&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;60%&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="Machine learning" /><category term="horse racing" /><category term="hkjc" /><category term="Neural network" /><summary type="html">预测什么 赛马预测是一个较少被公开研究的话题（成功的话早就闷声发大财了），这里做一些总结。首先，我们要预测什么？其实，以下几种预测都是常见的：</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Refinitiv Elektron SDK - Java 使用</title><link href="http://localhost:4000/elektron-sdk-java/" rel="alternate" type="text/html" title="Refinitiv Elektron SDK - Java 使用" /><published>2020-07-28T09:07:00+08:00</published><updated>2020-07-28T09:07:00+08:00</updated><id>http://localhost:4000/elektron-sdk-java</id><content type="html" xml:base="http://localhost:4000/elektron-sdk-java/">&lt;h1 id=&quot;安装gradle-build-tool&quot;&gt;安装Gradle Build Tool&lt;/h1&gt;
-&lt;p&gt;先安装openjdk&lt;/p&gt;
+&lt;h3 id=&quot;survivorship-bias-in-stock-database&quot;&gt;Survivorship Bias in Stock Database&lt;/h3&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;java-1.8.0-openjdk-devel
-...
-Complete!
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;java &lt;span class=&quot;nt&quot;&gt;-version&lt;/span&gt;
-openjdk version &lt;span class=&quot;s2&quot;&gt;&quot;1.8.0_262&quot;&lt;/span&gt;
-OpenJDK Runtime Environment &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;build 1.8.0_262-b10&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-OpenJDK 64-Bit Server VM &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;build 25.262-b10, mixed mode&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;p&gt;如果回测的数据里，不包括除牌（delisted）的公司，就存在survivorship bias了。对于mean-reverting long-only的策略而言，这种幸存者偏差的影响尤其重要；对momentum策略而言，影响相对没那么大。&lt;/p&gt;
 
-&lt;p&gt;去https://gradle.org/releases/查询gradle的最新版本，本文写作时最新版本是v6.5.1，这里我们用稳定版本v6.5&lt;/p&gt;
+&lt;p&gt;mean-reverting策略更依赖长期的数据，filter掉退市的股票，变相等于避免了一部分可能不盈利的策略，从而导致回测结果inflated；momentum策略更依赖短期的数据，filter掉退市的股票，变相等于放弃了一部分可能短期内盈利的股票，从而导致回测结果deflated。&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;gradle
-gradle-6.5-bin.zip
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;unzip &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; /opt/gradle gradle-6.5-bin.zip &lt;span class=&quot;c&quot;&gt;# 将当前zip文件解压至/opt/gradle&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /opt/gradle/gradle-6.5
-LICENSE NOTICE README bin init.d lib&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;h3 id=&quot;primary-versus-consolidated-stock-prices&quot;&gt;Primary versus Consolidated Stock Prices&lt;/h3&gt;
 
-&lt;p&gt;设置环境变量，将path环境变量设置为包括Gradle bin目录。在/etc/profile.d/目录下创建一个名为gradle.sh的新文件：&lt;/p&gt;
+&lt;p&gt;一只股票在多个交易所上市，在回测时要留意你用到的是哪个交易所的数据。如果使用consolidated prices做回测，很容易搞不清楚实际交易时到底应该用哪个交易所的价格。&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo touch&lt;/span&gt; /etc/profile.d/gradle.sh
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;vi /etc/profile.d/gradle.sh
+&lt;p&gt;Bar data某程度上就是一种consolidated data，使用OHLC数据进行回测时，要留意与真实的price feed的区别。&lt;/p&gt;
 
-&lt;span class=&quot;c&quot;&gt;# 写入如下配置&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GRADLE_HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/opt/gradle/gradle-6.5
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GRADLE_HOME&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;/bin:&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;
+&lt;p&gt;Tick data可以通过订阅实时数据，自行进行收录（如果技术上做得到的话）。&lt;/p&gt;
 
-wq
+&lt;h3 id=&quot;venue-dependence-of-currency-quotes&quot;&gt;Venue Dependence of Currency Quotes&lt;/h3&gt;
 
-&lt;span class=&quot;c&quot;&gt;# 通过chmod命令使脚本可执行&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chmod&lt;/span&gt; +x /etc/profile.d/gradle.sh
+&lt;p&gt;外汇市场，不同的venue有不同的报价，如果我们打算在A venue进行交易，那就必须用A venue的历史数据进行回测；如果用B venue的历史数据，那就是一个伪回测，
+不具备实际意义。&lt;/p&gt;
 
-&lt;span class=&quot;c&quot;&gt;# 使用source命令加载环境变量&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; /etc/profile.d/gradle.sh
+&lt;p&gt;如果用quote aggregator做回测的historical data，将来打算交易的venue，一定要在这个aggregator里面，否则也是一个无效的回测。&lt;/p&gt;
 
-&lt;span class=&quot;c&quot;&gt;# 验证gradle已经成功安装&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;gradle &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt;
-Welcome to Gradle 6.5!&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;p&gt;外汇市场数据还有一个特点：通常bid/ask quotes数据相对容易获得，但trade price/volume较难获得（因为没有监管要求上报trade数据，大家都会倾向将trade
+数据看作是自己的私有财产）&lt;/p&gt;
 
-&lt;h1 id=&quot;esdk-build-system&quot;&gt;ESDK Build System&lt;/h1&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="Refinitv" /><category term="Elektron" /><category term="Data" /><category term="Finance" /><summary type="html">安装Gradle Build Tool 先安装openjdk $ sudo yum install java-1.8.0-openjdk-devel ... Complete! $ java -version openjdk version &quot;1.8.0_262&quot; OpenJDK Runtime Environment (build 1.8.0_262-b10) OpenJDK 64-Bit Server VM (build 25.262-b10, mixed mode)</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Jira服务器搭建</title><link href="http://localhost:4000/jira-server/" rel="alternate" type="text/html" title="Jira服务器搭建" /><published>2020-07-22T15:41:00+08:00</published><updated>2020-07-22T15:41:00+08:00</updated><id>http://localhost:4000/jira-server</id><content type="html" xml:base="http://localhost:4000/jira-server/">&lt;h1 id=&quot;安装jdk&quot;&gt;安装jdk&lt;/h1&gt;
+&lt;h2 id=&quot;short-sale-constraints&quot;&gt;Short-Sale Constraints&lt;/h2&gt;
+
+&lt;p&gt;通常，你的经纪商（broker）未必支持short sale。&lt;/p&gt;
+
+&lt;p&gt;如果short interest足够多，会导致borrow share的成本很高。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;“uptick rule”：short sale的价格要比最近成交价更高。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;futures-continuous-contracts&quot;&gt;Futures Continuous Contracts&lt;/h2&gt;
+
+&lt;p&gt;期货需要考虑roll over&lt;/p&gt;
+
+&lt;h2 id=&quot;futures-close-versus-settlement-prices&quot;&gt;Futures Close versus Settlement Prices&lt;/h2&gt;
+
+&lt;p&gt;Settlement prices由exchange提供，即使当天没有交易，也会有一个settlement prices。用actural transaction prices去做回测比较好，如果用
+settlement prices，要小心。&lt;/p&gt;
+
+&lt;h2 id=&quot;statistical-significance-of-backtesting-hypothesis-testing&quot;&gt;Statistical Significance of Backtesting: Hypothesis Testing&lt;/h2&gt;
+
+&lt;h2 id=&quot;choosing-a-backtesting-and-automated-execution-platform&quot;&gt;Choosing a Backtesting and Automated Execution Platform&lt;/h2&gt;
+
+&lt;p&gt;买一个系统还是自己build一个系统？&lt;/p&gt;
+
+&lt;h2 id=&quot;can-backtesting-and-execution-use-the-same-program&quot;&gt;Can Backtesting and Execution Use the Same Program?&lt;/h2&gt;
+
+&lt;p&gt;应该要一致：&lt;/p&gt;
+
+&lt;p&gt;（1）方便将backtest strategy 迁移至实盘live trading（尽可能少的改动代码）&lt;/p&gt;
+
+&lt;p&gt;（2）避免look-ahead bias&lt;/p&gt;
+
+&lt;h2 id=&quot;what-type-of-asset-classes-or-strategies-does-the-platform-support&quot;&gt;What Type of Asset Classes or Strategies Does the Platform Support?&lt;/h2&gt;
+
+&lt;p&gt;市面上已有的平台，通常只能trade一种或几种资产。&lt;strong&gt;自己写会有足够的灵活性&lt;/strong&gt; （例如&lt;a href=&quot;https://github.com/josephchenhk/qtrader&quot;&gt;Qtrader&lt;/a&gt;）。&lt;/p&gt;
+
+&lt;h2 id=&quot;does-the-platform-have-complex-event-processing&quot;&gt;Does the Platform Have Complex Event Processing?&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;For an algorithmic trader, one important point is that the program is event driven, and not bar driven.That is, the program does not go poll prices or news items at the end of each bar and then decide what to do. Because CEP is event driven, there is no delay between the occurrence of an event and the response to it.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Jospeh：这未必是一条金科玉律。很多中低频的systematic trading strategies其实也是由bar驱动的。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="算法交易" /><category term="qtrader" /><summary type="html">A brief note of Ernest Chan’s book.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">在CentOS安装docker</title><link href="http://localhost:4000/centos-install-docker/" rel="alternate" type="text/html" title="在CentOS安装docker" /><published>2021-02-04T22:48:00+08:00</published><updated>2021-02-04T22:48:00+08:00</updated><id>http://localhost:4000/centos-install-docker</id><content type="html" xml:base="http://localhost:4000/centos-install-docker/">&lt;h1 id=&quot;centos7安装docker详细步骤&quot;&gt;centos7安装Docker详细步骤&lt;/h1&gt;
+
+&lt;p&gt;centos7安装Docker全过程记录（无坑版教程）：&lt;/p&gt;
+
+&lt;h2 id=&quot;一安装前必读&quot;&gt;一、安装前必读&lt;/h2&gt;
+&lt;p&gt;在安装 Docker 之前，先说一下配置，我这里是Centos7
+ Linux 内核：官方建议 3.10 以上，3.8以上貌似也可。&lt;/p&gt;
+
+&lt;p&gt;注意：本文的命令使用的是 root 用户登录执行，不是 root 的话所有命令前面要加 sudo&lt;/p&gt;
+
+&lt;h3 id=&quot;1查看当前的内核版本&quot;&gt;1.查看当前的内核版本&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nb&quot;&gt;uname&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;2使用-root-权限更新-yum-包生产环境中此步操作需慎重看自己情况学习的话随便搞&quot;&gt;2.使用 root 权限更新 yum 包（生产环境中此步操作需慎重，看自己情况，学习的话随便搞）&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;注意​ 
+yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; update：升级所有包同时也升级软件和系统内核；​ 
+yum &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; upgrade：只升级所有包，不升级软件和系统内核&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;3卸载旧版本如果之前安装过的话&quot;&gt;3.卸载旧版本（如果之前安装过的话）&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;yum remove docker  docker-common docker-selinux docker-engine&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;二安装docker的详细步骤&quot;&gt;二、安装Docker的详细步骤&lt;/h2&gt;
+
+&lt;h3 id=&quot;1安装需要的软件包-yum-util-提供yum-config-manager功能另两个是devicemapper驱动依赖&quot;&gt;1.安装需要的软件包， yum-util 提供yum-config-manager功能，另两个是devicemapper驱动依赖&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;yum &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-y&lt;/span&gt; yum-utils device-mapper-persistent-data lvm2&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;2设置-yum-源&quot;&gt;2.设置 yum 源&lt;/h3&gt;
+
+&lt;p&gt;设置一个yum源，下面两个都可用&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;yum-config-manager &lt;span class=&quot;nt&quot;&gt;--add-repo&lt;/span&gt; http://download.docker.com/linux/centos/docker-ce.repo（中央仓库）
+
+yum-config-manager &lt;span class=&quot;nt&quot;&gt;--add-repo&lt;/span&gt; http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo（阿里仓库）&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;3选择docker版本并安装&quot;&gt;3.选择docker版本并安装&lt;/h3&gt;
+
+&lt;p&gt;####（1）查看可用版本有哪些&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;yum list docker-ce &lt;span class=&quot;nt&quot;&gt;--showduplicates&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;sort&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;####（2）选择一个版本并安装：&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;yum install docker-ce-版本号&lt;/code&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;docker-ce-20.10.2&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;4启动-docker-并设置开机自启&quot;&gt;4.启动 Docker 并设置开机自启&lt;/h3&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;systemctl start docker
+systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;docker&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;ref&quot;&gt;Ref&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://cloud.tencent.com/developer/article/1701451&quot;&gt;centos7安装Docker详细步骤（无坑版教程）&lt;/a&gt;&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="docker" /><category term="centos" /><summary type="html">centos7安装Docker详细步骤</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Jira服务器搭建</title><link href="http://localhost:4000/jira-server/" rel="alternate" type="text/html" title="Jira服务器搭建" /><published>2020-07-22T15:41:00+08:00</published><updated>2020-07-22T15:41:00+08:00</updated><id>http://localhost:4000/jira-server</id><content type="html" xml:base="http://localhost:4000/jira-server/">&lt;h1 id=&quot;安装jdk&quot;&gt;安装jdk&lt;/h1&gt;
 
 &lt;p&gt;去官网下载jdk-8u261-linux-x64.rpm&lt;/p&gt;
 
@@ -599,167 +736,124 @@ grub&amp;gt; linuxefi /images/pxeboot/vmlinuz inst.stage2=hd:/dev/sdb4 quiet # �
 grub&amp;gt; initrdefi /images/pxeboot/initrd.img
 grub&amp;gt; boot&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;Reboot之后如果能够正常开机，显示图形界面的登陆界面，就说明一切已经ok了。下一篇将讲如何安装Vmware Workstation。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="markdown" /><category term="elements" /><summary type="html">准备</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Markdown Common Elements</title><link href="http://localhost:4000/markdown-common-elements/" rel="alternate" type="text/html" title="Markdown Common Elements" /><published>2016-02-24T22:44:00+08:00</published><updated>2016-02-24T22:44:00+08:00</updated><id>http://localhost:4000/markdown-common-elements</id><content type="html" xml:base="http://localhost:4000/markdown-common-elements/">&lt;h2 id=&quot;basic-formatting&quot;&gt;Basic formatting&lt;/h2&gt;
+&lt;p&gt;Reboot之后如果能够正常开机，显示图形界面的登陆界面，就说明一切已经ok了。下一篇将讲如何安装Vmware Workstation。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="markdown" /><category term="elements" /><summary type="html">准备</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">QTrader: A Light Event-Driven Algorithmic Trading Engine</title><link href="http://localhost:4000/qtrader-a-light-event-driven-algorithmic-trading-engine/" rel="alternate" type="text/html" title="QTrader: A Light Event-Driven Algorithmic Trading Engine" /><published>2020-03-14T10:10:00+08:00</published><updated>2020-03-14T10:10:00+08:00</updated><id>http://localhost:4000/qtrader-a-light-event-driven-algorithmic-trading-engine</id><content type="html" xml:base="http://localhost:4000/qtrader-a-light-event-driven-algorithmic-trading-engine/">&lt;p&gt;&lt;img src=&quot;/assets/images/algo-trading.jpg&quot; alt=&quot;Markdowm Image&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;This note &lt;strong&gt;demonstrates&lt;/strong&gt; some of what &lt;a href=&quot;https://daringfireball.net/projects/markdown/&quot;&gt;Markdown&lt;/a&gt; is &lt;em&gt;capable of doing&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/josephchenhk/qtrader&quot;&gt;&lt;strong&gt;QTrader&lt;/strong&gt; &lt;/a&gt; is a light and flexible event-driven algorithmic trading engine that can be used to backtest strategies, and seamlessly switch to live trading without any pain.&lt;/p&gt;
 
-&lt;p&gt;And that’s how to do it.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;This note **demonstrates** some of what [Markdown][some/link] is *capable of doing*.&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;headings&quot;&gt;Headings&lt;/h2&gt;
-
-&lt;p&gt;There are six levels of headings. They correspond with the six levels of HTML headings. You’ve probably noticed them already in the page. Each level down uses one more hash character. But we are using just 4 of them.&lt;/p&gt;
-
-&lt;h1 id=&quot;headings-can-be-small&quot;&gt;Headings can be small&lt;/h1&gt;
-
-&lt;h2 id=&quot;headings-can-be-small-1&quot;&gt;Headings can be small&lt;/h2&gt;
-
-&lt;h3 id=&quot;headings-can-be-small-2&quot;&gt;Headings can be small&lt;/h3&gt;
-
-&lt;h4 id=&quot;headings-can-be-small-3&quot;&gt;Headings can be small&lt;/h4&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;# Heading
-## Heading
-### Heading
-#### Heading&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;lists&quot;&gt;Lists&lt;/h2&gt;
-
-&lt;h3 id=&quot;ordered-list&quot;&gt;Ordered list&lt;/h3&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Item 1&lt;/li&gt;
-  &lt;li&gt;A second item&lt;/li&gt;
-  &lt;li&gt;Number 3&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;1. Item 1
-2. A second item
-3. Number 3&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;unordered-list&quot;&gt;Unordered list&lt;/h3&gt;
+&lt;h1 id=&quot;key-features&quot;&gt;Key features&lt;/h1&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;An item&lt;/li&gt;
-  &lt;li&gt;Another item&lt;/li&gt;
-  &lt;li&gt;Yet another item&lt;/li&gt;
-  &lt;li&gt;And there’s more…&lt;/li&gt;
+  &lt;li&gt;Completely same code for backtesting/simulation/live trading&lt;/li&gt;
+  &lt;li&gt;Currently only support equity trading&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;* An item
-* Another item
-* Yet another item
-* And there's more...&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;quick-install&quot;&gt;Quick install&lt;/h1&gt;
 
-&lt;hr /&gt;
+&lt;p&gt;You may run the folllowing command to install QTrader immediately:&lt;/p&gt;
 
-&lt;h2 id=&quot;paragraph-modifiers&quot;&gt;Paragraph modifiers&lt;/h2&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;c&quot;&gt;# python 3.7 or above is supported&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; conda create &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; qtrader &lt;span class=&quot;nv&quot;&gt;python&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;3.7
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; conda activate qtrader
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; pip &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;git+https://github.com/josephchenhk/qtrader@master&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h3 id=&quot;quote&quot;&gt;Quote&lt;/h3&gt;
+&lt;h1 id=&quot;get-the-data-ready&quot;&gt;Get the data ready&lt;/h1&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;Here is a quote. What this is should be self explanatory. Quotes are automatically indented when they are used.&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;QTrader supports 1 minute bar data at the moment. What you need to prepare is CSV files with file names in the format of “[symbol]-yyyy-mm-dd.csv”&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt; Here is a quote. What this is should be self explanatory.&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/bar_data_sample.png&quot; alt=&quot;Markdowm Image&quot; /&gt;&lt;/p&gt;
 
-&lt;hr /&gt;
+&lt;p&gt;And you should specify the path of data folder in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;qtrader.config.config.py&lt;/code&gt;. For example, set&lt;/p&gt;
 
-&lt;h2 id=&quot;urls&quot;&gt;URLs&lt;/h2&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;DATA_PATH = &quot;./qtrader/examples/data&quot; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;URLs can be made in a handful of ways:&lt;/p&gt;
+&lt;p&gt;and put all your CSV files to the following folder:&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;A named link to &lt;a href=&quot;https://daringfireball.net/projects/markdown/basics&quot;&gt;Mark It Down&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;Another named link to &lt;a href=&quot;https://google.com/&quot;&gt;Mark It Down&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Sometimes you just want a URL like &lt;a href=&quot;https://google.com/&quot;&gt;https://google.com/&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{DATA_PATH}/k_line/K_1M
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;* A named link to [MarkItDown][3].
-* Another named link to [MarkItDown](https://google.com/)
-* Sometimes you just want a URL like &amp;lt;https://google.com/&amp;gt;.&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;how-to-implement-a-strategy&quot;&gt;How to implement a strategy&lt;/h1&gt;
+&lt;p&gt;To implement a strategy is simple in QTrader. A strategy needs to implement init_strategy and on_bar methods in BaseStrategy. Here is a quick sample:&lt;/p&gt;
 
-&lt;hr /&gt;
+&lt;p&gt;from qtrader.core.strategy import BaseStrategy&lt;/p&gt;
 
-&lt;h2 id=&quot;horizontal-rule&quot;&gt;Horizontal rule&lt;/h2&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyStrategy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BaseStrategy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
 
-&lt;p&gt;A horizontal rule is a line that goes across the middle of the page.
-It’s sometimes handy for breaking things up.&lt;/p&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;init_strategy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;
+        
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;on_bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Stock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cur_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;---&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;how-to-record-anything-i-want&quot;&gt;How to record anything I want&lt;/h1&gt;
+&lt;p&gt;QTrader provides a module named BacktestRecorder to record variables during backtesting. By default, it saves datetime and portfolio_value every timestep.&lt;/p&gt;
 
-&lt;hr /&gt;
+&lt;p&gt;If you want to record additional variables (let’s say it is called var), you need to write a method called get_var in your strategy:&lt;/p&gt;
 
-&lt;h2 id=&quot;images&quot;&gt;Images&lt;/h2&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;qtrader.core.strategy&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BaseStrategy&lt;/span&gt;
 
-&lt;p&gt;Markdown can also contain images. I’ll need to add something here sometime.&lt;/p&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyStrategy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BaseStrategy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;![Markdowm Image][/image/url]&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;get_var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;XXX&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://kune.fr/wp-content/uploads/2013/10/ghost-blog.jpg&quot; alt=&quot;Markdowm Image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;And initialize your BacktestRecorder with the same vairable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;var=[]&lt;/code&gt;（if you want to record every timestep） or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;var=None&lt;/code&gt; （if you want to record only the last updated value）:&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;Figure Caption&lt;/em&gt;?&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;recorder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BacktestRecorder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;![Markdowm Image][/image/url]
-&amp;lt;figcaption class=&quot;caption&quot;&amp;gt;Photo by John Doe&amp;lt;/figcaption&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;run-a-backtest&quot;&gt;Run a backtest&lt;/h1&gt;
+&lt;p&gt;Now we are ready to run a backtest. Here is a sample of running a backtest in QTrader:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://kune.fr/wp-content/uploads/2013/10/ghost-blog.jpg&quot; alt=&quot;Markdowm Image&quot; /&gt;&lt;/p&gt;
-&lt;figcaption class=&quot;caption&quot;&gt;Photo by John Doe&lt;/figcaption&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# prepare stocks
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stock&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Stock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;HK.01157&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lot_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stock_name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;中联重科&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;stock_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
 
-&lt;p&gt;&lt;em&gt;Bigger Images&lt;/em&gt;?&lt;/p&gt;
+&lt;span class=&quot;n&quot;&gt;market&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BacktestGateway&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;securities&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stock_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2021&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2021&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;17&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# position management
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# account balance management
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;account_balance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AccountBalance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# portfolio management
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;portfolio&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Portfolio&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;account_balance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;account_balance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                      &lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+                      &lt;span class=&quot;n&quot;&gt;market&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;market&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# execution engine
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;engine&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;portfolio&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;![Markdowm Image][/image/url]{: class=&quot;bigger-image&quot; }&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;span class=&quot;c1&quot;&gt;# initialize strategy
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strategy&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DemoStrategy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;securities&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stock_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;engine&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;strategy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_strategy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://kune.fr/wp-content/uploads/2013/10/ghost-blog.jpg&quot; alt=&quot;Markdowm Image&quot; class=&quot;bigger-image&quot; /&gt;&lt;/p&gt;
+&lt;span class=&quot;c1&quot;&gt;# start event engine
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recorder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BarEventEngineRecorder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;event_engine&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BarEventEngine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strategy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recorder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trade_mode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TradeMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;BACKTEST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;event_engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 
-&lt;hr /&gt;
+&lt;span class=&quot;c1&quot;&gt;# plot profit and loss curve
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot_pnl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event_engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recorder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event_engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recorder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;portfolio_value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;h2 id=&quot;code&quot;&gt;Code&lt;/h2&gt;
+&lt;h1 id=&quot;live-trading&quot;&gt;Live trading&lt;/h1&gt;
+&lt;p&gt;Ok, your strategy looks good now. How can you put it to live trading? In QTrader it is extremely easy to switch from backtest mode to simulation or live trading mode. What you need to modify is just two lines:&lt;/p&gt;
 
-&lt;p&gt;A HTML Example:&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;html&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;lang=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;en&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;UTF-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Document&lt;span class=&quot;nt&quot;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;&amp;lt;h1&amp;gt;&lt;/span&gt;Just a test&lt;span class=&quot;nt&quot;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;span class=&quot;c1&quot;&gt;# specify the live trading gateway
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;market&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FutuGateway&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;securities&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stock_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2021&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-&lt;p&gt;A CSS Example:&lt;/p&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# turn on Simulation/Livetrading mode
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event_engine&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BarEventEngine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strategy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recorder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trade_mode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TradeMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SIMULATE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;event_engine&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BarEventEngine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strategy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recorder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;trade_mode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TradeMode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LIVETRADE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nt&quot;&gt;pre&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;10px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;font-size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;.8em&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;white-space&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;span class=&quot;nt&quot;&gt;pre&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;table&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;100%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;p&gt;Here you go! Enjoy the trading.&lt;/p&gt;
 
-&lt;span class=&quot;nt&quot;&gt;code&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;pre&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;tt&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;font-family&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Monaco&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Consolas&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Inconsolata&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;monospace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sans-serif&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;background&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rgba&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;.05&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;A JS Example:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;c1&quot;&gt;// Sticky Header&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;scroll&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;scrollTop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;900&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hasClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;show-menu&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#hamburguer__open&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fadeOut&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;fast&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hasClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;show-menu&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;#hamburguer__open&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fadeIn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;fast&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content><author><name>johndoe</name></author><category term="blog" /><category term="markdown" /><category term="elements" /><summary type="html">Basic formatting</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;p&gt;&lt;strong&gt;Important Notice&lt;/strong&gt;: In the demo sample, the live trading mode will keep sending orders, please be aware of the risk when running it.&lt;/p&gt;</content><author><name>joseph</name></author><category term="project" /><category term="qtrader" /><summary type="html"></summary></entry></feed>

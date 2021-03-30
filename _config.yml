@@ -1,8 +1,8 @@
 # main text of home
 name: Joseph Chen 
-bio: A theoretical physicist who works in quantitative finance  
+bio: physicist /trader /player
 # twitter summary info
-description: A blog about technology and stuff related
+description: A blog about Joseph
 
 # if it's an external image, update below for true
 # better with square images
@@ -13,7 +13,7 @@ picture: assets/images/joseph_profile.png
 # and specify source (external or local).
 resume: true
 resume-external: true
-resume-url: https://google.com/?q=my+resume
+resume-url: https://google.com/?q=joseph+chen
 
 url: https://josephchenhk.github.io
 # your url: https://USERNAME.github.io
@@ -54,7 +54,7 @@ email: josephchenhk@gmail.com
 authors:
   joseph:
     name: Joseph Chen
-    bio: A theoretical physicist who works in quantitative finance
+    bio: physicist /trader /player
     external-image: false
     picture: assets/images/joseph_profile.png
     #twitter: johndoe
