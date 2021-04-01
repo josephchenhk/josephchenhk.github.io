@@ -9,21 +9,21 @@
     <meta name=author content="Joseph Chen">
 
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>RHEL 7.5（一）替换yum源以及安装GUI | Joseph Chen</title>
+<title>Ernest P. Chan: Winning Strategies and Their Rationale (3) | Joseph Chen</title>
 <meta name="generator" content="Jekyll v3.8.7" />
-<meta property="og:title" content="RHEL 7.5（一）替换yum源以及安装GUI" />
+<meta property="og:title" content="Ernest P. Chan: Winning Strategies and Their Rationale (3)" />
 <meta name="author" content="joseph" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Redhat系统替换成CentOS的yum源，以及安装GUI" />
-<meta property="og:description" content="Redhat系统替换成CentOS的yum源，以及安装GUI" />
-<link rel="canonical" href="http://localhost:4000/install-redhat7.5/" />
-<meta property="og:url" content="http://localhost:4000/install-redhat7.5/" />
+<meta name="description" content="读书笔记" />
+<meta property="og:description" content="读书笔记" />
+<link rel="canonical" href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/" />
+<meta property="og:url" content="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/" />
 <meta property="og:site_name" content="Joseph Chen" />
 <meta property="og:image" content="http://localhost:4000/assets/images/markdown.jpg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-07-14T22:44:00+08:00" />
+<meta property="article:published_time" content="2021-04-01T09:52:38+08:00" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/install-redhat7.5/","headline":"RHEL 7.5（一）替换yum源以及安装GUI","dateModified":"2020-07-14T22:44:00+08:00","datePublished":"2020-07-14T22:44:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/install-redhat7.5/"},"image":"http://localhost:4000/assets/images/markdown.jpg","author":{"@type":"Person","name":"joseph"},"description":"Redhat系统替换成CentOS的yum源，以及安装GUI","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/","headline":"Ernest P. Chan: Winning Strategies and Their Rationale (3)","dateModified":"2021-04-01T09:52:38+08:00","datePublished":"2021-04-01T09:52:38+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/"},"image":"http://localhost:4000/assets/images/markdown.jpg","author":{"@type":"Person","name":"joseph"},"description":"读书笔记","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -49,7 +49,7 @@
 <meta name="msapplication-square310x310logo" content="mstile-310x310.png" />
 
 
-    <link rel="canonical" href="http://localhost:4000/install-redhat7.5/">
+    <link rel="canonical" href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/">
     <link rel="alternate" type="application/rss+xml" title="" href="http://localhost:4000/feed.xml" />
 
     <style>
@@ -503,15 +503,15 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
 
 
-<h1 class="title">RHEL 7.5（一）替换yum源以及安装GUI</h1>
+<h1 class="title">Ernest P. Chan: Winning Strategies and Their Rationale (3)</h1>
 
 <span class="date">
-    <time datetime="14-07-2020">Tuesday. July 14, 2020</time>
+    <time datetime="01-04-2021">Thursday. April 01, 2021</time>
      - <span class="reading-time" title="Estimated read time">
     
 
     
-        4 mins
+        1 min
     
 </span>
 
@@ -520,235 +520,49 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
     <div class="post-tags">
         
-            <a class="item" href="http://localhost:4000/tags/#markdown">markdown</a>
-        
-            <a class="item" href="http://localhost:4000/tags/#elements">elements</a>
+            <a class="item" href="http://localhost:4000/tags/#算法交易">算法交易</a>
         
     </div>
 
 
-<h2 id="准备">准备</h2>
+<head>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            inlineMath: [['$','$']]
+            }
+        });
+    </script>
+</head>
 
-<p>要在新安装好的RHEL7.5上安装Vmware Workstation，需要提前做好如下准备：</p>
+<h1 id="tests-for-time-series-momentum">Tests for Time Series Momentum</h1>
 
-<ol>
-  <li>
-    <p>设置上网</p>
-  </li>
-  <li>
-    <p>替换yum源（Redhat的yum需要付费，切换成CentOS的源）</p>
-  </li>
-  <li>
-    <p>安装GUI</p>
-  </li>
-</ol>
+<p>计算时间序列的correlation，首先需要<strong>选取一个time lag</strong>，站在某个时间点上，我们总会有两个return：过去一段时间(-N)的return，和未来一段时间(+M)的return，我们需要计算在时间序列上两者的相关系数：</p>
 
-<h3 id="设置上网">设置上网</h3>
+<script type="math/tex; mode=display">Corr(R(-N, t), R(+M, t)) = \rho(R(-N, t), R(+M, t))</script>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">ls</span> /etc/sysconfig/network-scripts/
-ifcfg-enp0s31f6 <span class="c"># 这个就是我们网卡的名字</span>
-ifcfg-lo
-...
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-l</span> /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
-<span class="nt">-rw-r--r--</span>
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">sudo chmod </span>o+w /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-l</span> /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
-<span class="nt">-rw-r--rw-</span></code></pre></figure>
+<p>尽可能尝试不同的(N,M)组合，去找出最optimal（相关系数最大）的look-back period (N) 和holding period (M).</p>
 
-<p>修改ifcfg-enp0s31f6:</p>
+<p>计算时，需要注意要么look-back period不能重叠，要么holding period不能重叠，如下图所示：</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>vi /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
-<span class="nv">TYPE</span><span class="o">=</span>Ethernet
-...
-<span class="c"># 以下为修改项</span>
-<span class="nv">BOOTPROTO</span><span class="o">=</span>static     <span class="c"># dhcp为动态分配ip</span>
-<span class="nv">ONBOOT</span><span class="o">=</span><span class="nb">yes</span>           <span class="c"># 设置电脑启动时开启</span>
-<span class="nv">IPADDR0</span><span class="o">=</span>192.168.1.20 <span class="c"># fixed局域网ip，0可省略</span>
-<span class="nv">GATEWAY0</span><span class="o">=</span>192.168.1.1 <span class="c"># 网关，0可省略</span>
-<span class="nv">PREFIX0</span><span class="o">=</span>24           <span class="c"># 子网掩码，0可省略（也可以是NETMASK=255.255.255.0，换算成2进制是24个1）</span>
-<span class="nv">DNS1</span><span class="o">=</span>192.168.1.1     <span class="c"># DNS解释地址（通常与网关一致），不要忘记DNS后面有个1</span>
-<span class="nv">ZONE</span><span class="o">=</span>public          <span class="c"># 可能是optional的</span></code></pre></figure>
+<p><img src="/assets/images_in_posts/overlap_lookback_holding.png" alt="Markdown Image" /></p>
 
-<p>按wq保存之后，记得将权限改回来：</p>
+<h1 id="hurst-exponent-together-with-the-variance-ratio-test">Hurst exponent together with the Variance Ratio test</h1>
+<p>“variance-ratio test”又称作 “F-ratio test” 或者F-test.  F-test 主要表征两个分布的方差的比例</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">sudo chmod </span>o-w /etc/sysconfig/network-scripts/ifcfg-enp0s31f6</code></pre></figure>
+<script type="math/tex; mode=display">F = \frac{s_1^2}{s_2^2}</script>
 
-<p>之后reboot电脑，让ip生效。重启电脑后</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>ip address   <span class="c"># 查看ip地址，看到刚刚的配置已经生效</span>
-1: lo: ...
-2: enp0s31f6: ...
-   ...
-   inet 192.168.1.20/24 ...
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>ping www.baidu.com <span class="c"># 试一试连外网，收到数据的话即ok</span></code></pre></figure>
-
-<h3 id="替换yum源">替换yum源</h3>
-
-<p>Redhat自带的yum需要付费，而CentOS的yum是免费使用的，Redhat和CentOS的内核是非常接近的，我们可以将其替换成CentOS的源（<em>注意</em>：这一步操作有一点危险，操作不当可能导致不能开机）</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>rpm <span class="nt">-qa</span> | <span class="nb">grep </span>yum <span class="c"># 查询rpm库中的yum文件</span>
-yum-3.4.3-158.e17.noarch
-yum-metadata-parser-1.1.4-10.e17.x86_64
-yum-rhn-plugin-2.0.1-10.e17.noarch
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>rpm <span class="nt">-qa</span> | <span class="nb">grep </span>yum | xargs rpm <span class="nt">-e</span> <span class="nt">--nodeps</span> <span class="c"># 切换到root用户，通过以下命令删除yum文件</span></code></pre></figure>
-
-<p>去mirrors.aliyun.com/centos/7/os/x86_64/Packages/ 下载以下几个文件</p>
-<ul>
-  <li>yum-3.4.3-167.el7.centos.noarch.rpm</li>
-  <li>yum-metadata-parser-1.1.4-10.el7.x86_64.rpm</li>
-  <li>yum-plugin-fastestmirror-1.1.31-53.el7.noarch.rpm</li>
-  <li>yum-utils-1.1.31-53.el7.noarch.rpm</li>
-  <li>yum-rhn-plugin-2.0.1-10.el7.noarch.rpm</li>
-  <li>python-urlgrabber-3.10-10.el7.noarch.rpm</li>
-  <li>python-iniparse-0.4-9.el7.noarch.rpm</li>
-</ul>
-
-<p>上传至RHEL服务器，按顺序进行安装</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">sudo </span>rpm <span class="nt">-ivh</span> python-iniparse-0.4-9.el7.noarch.rpm
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">sudo </span>rpm <span class="nt">-ivh</span> python-urlgrabber-3.10-10.el7.noarch.rpm
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">sudo </span>rpm <span class="nt">-ivh</span> yum-metadata-parser-1.1.4-10.el7.x86_64.rpm
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">sudo </span>rpm <span class="nt">-ivh</span> yum-plugin-fastestmirror-1.1.31-53.el7.noarch.rpm <span class="o">(</span><span class="nt">--force</span> <span class="nt">--nodeps</span><span class="o">)</span>
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">sudo </span>rpm <span class="nt">-ivh</span> yum-utils-1.1.31-53.el7.noarch.rpm <span class="o">(</span><span class="nt">--force</span> <span class="nt">--nodeps</span><span class="o">)</span>
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">sudo </span>rpm <span class="nt">-ivh</span> yum-rhn-plugin-2.0.1-10.el7.noarch.rpm <span class="o">(</span><span class="nt">--force</span> <span class="nt">--nodeps</span><span class="o">)</span>
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">sudo </span>rpm <span class="nt">-ivh</span> yum-3.4.3-167.el7.centos.noarch.rpm <span class="o">(</span><span class="nt">--force</span> <span class="nt">--nodeps</span><span class="o">)</span></code></pre></figure>
-
-<p>通常直接这样会遇到报错”**.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY …“，可以在上述命令后面加上 <code class="language-plaintext highlighter-rouge">--force --nodeps</code> 进行强制安装.</p>
-
-<p>另一种方法是<a href="https://www.cnblogs.com/code1992/p/10735725.html">用CentOS的签名去注册</a></p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">cd</span> /etc/pki/rpm-gpg/
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>wget http://mirrors.163.com/centos/RPM-GPG-KEY-CentOS-7
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>rpm <span class="nt">--import</span> /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</code></pre></figure>
-
-<p>修改yum源配置文件。先看看现有的配置：</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">ls</span> /etc/yum.repos.d/  <span class="c"># 空白目录，说明未有配置</span></code></pre></figure>
-
-<p>接着下载阿里镜像到/etc/yum.repos.d/ 目录下：</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;&gt;&gt;</span><span class="nv">$wget</span> <span class="nt">-O</span> /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</code></pre></figure>
-
-<p>如果wget命令不可用，则可以在另外的机子下载好，然后通过sftp上载至服务器上。修改刚刚下载的文件 /etc/yum.repos.d/CentOS-Base.repo，将所有的$releasever 替换成7:</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;&gt;&gt;</span> vi /etc/yum.repos.d/CentOS-Base.repo
-
-:%s/<span class="nv">$releasever</span>/7/g</code></pre></figure>
-
-<p>最后，运行以下命令进行更新源</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>yum clean all
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>yum makecache
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>yum update <span class="c"># 【注意】不要跑这句，yum update之后会mess up /boot/efi/EFI 里面的启动项</span></code></pre></figure>
-
-<h3 id="安装gui">安装GUI</h3>
-
-<p>首先，经过上面更换yum源之后，应该已经可以通过以下命令查看可用的package groups：</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>yum group list
-Loaded plugins: fastestmirror, ...
-...
-Available Environment Groups
- ...
- Server with GUI
- GNOME Desktop
- ...
-Available Groups:
- ...
- Graphical Administration Tools
- ...
-Done
-
-<span class="c"># 如果是Centos 7:</span>
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>yum groupinstall <span class="s2">"GNOME Desktop"</span> <span class="s2">"Graphical Adminstration Tools"</span>
-
-<span class="c"># 如果是RHEL 7:</span>
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>yum groupinstall <span class="s2">"Server with GUI"</span>
-
-<span class="c"># 令系统在启动后启用GUI（level5是图形界面，原来文字界面应该是level3）</span>
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">ln</span> <span class="nt">-sf</span> /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
-
-<span class="c"># 千万不要重启电脑！</span>
-【！！】&gt;&gt;&gt;<span class="nv">$ </span>reboot</code></pre></figure>
-
-<p>重启电脑之前，先检查以下启动项是否已经被污染了：</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">ls</span> /etc/efi/EFI
-BOOT redhat CentOS <span class="c"># 多了一个CentOS，grub已经mess up，如果此时reboot，会导致不能进入系统</span>
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">ls</span> /etc/efi/EFI/redhat
-fonts grub.cfg grubenv grubx64.efi
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">ls</span> /etc/efi/EFI/centos
-BOOT.CSV BOOTX64.CSV fw fwupia32.efi fwupx64.efi MokManager.efi shim.efi shimx64-cemtps.efi shimx64.efi
-<span class="c"># grub.cfg文件在redhat下，但其实系统需要到/etc/efi/EFI/centos目录下面进行启动，所以要在该目录重建grub</span>
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>grub-mkconfig <span class="nt">-o</span> /boot/efi/EFI/centos/grub.cfg
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">ls</span> /etc/efi/EFI/centos
-... grub.cfg <span class="c"># 已经生成grub.cfg文件</span></code></pre></figure>
-
-<p>现在，需要对grub进行修复（注意：在确认修复前，不要随便reboot，否则可能开不了机）</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>yum update
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>grubby <span class="nt">--bootloader-probe</span>
-error opening /boot/grub/grub.cfg <span class="k">for </span><span class="nb">read</span>: no such file or directory
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">ls</span> /usr/lib/grub
-i386-pc
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>grub2-install <span class="nt">--boot-directory</span><span class="o">=</span>/boot <span class="nt">--efi-directory</span><span class="o">=</span>/boot/efi /dev/sda <span class="nt">--target</span><span class="o">=</span>i386-pc
-...
-grub2-install: error: will not proceed with blocklists.
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">ls</span> /boot/grub
-splash.xpm.gz
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>grub2-mkconfig <span class="nt">-o</span> /boot/grub/grub.cfg
-....
-<span class="k">done</span>
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span><span class="nb">ls</span> /boot/grub/
-grub.cfg splash.xpm.gz
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>groupby <span class="nt">--bootloader-probe</span>
-grub2
-<span class="o">&gt;&gt;&gt;</span><span class="nv">$ </span>grub2-mkconfig <span class="nt">-o</span> /boot/efi/EFI/centos/grub.cfg</code></pre></figure>
-
-<p>如果幸运的话，就试试重启电脑吧：</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">&gt;&gt;&gt;$ reboot</code></pre></figure>
-
-<p>我们需要修复grub</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw"># 进入grub
-grub&gt; ls (hd1,1)/efi  # 找到efi文件夹
-./ ../ redhat/ boot/ centos/
-grub&gt; ls (hd1,2)/     # 找到kernel镜像所在位置
-... vmlinuz-3.10.0-1127.13.1.el7.x86_64 initramfs-3.10.0-1127.13.1.el7.x86_64.img...
-grub&gt; set pager=1
-grub&gt; cat (hd1,1)/efi/redhat/grub.cfg
-(找出以下两句话：)
-linuxefi /vmlinuz-3.10.0-1127.13.1.el7.x86_64 root=/dev/mapper/rehel-root ro crashkernel=auto rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet LANG=en_US.UTF-8
-initrdefi /initramfs-3.10.0-1127.13.1.el7.x86_64.img
-
-grub&gt; GRUB_PRELOAD_MODULES="lvm"
-grub&gt; set root=(hd1,2)  # kernel镜像所在位置
-grub&gt; linuxefi /vmlinuz-3.10.0-1127.13.1.el7.x86_64 root=/dev/mapper/rhel-root # 通过tab键补全
-grub&gt; initrdefi /initramfs-3.10.0-1127.13.1.el7.x86_64.img
-grub&gt; boot</code></pre></figure>
-
-<p>如果此方法不能正常启动linux，则可以找到u盘镜像所在位置，然后重装系统了：</p>
-
-<figure class="highlight"><pre><code class="language-raw" data-lang="raw">grub&gt; ls (hd0,4)/
-... images/ ...
-grub&gt; GRUB_PRELOAD_MODULES="lvm"
-grub&gt; set root=(hd0,4)
-grub&gt; linuxefi /images/pxeboot/vmlinuz inst.stage2=hd:/dev/sdb4 quiet # 注意这里要指定根目录
-grub&gt; initrdefi /images/pxeboot/initrd.img
-grub&gt; boot</code></pre></figure>
-
-<p>Reboot之后如果能够正常开机，显示图形界面的登陆界面，就说明一切已经ok了。下一篇将讲如何安装Vmware Workstation。</p>
+<p>其中，$s_1^2=\frac{\sum(x_1-\bar{x}_1)^2}{n_1-1}$</p>
 
 
 
 
     <div class="blog-navigation">
         
-            <a class="prev"></a>
+            <a class="prev" href="http://localhost:4000/centos-7-remote-connect-gui/">&laquo; CentOS 7 远程连接GUI界面</a>
         
-        
-            <a class="next" href="http://localhost:4000/vmware-workstation/">RHEL 7.5（二）安装Vmware Workstation &raquo;</a>
         
     </div>
 
@@ -762,89 +576,10 @@ grub&gt; boot</code></pre></figure>
             
                 
             
-                
-            
         
     
         
         
-            
-                
-            
-                
-            
-        
-    
-        
-        
-            
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-        
-    
-        
-        
-            
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-        
-    
-        
-        
-            
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-        
-    
-        
-        
-            
-                
-            
-                
-            
-        
-            
-                
-            
-                
-            
-        
-    
-        
-        
-            
-                
-            
-                
-            
-        
-            
-                
             
                 
             
@@ -859,7 +594,7 @@ grub&gt; boot</code></pre></figure>
                     <ul>
                     
                     <li class="relatedPost">
-                        <a href="http://localhost:4000/remote-access-to-local-network/">远程连接至局域网
+                        <a href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1/">Ernest P. Chan: Winning Strategies and Their Rationale (1)
                         
                         </a>
                     </li>
@@ -867,35 +602,7 @@ grub&gt; boot</code></pre></figure>
                     
                 
             
-                
-            
         
-            
-                
-            
-                
-            
-        
-    
-        
-        
-            
-                
-                    
-                    <li class="relatedPost">
-                        <a href="http://localhost:4000/vmware-workstation/">RHEL 7.5（二）安装Vmware Workstation
-                        
-                        </a>
-                    </li>
-                    
-                    
-                
-            
-                
-            
-        
-            
-                
             
                 
             
@@ -906,11 +613,7 @@ grub&gt; boot</code></pre></figure>
             
                 
             
-                
-            
         
-            
-                
             
                 
             
@@ -921,6 +624,8 @@ grub&gt; boot</code></pre></figure>
             
                 
             
+        
+            
                 
             
         
@@ -929,21 +634,70 @@ grub&gt; boot</code></pre></figure>
         
             
                 
-                    
-                    <li class="relatedPost">
-                        <a href="http://localhost:4000/markdown-tutorial/">Markdown Tutorial
-                        
-                        </a>
-                    </li>
-                    
-                    
+            
+        
+            
                 
+            
+        
+    
+        
+        
             
                 
             
         
             
                 
+            
+        
+    
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+        
             
                 
             
@@ -975,7 +729,7 @@ grub&gt; boot</code></pre></figure>
             <!-- If site width is set to normal, you may choose any two share links -->
             <a
                 class="twitter"
-                href="https://twitter.com/intent/tweet?text=http://localhost:4000/install-redhat7.5/ - RHEL 7.5（一）替换yum源以及安装GUI by @"
+                href="https://twitter.com/intent/tweet?text=http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/ - Ernest P. Chan: Winning Strategies and Their Rationale (3) by @"
             >
                 <svg class="icon icon-twitter">
                     <use xlink:href="#icon-twitter"></use></svg
@@ -992,11 +746,11 @@ grub&gt; boot</code></pre></figure>
                 ><span class="icon-facebook-rect">Share</span>
             </a>
 
-            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/install-redhat7.5/&amp;title=RHEL 7.5（一）替换yum源以及安装GUI&amp;summary=Redhat系统替换成CentOS的yum源，以及安装GUI&amp;source=http://localhost:4000" target="_blank">
+            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/&amp;title=Ernest P. Chan: Winning Strategies and Their Rationale (3)&amp;summary=读书笔记&amp;source=http://localhost:4000" target="_blank">
                 <svg class="icon icon-linkedin"><use xlink:href="#icon-linkedin"></use></svg><span class="icon-linkedin">Share</span>
             </a> -->
 
-            <!-- <a class="reddit" href="https://reddit.com/submit?url=http://localhost:4000/install-redhat7.5/&amp;title=RHEL 7.5（一）替换yum源以及安装GUI" target="_blank">
+            <!-- <a class="reddit" href="https://reddit.com/submit?url=http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/&amp;title=Ernest P. Chan: Winning Strategies and Their Rationale (3)" target="_blank">
                 <svg class="icon icon-reddit"><use xlink:href="#icon-reddit"></use></svg><span class="icon-reddit">Share</span>
             </a> -->
         </div>
@@ -1011,8 +765,8 @@ grub&gt; boot</code></pre></figure>
     <script type="text/javascript">
 
         var disqus_config = function () {
-            this.page.url = 'http://localhost:4000/install-redhat7.5/';
-            this.page.identifier = '/install-redhat7.5';
+            this.page.url = 'http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/';
+            this.page.identifier = '/ernest-p-chan-winning-strategies-and-their-rationale-3';
         };
         var disqus_shortname = 'mydisqus';
         var disqus_developer = 0;

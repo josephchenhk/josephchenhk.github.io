@@ -140,3 +140,5 @@ exclude:
     "node_modules",
     "vendor",
   ]
+
+markdown: kramdown
