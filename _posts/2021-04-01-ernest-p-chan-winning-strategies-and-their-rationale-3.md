@@ -36,12 +36,14 @@ $$Corr(R(-N, t), R(+M, t)) = \rho(R(-N, t), R(+M, t)) $$
 
 ![Markdown Image][1]
 
-# Hurst exponent together with the Variance Ratio test
+# Variance Ratio test
 “variance-ratio test”又称作 “F-ratio test” 或者F-test.  F-test 主要表征两个分布的方差的比例
 
 $$F = \frac{s_1^2}{s_2^2}$$
 
 其中，$s_1^2=\frac{\sum(x_1-\bar{x}_1)^2}{n_1-1}$， $s_2^2=\frac{\sum(x_2-\bar{x}_2)^2}{n_2-1}$
 
+Variance-ratio test由Cochrane（1988）年发展，主要用于检测时间序列是否具备均值回归（mean-reverting）的特性。其原理为：若价格时间序列遵从
+随机漫步过程，则任意K期的资产回报率的方差（Variance）与时间间隔K成正比。
 
 [1]: /assets/images_in_posts/overlap_lookback_holding.png

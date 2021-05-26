@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-04-01T15:13:42+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about Joseph</subtitle><entry><title type="html">Ernest P. Chan: Winning Strategies and Their Rationale (3)</title><link href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/" rel="alternate" type="text/html" title="Ernest P. Chan: Winning Strategies and Their Rationale (3)" /><published>2021-04-01T09:52:38+08:00</published><updated>2021-04-01T09:52:38+08:00</updated><id>http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3</id><content type="html" xml:base="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/">&lt;head&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-05-26T14:42:36+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about Joseph</subtitle><entry><title type="html">Ernest P. Chan: Winning Strategies and Their Rationale (3)</title><link href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/" rel="alternate" type="text/html" title="Ernest P. Chan: Winning Strategies and Their Rationale (3)" /><published>2021-04-01T09:52:38+08:00</published><updated>2021-04-01T09:52:38+08:00</updated><id>http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3</id><content type="html" xml:base="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/">&lt;head&gt;
     &lt;script src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
     &lt;script type=&quot;text/x-mathjax-config&quot;&gt;
         MathJax.Hub.Config({
@@ -22,12 +22,215 @@
 
 &lt;p&gt;&lt;img src=&quot;/assets/images_in_posts/overlap_lookback_holding.png&quot; alt=&quot;Markdown Image&quot; /&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;hurst-exponent-together-with-the-variance-ratio-test&quot;&gt;Hurst exponent together with the Variance Ratio test&lt;/h1&gt;
+&lt;h1 id=&quot;variance-ratio-test&quot;&gt;Variance Ratio test&lt;/h1&gt;
 &lt;p&gt;“variance-ratio test”又称作 “F-ratio test” 或者F-test.  F-test 主要表征两个分布的方差的比例&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;F = \frac{s_1^2}{s_2^2}&lt;/script&gt;
 
-&lt;p&gt;其中，$s_1^2=\frac{\sum(x_1-\bar{x}_1)^2}{n_1-1}$&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="算法交易" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">CentOS 7 远程连接GUI界面</title><link href="http://localhost:4000/centos-7-remote-connect-gui/" rel="alternate" type="text/html" title="CentOS 7 远程连接GUI界面" /><published>2021-03-30T17:15:18+08:00</published><updated>2021-03-30T17:15:18+08:00</updated><id>http://localhost:4000/centos-7-remote-connect-gui</id><content type="html" xml:base="http://localhost:4000/centos-7-remote-connect-gui/">&lt;h1 id=&quot;安装vnc-server&quot;&gt;安装vnc-server&lt;/h1&gt;
+&lt;p&gt;其中，$s_1^2=\frac{\sum(x_1-\bar{x}_1)^2}{n_1-1}$， $s_2^2=\frac{\sum(x_2-\bar{x}_2)^2}{n_2-1}$&lt;/p&gt;
+
+&lt;p&gt;Variance-ratio test由Cochrane（1988）年发展，主要用于检测时间序列是否具备均值回归（mean-reverting）的特性。其原理为：若价格时间序列遵从
+随机漫步过程，则任意K期的资产回报率的方差（Variance）与时间间隔K成正比。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="算法交易" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Sample Mean and Variance</title><link href="http://localhost:4000/sample-mean-and-variance/" rel="alternate" type="text/html" title="Sample Mean and Variance" /><published>2021-04-01T09:52:38+08:00</published><updated>2021-04-01T09:52:38+08:00</updated><id>http://localhost:4000/sample-mean-and-variance</id><content type="html" xml:base="http://localhost:4000/sample-mean-and-variance/">&lt;head&gt;
+    &lt;script src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+    &lt;script type=&quot;text/x-mathjax-config&quot;&gt;
+        MathJax.Hub.Config({
+            tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            inlineMath: [['$','$']]
+            }
+        });
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;h1 id=&quot;population&quot;&gt;Population&lt;/h1&gt;
+
+&lt;p&gt;Suppose $\vec{X} $ is our population with $N$ elements:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\vec{X} = (X_1, X_2, X_3, ..., X_N)&lt;/script&gt;
+
+&lt;p&gt;According to the definition of mean and variance, we can have:&lt;/p&gt;
+
+&lt;p&gt;(1). population mean:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation} \label{eq-pop-mean}
+\mu = \textbf{E}(\vec{X}) = \frac{1}{N} \sum_{i=1}^{N}X_i
+\end{equation}&lt;/script&gt;
+
+&lt;p&gt;(2). population variance (thus standard deviation $\sigma$ is the square root of variance):&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation} \label{eq-pop-var}
+\sigma^2 = \textbf{Var}(\vec{X}) = \frac{1}{N} \sum_{i=1}^{N} \left( X_i-\mu \right)^2
+\end{equation}&lt;/script&gt;
+
+&lt;p&gt;From the definitions above, we have the following conclusion: the variance equals &lt;strong&gt;mean of square minus square of mean&lt;/strong&gt; (see &lt;a href=&quot;https://en.wikipedia.org/wiki/Variance&quot;&gt;variance&lt;/a&gt;):&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation*} 
+\textbf{Var}(\vec{X})  = \textbf{E}(\vec{X}^2) - \left[\textbf{E}(\vec{X})  \right]^2
+\end{equation*}&lt;/script&gt;
+
+&lt;p&gt;&lt;strong&gt;Proof&lt;/strong&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align*} 
+\textbf{Var}(\vec{X})  &amp;= \frac{1}{N} \sum_{i=1}^{N} \left( X_i-\mu \right)^2 \\
+                                                &amp;= \frac{1}{N} \sum_{i=1}^{N} \left( X_i^2-2\cdot\mu\cdot X_i+\mu^2 \right) \\
+																								&amp;= \frac{1}{N} \sum_{i=1}^{N} X_i^2-2\cdot\mu\cdot \frac{1}{N} \sum_{i=1}^{N}X_i+\frac{1}{N} \sum_{i=1}^{N}\mu^2  \\
+																								&amp;= \frac{1}{N} \sum_{i=1}^{N} X_i^2-2\cdot\mu\cdot \mu+\mu^2  \\
+																								&amp;= \frac{1}{N} \sum_{i=1}^{N} X_i^2-\mu^2  \\
+																								&amp;= \textbf{E}(\vec{X}^2)-\left[\textbf{E}(\vec{X})  \right]^2  \\
+\end{align*} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;Q.E.D&lt;/p&gt;
+&lt;h1 id=&quot;sample&quot;&gt;Sample&lt;/h1&gt;
+&lt;p&gt;We can randomly take out some samples from our population. If we fix the sample size to be $n$ (where $n&amp;lt;=N$), then there will be $C_N^n = \frac{N!}{n!\cdot(N-n)!}$ distinct samples from our population $\vec{X}$.&lt;/p&gt;
+
+&lt;p&gt;As a brief example, let’s say $N=4$, and $n=3$, then for a population $\vec{X} $:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\vec{X} = (X_1, X_2, X_3, X_4)&lt;/script&gt;
+
+&lt;p&gt;we can take out &lt;em&gt;four&lt;/em&gt; distinct samples ($C_4^3 = 4$) as below (the probability of each is equal to $1/4$):&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;(X_1, X_2, X_3), (X_1, X_2, X_4), (X_1, X_3, X_4), (X_2, X_3, X_4)&lt;/script&gt;
+
+&lt;p&gt;And for each sample, we are able to calculate the mean of the sample (just the same as population mean while treating the sample as a new population):&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align*} 
+\bar{X}_{sm,1} &amp;= \frac{X_1 + X_2 + X_3} {3} \\ 
+\bar{X}_{sm,2} &amp;= \frac{X_1 + X_2 + X_4} {3} \\
+\bar{X}_{sm,3} &amp;= \frac{X_1 + X_3 + X_4} {3} \\
+\bar{X}_{sm,4} &amp;= \frac{X_2 + X_3 + X_4} {3} 
+\end{align*} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;where $sm$ stands for &lt;em&gt;sample mean&lt;/em&gt;. For this &lt;strong&gt;distribution of sample mean&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\vec{X}_{sm} =\left( \bar{X}_{sm,1} , \bar{X}_{sm,2} , \bar{X}_{sm,3} , \bar{X}_{sm,4} \right)&lt;/script&gt;,   we can calculate its mean and variance:&lt;/p&gt;
+
+&lt;p&gt;(3). mean of sample mean:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation} \label{eq-samplemean-mean}
+\mu_{sm} = \textbf{E}(\vec{X}_{sm} ) = \frac{1}{4} \sum_{i=1}^{4} \bar{X}_{sm,i} 
+\end{equation}&lt;/script&gt;
+
+&lt;p&gt;(4). variance of sample mean:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation} \label{eq-samplemean-var}
+\sigma_{sm}^2 = \textbf{Var}(\vec{X}_{sm} ) = \frac{1}{4} \sum_{i=1}^{4} \left( \bar{X}_{sm,i} -\mu_{sm} \right)^2
+\end{equation}&lt;/script&gt;
+
+&lt;p&gt;For the relations of the original population and the sample mean, we have the following two assertations:&lt;/p&gt;
+
+&lt;p&gt;(5). &lt;span style=&quot;color:red&quot;&gt;&lt;em&gt;mean of sample mean = population mean&lt;/em&gt; &lt;/span&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation} 
+\mu_{sm} = \textbf{E}(\vec{X}_{sm} ) \color{blue}{=\textbf{E}(\vec{X})  = \mu}
+\end{equation}&lt;/script&gt;
+
+&lt;p&gt;(6). &lt;span style=&quot;color:red&quot;&gt;&lt;em&gt;variance of sample mean = population variance / sample size&lt;/em&gt; &lt;/span&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation} 
+\sigma_{sm}^2 = \textbf{Var}(\vec{X}_{sm} ) \color{blue}{= \frac{\textbf{Var}(\vec{X}) }{n}=\frac{\sigma^2}{n} }
+\end{equation}&lt;/script&gt;
+
+&lt;p&gt;&lt;strong&gt;Proof&lt;/strong&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align*} 
+\mu_{sm} &amp;= \textbf{E}(\vec{X}_{sm} )   \\
+                     &amp;= \frac{1}{4} \sum_{i=1}^{4} \bar{X}_{sm,i}  \\
+										 &amp;= \frac{1}{4} \left[ \frac{X_1 + X_2 + X_3} {3}  + \frac{X_1 + X_2 + X_4} {3} +  \frac{X_1 + X_3 + X_4} {3}  + \frac{X_2 + X_3 + X_4} {3}  \right] \\ 
+										 &amp; = \frac{1}{4} \left( \frac{\color{green}{3}\cdot X_1 + \color{green}{3} \cdot X_2 + \color{green}{3}\cdot X_3 + \color{green}{3}\cdot X_4} {3}   \right)    [\color{green}{\text{each element appears } C_{N-1}^{n-1}=C_3^2=3 \text{ times in the samples}}]\\
+										 &amp; = \frac{1}{\color{green}{C_N^n}} \left( \sum_{i=1}^{N}\frac{\color{green}{C_{N-1}^{n-1}}\cdot X_i} {\color{green}{n}}   \right) [\color{green}{\text{generalize to population size=N and sample size=n}}]\\
+										 &amp; = \frac{C_{N-1}^{n-1}}{C_N^n\cdot n}\sum_{i=1}^{N}X_i \\
+										 &amp;= \frac{1}{N}\sum_{i=1}^{N}X_i  [\color{green}{\text{when N=4, it is }\frac{1}{4} \left(  X_1  + X_2 + X_3 + X_4\right)} ]\\
+                     &amp;=\color{blue}{ \textbf{E}(\vec{X})  = \mu}
+\end{align*} %]]&gt;&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align*} 
+\sigma_{sm}^2 &amp;= \textbf{Var}(\vec{X}_{sm} )  \\
+                     &amp;= \frac{1}{4} \sum_{i=1}^{4} \left( \bar{X}_{sm,i} -\mu_{sm} \right)^2 \\
+										 &amp;= \frac{1}{4} \sum_{i=1}^{4} \left( \bar{X}_{sm,i} -\mu \right)^2  [\color{green}{\text{as we have demonstrated } \mu_{sm} =\mu}]\\
+										 &amp;= \frac{1}{4} \left[ \left( \frac{X_1 + X_2 + X_3} {3} -\mu\right)^2 + 
+										                                            \left( \frac{X_1 + X_2 + X_4} {3} -\mu\right)^2 +
+																																\left( \frac{X_1 + X_3 + X_4} {3} -\mu\right)^2 +
+																																\left( \frac{X_2 + X_3 + X_4} {3} -\mu\right)^2  \right]  \\
+										&amp;= \frac{1}{4} \left[ \left( \frac{(X_1-\mu) +(X_2-\mu) + (X_3-\mu)} {3} \right)^2 + 
+										                                            \left( \frac{(X_1-\mu) +(X_2-\mu) + (X_4-\mu)} {3} \right)^2 +
+																																\left( \frac{(X_1-\mu) +(X_3-\mu) + (X_4-\mu)} {3} \right)^2 +
+																																\left( \frac{(X_2-\mu) +(X_3-\mu) + (X_4-\mu)} {3} \right)^2  \right]  \\
+										&amp;= \frac{1}{4} \left[ \left( \frac{\color{green}{3}\cdot(X_1-\mu)^2 +
+																																												\color{green}{3}\cdot(X_2-\mu)^2 + 
+																																												\color{green}{3}\cdot(X_3-\mu)^2 + 
+																																												\color{green}{3}\cdot(X_4-\mu)^2 \color{red}{+0}} {3^ 2} \right)  \right] 
+																															 [\color{green}{\text{each element appears } C_{N-1}^{n-1}=C_3^2=3 \text{ times in the samples}}, 
+																															 \color{red}{\text{assuming all $X_i$ are uncorrelated, so cross terms are neligible}}]\\
+										&amp; = \frac{1}{\color{green}{C_N^n}} \left( \sum_{i=1}^{N}\frac{\color{green}{C_{N-1}^{n-1}}\cdot(X_i-\mu)^2} {\color{green}{n^2}}   \right)
+										                                          [\color{green}{\text{generalize to population size=N and sample size=n}}]\\
+										&amp; = \frac{C_{N-1}^{n-1}}{C_N^n\cdot n^2}\sum_{i=1}^{N}(X_i-\mu)^2 \\
+										&amp; = \frac{1}{n}\cdot\frac{1}{N}\sum_{i=1}^{N}(X_i-\mu)^2 \\
+										&amp;=\frac{1}{n}\cdot \textbf{Var}(\vec{X})  \\
+										&amp;=\color{blue}{\frac{\textbf{Var}(\vec{X}) }{n}=\frac{\sigma^2}{n} }
+\end{align*} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;Q.E.D&lt;/p&gt;
+
+&lt;h1 id=&quot;variance-of-a-sum-equals-the-sum-of-the-variances&quot;&gt;Variance of a sum equals the sum of the variances?&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: in the proof above, we have used the conclusion that &lt;strong&gt;the variance of  a sum equals the sum of the variances&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation*}
+\textbf{Var} \left(  \sum_{i=1}^{N}X_i \right)=  \sum_{i=1}^{N} \textbf{Var} (X_i) \color{red}{?}
+\end{equation*}&lt;/script&gt;
+
+&lt;p&gt;This conclusion is &lt;em&gt;NOT true&lt;/em&gt;  in general. There is a &lt;a href=&quot;https://stats.stackexchange.com/questions/31177/does-the-variance-of-a-sum-equal-the-sum-of-the-variances&quot;&gt;post&lt;/a&gt; that explains this issue. To summarise, starting from the calculation of variance as discussed above: $\textbf{Var}(\vec{X})  = \textbf{E}(\vec{X}^2) - \left[\textbf{E}(\vec{X})  \right]^2$, we can show that&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align*}
+\textbf{Var} \left(  \sum_{i=1}^{N}X_i \right) &amp;= \textbf{E} \left(  \left[ \sum_{i=1}^{N}X_i \right]^2\right) - \left[ \textbf{E} \left(  \sum_{i=1}^{N}X_i \right)  \right]^2 \\
+                                                                                                  &amp;=\textbf{E} \left(   \sum_{i=1}^{N}\sum_{j=1}^{N}X_i\cdot X_j\right) - \sum_{i=1}^{N}\sum_{j=1}^{N}\textbf{E} (X_i)\cdot \textbf{E} (X_j) \\
+																																																	&amp;=\sum_{i=1}^{N}\sum_{j=1}^{N}\textbf{E} \left(   X_i\cdot X_j\right) - \sum_{i=1}^{N}\sum_{j=1}^{N}\textbf{E} (X_i)\cdot \textbf{E} (X_j) \\
+																																																	&amp;=\sum_{i=1}^{N}\sum_{j=1}^{N}\left(\textbf{E} \left(   X_i\cdot X_j\right) - \textbf{E} (X_i)\cdot \textbf{E} (X_j) \right)\\
+																																																	&amp;=\sum_{i=1}^{N}\sum_{j=1}^{N}\textbf{Cov}(X_i, X_j)\\
+\end{align*} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;Therefore,&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;if the variables are uncorrelated&lt;/strong&gt;, that is, $\textbf{Cov}(X_i, X_j)=0$ for $i\neq j$, then&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation*}
+\textbf{Var} \left(  \sum_{i=1}^{N}X_i \right)  =\sum_{i=1}^{N}\sum_{j=1}^{N}\textbf{Cov}(X_i, X_j) = \sum_{i=1}^{N}\textbf{Cov}(X_i, X_i) = \sum_{i=1}^{N}\textbf{Var}(X_i)
+\end{equation*}&lt;/script&gt;
+
+&lt;p&gt;&lt;strong&gt;but if the variables are correlated&lt;/strong&gt;, this relation fails in general: for example, suppose $X_1$, $X_2$ are two random variables each with variance $\sigma^2$ and $\textbf{Cov}(X_1,X_2)=\rho$ where $0&amp;lt;\rho&amp;lt;\sigma^2$. Then $\textbf{Var}(X_1 + X_2) = 2\cdot(\sigma^2 + \rho) \neq 2\cdot \sigma^2$, so the identity fails.&lt;/p&gt;
+&lt;h1 id=&quot;unbiased-estimator-for-population-variance&quot;&gt;Unbiased estimator for population variance&lt;/h1&gt;
+&lt;p&gt;When computing variance from a sample, we use&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation*} 
+s^2 = \frac{1}{\color{blue}{n-1}} \sum_{i=1}^{n} \left( X_{sm},i-\mu_{sm} \right)^2
+\end{equation*}&lt;/script&gt;
+
+&lt;p&gt;as an&lt;em&gt;unbiased estimator for the population variance&lt;/em&gt; , which means, $\textbf{E}(s^2)=\sigma^2$. Why do we use $n-1$ instead of $n$ here? It is an issue related to &lt;a href=&quot;https://en.wikipedia.org/wiki/Bessel%27s_correction&quot;&gt;Bessel’s correction&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;To explain this, let’s take $\textbf{E}(\vec{X}^2) =\textbf{Var}(\vec{X})  + \left[\textbf{E}(\vec{X})  \right]^2$ as assumed knowledge, and assume that variance of a sum equals the sum of the variances (i.e., variables are uncorrelated).&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align*} 
+\textbf{E}\left( \sum_{i=1}^{n} \left( X_{sm,i}-\mu_{sm} \right)^2 \right) 
+									&amp;= \textbf{E}\left( \sum_{i=1}^{n}X_{sm,i}^2 - 2\cdot \mu_{sm}\cdot\sum_{i=1}^{n} X_{sm,i} + n\cdot\mu_{sm}^2 \right) \\
+									&amp;= \textbf{E}\left( \sum_{i=1}^{n}X_{sm,i}^2 - n\cdot\mu_{sm}^2 \right)  
+									[\color{green}{\textbf{E}(X_{sm,i} )=\mu_{sm}, \text{ and } \textbf{E}(\mu_{sm}\cdot X)=\mu_{sm}\cdot\textbf{E}(X)}]\\
+									&amp;=n\cdot\textbf{E}(X_{sm,i}^2) - n\cdot\textbf{E}(\mu_{sm}^2) \\
+									&amp;=n\cdot\left[ \textbf{Var}(X_{sm,i}) + \left(\textbf{E}(X_{sm,i})\right)^2 \right]- n\cdot\left[ \textbf{Var}(\mu_{sm}) + \left(\textbf{E}(\mu_{sm})\right)^2 \right]
+									[\color{green}{\textbf{E}(\vec{X}^2) =\textbf{Var}(\vec{X})  + \left[\textbf{E}(\vec{X})  \right]^2}] \\
+									&amp;=n\cdot\left(\sigma^2 + \mu_{sm}^2\right) - n\cdot\left(\frac{\sigma^2}{n} + \mu_{sm}^2\right) 
+									[\color{green}{\textbf{E}(X_{sm,i})=\mu_{sm}=\textbf{E}(\mu_{sm}); \text{ and } \textbf{Var}(\mu_{sm})=\textbf{Var}(X_{sm,i})/n=\sigma^2/n} \color{red}{ \text{ if we assume variables $X$ are uncorrelated as disscussed above}} ] \\
+									&amp;=(n-1)\cdot\sigma^2\\
+\end{align*} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;Therefore we have:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation*} 
+\textbf{E}\left( \frac{1}{\color{blue}{n-1}}\sum_{i=1}^{n} \left( X_{sm,i}-\mu_{sm} \right)^2 \right) = \sigma^2
+\end{equation*}&lt;/script&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="算法交易" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">CentOS 7 远程连接GUI界面</title><link href="http://localhost:4000/centos-7-remote-connect-gui/" rel="alternate" type="text/html" title="CentOS 7 远程连接GUI界面" /><published>2021-03-30T17:15:18+08:00</published><updated>2021-03-30T17:15:18+08:00</updated><id>http://localhost:4000/centos-7-remote-connect-gui</id><content type="html" xml:base="http://localhost:4000/centos-7-remote-connect-gui/">&lt;h1 id=&quot;安装vnc-server&quot;&gt;安装vnc-server&lt;/h1&gt;
 &lt;p&gt;有了桌面环境，一般可以通过云服务器厂商提供的web终端远程连接进入桌面。用web终端每次都需要打开浏览器，然后登陆云管理后台再连接，比较麻烦。我们采取直接从桌面客户端远程连接的方式，省去打开浏览器和登录云管理后台的操作。&lt;/p&gt;
 
 &lt;p&gt;远程桌面技术有多种，例如VNC, TeamViewer, RDP等，本文使用免费且广泛使用的VNC。&lt;/p&gt;
@@ -554,215 +757,4 @@ gitlab Reconfigured!&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;下载CentOS-7-x86_64-Minimal-2003.iso并上传至服务器，打开vmware workstation，安装镜像。当安装完成之后，会提示说”Could not open /dev/vmmon: No such file or direcotry. Please make sure that the kernel module &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmmon&lt;/code&gt; is loaded.”&lt;/p&gt;
 
-&lt;p&gt;这个错误大概是说vmmonitor和vmnet这两个模块没有经过签名认证，所以vmware出于安全的考虑，无法built。解决方案之一是重启系统，进入bios修改secure boot，将之改为disable，再重新尝试即可。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="markdown" /><category term="elements" /><summary type="html">安装Vmware Workstation 下载：WMware Workstation Pro 14.1.0 Linux 完美破解版 多语言版 注册码：(适合VMware 2017 v14.x) FF31K-AHZD1-H8ETZ-8WWEZ-WUUVA / CV7T2-6WY5Q-48EWP-ZXY7X-QGUWD</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">RHEL 7.5（一）替换yum源以及安装GUI</title><link href="http://localhost:4000/install-redhat7.5/" rel="alternate" type="text/html" title="RHEL 7.5（一）替换yum源以及安装GUI" /><published>2020-07-14T22:44:00+08:00</published><updated>2020-07-14T22:44:00+08:00</updated><id>http://localhost:4000/install-redhat7.5</id><content type="html" xml:base="http://localhost:4000/install-redhat7.5/">&lt;h2 id=&quot;准备&quot;&gt;准备&lt;/h2&gt;
-
-&lt;p&gt;要在新安装好的RHEL7.5上安装Vmware Workstation，需要提前做好如下准备：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;设置上网&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;替换yum源（Redhat的yum需要付费，切换成CentOS的源）&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;安装GUI&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;设置上网&quot;&gt;设置上网&lt;/h3&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /etc/sysconfig/network-scripts/
-ifcfg-enp0s31f6 &lt;span class=&quot;c&quot;&gt;# 这个就是我们网卡的名字&lt;/span&gt;
-ifcfg-lo
-...
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
-&lt;span class=&quot;nt&quot;&gt;-rw-r--r--&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chmod &lt;/span&gt;o+w /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt; /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
-&lt;span class=&quot;nt&quot;&gt;-rw-r--rw-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;修改ifcfg-enp0s31f6:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;vi /etc/sysconfig/network-scripts/ifcfg-enp0s31f6
-&lt;span class=&quot;nv&quot;&gt;TYPE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;Ethernet
-...
-&lt;span class=&quot;c&quot;&gt;# 以下为修改项&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;BOOTPROTO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;static     &lt;span class=&quot;c&quot;&gt;# dhcp为动态分配ip&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;ONBOOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;yes&lt;/span&gt;           &lt;span class=&quot;c&quot;&gt;# 设置电脑启动时开启&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;IPADDR0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;192.168.1.20 &lt;span class=&quot;c&quot;&gt;# fixed局域网ip，0可省略&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;GATEWAY0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;192.168.1.1 &lt;span class=&quot;c&quot;&gt;# 网关，0可省略&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;PREFIX0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;24           &lt;span class=&quot;c&quot;&gt;# 子网掩码，0可省略（也可以是NETMASK=255.255.255.0，换算成2进制是24个1）&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;DNS1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;192.168.1.1     &lt;span class=&quot;c&quot;&gt;# DNS解释地址（通常与网关一致），不要忘记DNS后面有个1&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;ZONE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;public          &lt;span class=&quot;c&quot;&gt;# 可能是optional的&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;按wq保存之后，记得将权限改回来：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo chmod &lt;/span&gt;o-w /etc/sysconfig/network-scripts/ifcfg-enp0s31f6&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;之后reboot电脑，让ip生效。重启电脑后&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ip address   &lt;span class=&quot;c&quot;&gt;# 查看ip地址，看到刚刚的配置已经生效&lt;/span&gt;
-1: lo: ...
-2: enp0s31f6: ...
-   ...
-   inet 192.168.1.20/24 ...
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ping www.baidu.com &lt;span class=&quot;c&quot;&gt;# 试一试连外网，收到数据的话即ok&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;替换yum源&quot;&gt;替换yum源&lt;/h3&gt;
-
-&lt;p&gt;Redhat自带的yum需要付费，而CentOS的yum是免费使用的，Redhat和CentOS的内核是非常接近的，我们可以将其替换成CentOS的源（&lt;em&gt;注意&lt;/em&gt;：这一步操作有一点危险，操作不当可能导致不能开机）&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;-qa&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;yum &lt;span class=&quot;c&quot;&gt;# 查询rpm库中的yum文件&lt;/span&gt;
-yum-3.4.3-158.e17.noarch
-yum-metadata-parser-1.1.4-10.e17.x86_64
-yum-rhn-plugin-2.0.1-10.e17.noarch
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;-qa&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;yum | xargs rpm &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--nodeps&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 切换到root用户，通过以下命令删除yum文件&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;去mirrors.aliyun.com/centos/7/os/x86_64/Packages/ 下载以下几个文件&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;yum-3.4.3-167.el7.centos.noarch.rpm&lt;/li&gt;
-  &lt;li&gt;yum-metadata-parser-1.1.4-10.el7.x86_64.rpm&lt;/li&gt;
-  &lt;li&gt;yum-plugin-fastestmirror-1.1.31-53.el7.noarch.rpm&lt;/li&gt;
-  &lt;li&gt;yum-utils-1.1.31-53.el7.noarch.rpm&lt;/li&gt;
-  &lt;li&gt;yum-rhn-plugin-2.0.1-10.el7.noarch.rpm&lt;/li&gt;
-  &lt;li&gt;python-urlgrabber-3.10-10.el7.noarch.rpm&lt;/li&gt;
-  &lt;li&gt;python-iniparse-0.4-9.el7.noarch.rpm&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;上传至RHEL服务器，按顺序进行安装&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;-ivh&lt;/span&gt; python-iniparse-0.4-9.el7.noarch.rpm
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;-ivh&lt;/span&gt; python-urlgrabber-3.10-10.el7.noarch.rpm
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;-ivh&lt;/span&gt; yum-metadata-parser-1.1.4-10.el7.x86_64.rpm
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;-ivh&lt;/span&gt; yum-plugin-fastestmirror-1.1.31-53.el7.noarch.rpm &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--force&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--nodeps&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;-ivh&lt;/span&gt; yum-utils-1.1.31-53.el7.noarch.rpm &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--force&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--nodeps&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;-ivh&lt;/span&gt; yum-rhn-plugin-2.0.1-10.el7.noarch.rpm &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--force&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--nodeps&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;-ivh&lt;/span&gt; yum-3.4.3-167.el7.centos.noarch.rpm &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--force&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--nodeps&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;通常直接这样会遇到报错”**.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY …“，可以在上述命令后面加上 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--force --nodeps&lt;/code&gt; 进行强制安装.&lt;/p&gt;
-
-&lt;p&gt;另一种方法是&lt;a href=&quot;https://www.cnblogs.com/code1992/p/10735725.html&quot;&gt;用CentOS的签名去注册&lt;/a&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /etc/pki/rpm-gpg/
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget http://mirrors.163.com/centos/RPM-GPG-KEY-CentOS-7
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rpm &lt;span class=&quot;nt&quot;&gt;--import&lt;/span&gt; /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;修改yum源配置文件。先看看现有的配置：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /etc/yum.repos.d/  &lt;span class=&quot;c&quot;&gt;# 空白目录，说明未有配置&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;接着下载阿里镜像到/etc/yum.repos.d/ 目录下：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$wget&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-O&lt;/span&gt; /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;如果wget命令不可用，则可以在另外的机子下载好，然后通过sftp上载至服务器上。修改刚刚下载的文件 /etc/yum.repos.d/CentOS-Base.repo，将所有的$releasever 替换成7:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; vi /etc/yum.repos.d/CentOS-Base.repo
-
-:%s/&lt;span class=&quot;nv&quot;&gt;$releasever&lt;/span&gt;/7/g&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;最后，运行以下命令进行更新源&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum clean all
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum makecache
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum update &lt;span class=&quot;c&quot;&gt;# 【注意】不要跑这句，yum update之后会mess up /boot/efi/EFI 里面的启动项&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;安装gui&quot;&gt;安装GUI&lt;/h3&gt;
-
-&lt;p&gt;首先，经过上面更换yum源之后，应该已经可以通过以下命令查看可用的package groups：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum group list
-Loaded plugins: fastestmirror, ...
-...
-Available Environment Groups
- ...
- Server with GUI
- GNOME Desktop
- ...
-Available Groups:
- ...
- Graphical Administration Tools
- ...
-Done
-
-&lt;span class=&quot;c&quot;&gt;# 如果是Centos 7:&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum groupinstall &lt;span class=&quot;s2&quot;&gt;&quot;GNOME Desktop&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Graphical Adminstration Tools&quot;&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# 如果是RHEL 7:&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum groupinstall &lt;span class=&quot;s2&quot;&gt;&quot;Server with GUI&quot;&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# 令系统在启动后启用GUI（level5是图形界面，原来文字界面应该是level3）&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ln&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-sf&lt;/span&gt; /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
-
-&lt;span class=&quot;c&quot;&gt;# 千万不要重启电脑！&lt;/span&gt;
-【！！】&amp;gt;&amp;gt;&amp;gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;reboot&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;重启电脑之前，先检查以下启动项是否已经被污染了：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /etc/efi/EFI
-BOOT redhat CentOS &lt;span class=&quot;c&quot;&gt;# 多了一个CentOS，grub已经mess up，如果此时reboot，会导致不能进入系统&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /etc/efi/EFI/redhat
-fonts grub.cfg grubenv grubx64.efi
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /etc/efi/EFI/centos
-BOOT.CSV BOOTX64.CSV fw fwupia32.efi fwupx64.efi MokManager.efi shim.efi shimx64-cemtps.efi shimx64.efi
-&lt;span class=&quot;c&quot;&gt;# grub.cfg文件在redhat下，但其实系统需要到/etc/efi/EFI/centos目录下面进行启动，所以要在该目录重建grub&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;grub-mkconfig &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; /boot/efi/EFI/centos/grub.cfg
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /etc/efi/EFI/centos
-... grub.cfg &lt;span class=&quot;c&quot;&gt;# 已经生成grub.cfg文件&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;现在，需要对grub进行修复（注意：在确认修复前，不要随便reboot，否则可能开不了机）&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum update
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;grubby &lt;span class=&quot;nt&quot;&gt;--bootloader-probe&lt;/span&gt;
-error opening /boot/grub/grub.cfg &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;read&lt;/span&gt;: no such file or directory
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /usr/lib/grub
-i386-pc
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;grub2-install &lt;span class=&quot;nt&quot;&gt;--boot-directory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/boot &lt;span class=&quot;nt&quot;&gt;--efi-directory&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/boot/efi /dev/sda &lt;span class=&quot;nt&quot;&gt;--target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;i386-pc
-...
-grub2-install: error: will not proceed with blocklists.
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /boot/grub
-splash.xpm.gz
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;grub2-mkconfig &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; /boot/grub/grub.cfg
-....
-&lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /boot/grub/
-grub.cfg splash.xpm.gz
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;groupby &lt;span class=&quot;nt&quot;&gt;--bootloader-probe&lt;/span&gt;
-grub2
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;grub2-mkconfig &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; /boot/efi/EFI/centos/grub.cfg&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;如果幸运的话，就试试重启电脑吧：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;&amp;gt;&amp;gt;&amp;gt;$ reboot&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;我们需要修复grub&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;# 进入grub
-grub&amp;gt; ls (hd1,1)/efi  # 找到efi文件夹
-./ ../ redhat/ boot/ centos/
-grub&amp;gt; ls (hd1,2)/     # 找到kernel镜像所在位置
-... vmlinuz-3.10.0-1127.13.1.el7.x86_64 initramfs-3.10.0-1127.13.1.el7.x86_64.img...
-grub&amp;gt; set pager=1
-grub&amp;gt; cat (hd1,1)/efi/redhat/grub.cfg
-(找出以下两句话：)
-linuxefi /vmlinuz-3.10.0-1127.13.1.el7.x86_64 root=/dev/mapper/rehel-root ro crashkernel=auto rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet LANG=en_US.UTF-8
-initrdefi /initramfs-3.10.0-1127.13.1.el7.x86_64.img
-
-grub&amp;gt; GRUB_PRELOAD_MODULES=&quot;lvm&quot;
-grub&amp;gt; set root=(hd1,2)  # kernel镜像所在位置
-grub&amp;gt; linuxefi /vmlinuz-3.10.0-1127.13.1.el7.x86_64 root=/dev/mapper/rhel-root # 通过tab键补全
-grub&amp;gt; initrdefi /initramfs-3.10.0-1127.13.1.el7.x86_64.img
-grub&amp;gt; boot&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;如果此方法不能正常启动linux，则可以找到u盘镜像所在位置，然后重装系统了：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-raw&quot; data-lang=&quot;raw&quot;&gt;grub&amp;gt; ls (hd0,4)/
-... images/ ...
-grub&amp;gt; GRUB_PRELOAD_MODULES=&quot;lvm&quot;
-grub&amp;gt; set root=(hd0,4)
-grub&amp;gt; linuxefi /images/pxeboot/vmlinuz inst.stage2=hd:/dev/sdb4 quiet # 注意这里要指定根目录
-grub&amp;gt; initrdefi /images/pxeboot/initrd.img
-grub&amp;gt; boot&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Reboot之后如果能够正常开机，显示图形界面的登陆界面，就说明一切已经ok了。下一篇将讲如何安装Vmware Workstation。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="markdown" /><category term="elements" /><summary type="html">准备</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;p&gt;这个错误大概是说vmmonitor和vmnet这两个模块没有经过签名认证，所以vmware出于安全的考虑，无法built。解决方案之一是重启系统，进入bios修改secure boot，将之改为disable，再重新尝试即可。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="markdown" /><category term="elements" /><summary type="html">安装Vmware Workstation 下载：WMware Workstation Pro 14.1.0 Linux 完美破解版 多语言版 注册码：(适合VMware 2017 v14.x) FF31K-AHZD1-H8ETZ-8WWEZ-WUUVA / CV7T2-6WY5Q-48EWP-ZXY7X-QGUWD</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>

@@ -549,12 +549,15 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
 <p><img src="/assets/images_in_posts/overlap_lookback_holding.png" alt="Markdown Image" /></p>
 
-<h1 id="hurst-exponent-together-with-the-variance-ratio-test">Hurst exponent together with the Variance Ratio test</h1>
+<h1 id="variance-ratio-test">Variance Ratio test</h1>
 <p>“variance-ratio test”又称作 “F-ratio test” 或者F-test.  F-test 主要表征两个分布的方差的比例</p>
 
 <script type="math/tex; mode=display">F = \frac{s_1^2}{s_2^2}</script>
 
-<p>其中，$s_1^2=\frac{\sum(x_1-\bar{x}_1)^2}{n_1-1}$</p>
+<p>其中，$s_1^2=\frac{\sum(x_1-\bar{x}_1)^2}{n_1-1}$， $s_2^2=\frac{\sum(x_2-\bar{x}_2)^2}{n_2-1}$</p>
+
+<p>Variance-ratio test由Cochrane（1988）年发展，主要用于检测时间序列是否具备均值回归（mean-reverting）的特性。其原理为：若价格时间序列遵从
+随机漫步过程，则任意K期的资产回报率的方差（Variance）与时间间隔K成正比。</p>
 
 
 
@@ -563,6 +566,8 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
         
             <a class="prev" href="http://localhost:4000/centos-7-remote-connect-gui/">&laquo; CentOS 7 远程连接GUI界面</a>
         
+        
+            <a class="next" href="http://localhost:4000/sample-mean-and-variance/">Sample Mean and Variance &raquo;</a>
         
     </div>
 
@@ -575,23 +580,39 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
         
             
                 
-            
-        
-    
-        
-        
-            
-                
-            
-        
-    
-        
-        
-            
-                
                     
                     <h4>Related Posts</h4>
                     <ul>
+                    
+                    <li class="relatedPost">
+                        <a href="http://localhost:4000/sample-mean-and-variance/">Sample Mean and Variance
+                        
+                        </a>
+                    </li>
+                    
+                    
+                
+            
+        
+    
+        
+        
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+        
+    
+        
+        
+            
+                
                     
                     <li class="relatedPost">
                         <a href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1/">Ernest P. Chan: Winning Strategies and Their Rationale (1)
@@ -722,7 +743,7 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
     <div class="toright">
         <h4 class="name">Joseph Chen</h4>
-        <p class="bio">physicist /trader /player</p>
+        <p class="bio">physicist/trader/travelor</p>
 
         <div class="share">
             <!-- Note: Only use three share links if your site width is set to large -->
@@ -768,7 +789,7 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
             this.page.url = 'http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/';
             this.page.identifier = '/ernest-p-chan-winning-strategies-and-their-rationale-3';
         };
-        var disqus_shortname = 'mydisqus';
+        var disqus_shortname = 'josephchenhk';
         var disqus_developer = 0;
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

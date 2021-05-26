@@ -1,6 +1,6 @@
 # main text of home
 name: Joseph Chen 
-bio: physicist/trader/travelor
+bio: physicist/trader/traveler
 # twitter summary info
 description: A blog about Joseph
 
@@ -54,7 +54,7 @@ email: josephchenhk@gmail.com
 authors:
   joseph:
     name: Joseph Chen
-    bio: physicist/trader/travelor
+    bio: physicist/trader/traveler
     external-image: false
     picture: assets/images/joseph_profile.png
     #twitter: johndoe

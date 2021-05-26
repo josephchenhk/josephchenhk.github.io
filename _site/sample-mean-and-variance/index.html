@@ -9,17 +9,21 @@
     <meta name=author content="Joseph Chen">
 
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Tags | Joseph Chen</title>
+<title>Sample Mean and Variance | Joseph Chen</title>
 <meta name="generator" content="Jekyll v3.8.7" />
-<meta property="og:title" content="Tags" />
+<meta property="og:title" content="Sample Mean and Variance" />
+<meta name="author" content="joseph" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="A blog about Joseph" />
-<meta property="og:description" content="A blog about Joseph" />
-<link rel="canonical" href="http://localhost:4000/tags/" />
-<meta property="og:url" content="http://localhost:4000/tags/" />
+<meta name="description" content="读书笔记" />
+<meta property="og:description" content="读书笔记" />
+<link rel="canonical" href="http://localhost:4000/sample-mean-and-variance/" />
+<meta property="og:url" content="http://localhost:4000/sample-mean-and-variance/" />
 <meta property="og:site_name" content="Joseph Chen" />
+<meta property="og:image" content="http://localhost:4000/assets/images/markdown.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-04-01T09:52:38+08:00" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/tags/","headline":"Tags","description":"A blog about Joseph","@type":"WebPage","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/sample-mean-and-variance/","headline":"Sample Mean and Variance","dateModified":"2021-04-01T09:52:38+08:00","datePublished":"2021-04-01T09:52:38+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/sample-mean-and-variance/"},"image":"http://localhost:4000/assets/images/markdown.jpg","author":{"@type":"Person","name":"joseph"},"description":"读书笔记","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -45,7 +49,7 @@
 <meta name="msapplication-square310x310logo" content="mstile-310x310.png" />
 
 
-    <link rel="canonical" href="http://localhost:4000/tags/">
+    <link rel="canonical" href="http://localhost:4000/sample-mean-and-variance/">
     <link rel="alternate" type="application/rss+xml" title="" href="http://localhost:4000/feed.xml" />
 
     <style>
@@ -448,71 +452,11 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
     <div class="wrapper-large">
         
-            
-                <div class="page tags">
-            
+            <div class="post">
         
 
             
 
-
-    <header class="header-home animated">
-        
-            <a class="link" href="http://localhost:4000/about">
-                <img class="selfie" alt="Joseph Chen" src="http://localhost:4000/assets/images/joseph_profile.png" />
-            </a>
-        
-
-        <h1 class="title">Joseph Chen</h1>
-        <h2 class="description">physicist/trader/travelor</h2>
-
-        <div class="social-links">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <a class="link" data-title="github.com/josephchenhk" href="https://github.com/josephchenhk" target="_blank">
-            <svg class="icon icon-github"><use xlink:href="#icon-github"></use></svg>
-        </a>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <a class="link" data-title="josephchenhk@gmail.com" href="mailto:josephchenhk@gmail.com">
-            <svg class="icon icon-mail"><use xlink:href="#icon-mail"></use></svg>
-        </a>
-    
-</div>
-
-    </header>
 
 
 <nav class="nav">
@@ -557,408 +501,472 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
 
 
-<section class="list">
-    <h1 class="title">Tags</h1>
 
-    
 
-    
-        
-            <a class="item" href="#markdown">markdown</a>
-        
-            <a class="item" href="#elements">elements</a>
-        
-            <a class="item" href="#qtrader">qtrader</a>
-        
-            <a class="item" href="#git">Git</a>
-        
-            <a class="item" href="#server">server</a>
-        
-            <a class="item" href="#gitlab">GitLab</a>
-        
-            <a class="item" href="#jira">Jira</a>
-        
-            <a class="item" href="#docker">docker</a>
-        
-            <a class="item" href="#centos">centos</a>
-        
-            <a class="item" href="#算法交易">算法交易</a>
-        
-            <a class="item" href="#vncserver">vncserver</a>
-        
+<h1 class="title">Sample Mean and Variance</h1>
+
+<span class="date">
+    <time datetime="01-04-2021">Thursday. April 01, 2021</time>
+     - <span class="reading-time" title="Estimated read time">
     
 
     
+        6 mins
+    
+</span>
+
+</span>
+
+
+    <div class="post-tags">
+        
+            <a class="item" href="http://localhost:4000/tags/#算法交易">算法交易</a>
+        
+    </div>
+
+
+<head>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            inlineMath: [['$','$']]
+            }
+        });
+    </script>
+</head>
+
+<h1 id="population">Population</h1>
+
+<p>Suppose $\vec{X} $ is our population with $N$ elements:</p>
+
+<script type="math/tex; mode=display">\vec{X} = (X_1, X_2, X_3, ..., X_N)</script>
+
+<p>According to the definition of mean and variance, we can have:</p>
+
+<p>(1). population mean:</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq-pop-mean}
+\mu = \textbf{E}(\vec{X}) = \frac{1}{N} \sum_{i=1}^{N}X_i
+\end{equation}</script>
+
+<p>(2). population variance (thus standard deviation $\sigma$ is the square root of variance):</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq-pop-var}
+\sigma^2 = \textbf{Var}(\vec{X}) = \frac{1}{N} \sum_{i=1}^{N} \left( X_i-\mu \right)^2
+\end{equation}</script>
+
+<p>From the definitions above, we have the following conclusion: the variance equals <strong>mean of square minus square of mean</strong> (see <a href="https://en.wikipedia.org/wiki/Variance">variance</a>):</p>
+
+<script type="math/tex; mode=display">\begin{equation*} 
+\textbf{Var}(\vec{X})  = \textbf{E}(\vec{X}^2) - \left[\textbf{E}(\vec{X})  \right]^2
+\end{equation*}</script>
+
+<p><strong>Proof</strong></p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align*} 
+\textbf{Var}(\vec{X})  &= \frac{1}{N} \sum_{i=1}^{N} \left( X_i-\mu \right)^2 \\
+                                                &= \frac{1}{N} \sum_{i=1}^{N} \left( X_i^2-2\cdot\mu\cdot X_i+\mu^2 \right) \\
+																								&= \frac{1}{N} \sum_{i=1}^{N} X_i^2-2\cdot\mu\cdot \frac{1}{N} \sum_{i=1}^{N}X_i+\frac{1}{N} \sum_{i=1}^{N}\mu^2  \\
+																								&= \frac{1}{N} \sum_{i=1}^{N} X_i^2-2\cdot\mu\cdot \mu+\mu^2  \\
+																								&= \frac{1}{N} \sum_{i=1}^{N} X_i^2-\mu^2  \\
+																								&= \textbf{E}(\vec{X}^2)-\left[\textbf{E}(\vec{X})  \right]^2  \\
+\end{align*} %]]></script>
+
+<p>Q.E.D</p>
+<h1 id="sample">Sample</h1>
+<p>We can randomly take out some samples from our population. If we fix the sample size to be $n$ (where $n&lt;=N$), then there will be $C_N^n = \frac{N!}{n!\cdot(N-n)!}$ distinct samples from our population $\vec{X}$.</p>
+
+<p>As a brief example, let’s say $N=4$, and $n=3$, then for a population $\vec{X} $:</p>
+
+<script type="math/tex; mode=display">\vec{X} = (X_1, X_2, X_3, X_4)</script>
+
+<p>we can take out <em>four</em> distinct samples ($C_4^3 = 4$) as below (the probability of each is equal to $1/4$):</p>
+
+<script type="math/tex; mode=display">(X_1, X_2, X_3), (X_1, X_2, X_4), (X_1, X_3, X_4), (X_2, X_3, X_4)</script>
+
+<p>And for each sample, we are able to calculate the mean of the sample (just the same as population mean while treating the sample as a new population):</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align*} 
+\bar{X}_{sm,1} &= \frac{X_1 + X_2 + X_3} {3} \\ 
+\bar{X}_{sm,2} &= \frac{X_1 + X_2 + X_4} {3} \\
+\bar{X}_{sm,3} &= \frac{X_1 + X_3 + X_4} {3} \\
+\bar{X}_{sm,4} &= \frac{X_2 + X_3 + X_4} {3} 
+\end{align*} %]]></script>
+
+<p>where $sm$ stands for <em>sample mean</em>. For this <strong>distribution of sample mean</strong> <script type="math/tex">\vec{X}_{sm} =\left( \bar{X}_{sm,1} , \bar{X}_{sm,2} , \bar{X}_{sm,3} , \bar{X}_{sm,4} \right)</script>,   we can calculate its mean and variance:</p>
+
+<p>(3). mean of sample mean:</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq-samplemean-mean}
+\mu_{sm} = \textbf{E}(\vec{X}_{sm} ) = \frac{1}{4} \sum_{i=1}^{4} \bar{X}_{sm,i} 
+\end{equation}</script>
+
+<p>(4). variance of sample mean:</p>
+
+<script type="math/tex; mode=display">\begin{equation} \label{eq-samplemean-var}
+\sigma_{sm}^2 = \textbf{Var}(\vec{X}_{sm} ) = \frac{1}{4} \sum_{i=1}^{4} \left( \bar{X}_{sm,i} -\mu_{sm} \right)^2
+\end{equation}</script>
+
+<p>For the relations of the original population and the sample mean, we have the following two assertations:</p>
+
+<p>(5). <span style="color:red"><em>mean of sample mean = population mean</em> </span></p>
+
+<script type="math/tex; mode=display">\begin{equation} 
+\mu_{sm} = \textbf{E}(\vec{X}_{sm} ) \color{blue}{=\textbf{E}(\vec{X})  = \mu}
+\end{equation}</script>
+
+<p>(6). <span style="color:red"><em>variance of sample mean = population variance / sample size</em> </span></p>
+
+<script type="math/tex; mode=display">\begin{equation} 
+\sigma_{sm}^2 = \textbf{Var}(\vec{X}_{sm} ) \color{blue}{= \frac{\textbf{Var}(\vec{X}) }{n}=\frac{\sigma^2}{n} }
+\end{equation}</script>
+
+<p><strong>Proof</strong></p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align*} 
+\mu_{sm} &= \textbf{E}(\vec{X}_{sm} )   \\
+                     &= \frac{1}{4} \sum_{i=1}^{4} \bar{X}_{sm,i}  \\
+										 &= \frac{1}{4} \left[ \frac{X_1 + X_2 + X_3} {3}  + \frac{X_1 + X_2 + X_4} {3} +  \frac{X_1 + X_3 + X_4} {3}  + \frac{X_2 + X_3 + X_4} {3}  \right] \\ 
+										 & = \frac{1}{4} \left( \frac{\color{green}{3}\cdot X_1 + \color{green}{3} \cdot X_2 + \color{green}{3}\cdot X_3 + \color{green}{3}\cdot X_4} {3}   \right)    [\color{green}{\text{each element appears } C_{N-1}^{n-1}=C_3^2=3 \text{ times in the samples}}]\\
+										 & = \frac{1}{\color{green}{C_N^n}} \left( \sum_{i=1}^{N}\frac{\color{green}{C_{N-1}^{n-1}}\cdot X_i} {\color{green}{n}}   \right) [\color{green}{\text{generalize to population size=N and sample size=n}}]\\
+										 & = \frac{C_{N-1}^{n-1}}{C_N^n\cdot n}\sum_{i=1}^{N}X_i \\
+										 &= \frac{1}{N}\sum_{i=1}^{N}X_i  [\color{green}{\text{when N=4, it is }\frac{1}{4} \left(  X_1  + X_2 + X_3 + X_4\right)} ]\\
+                     &=\color{blue}{ \textbf{E}(\vec{X})  = \mu}
+\end{align*} %]]></script>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align*} 
+\sigma_{sm}^2 &= \textbf{Var}(\vec{X}_{sm} )  \\
+                     &= \frac{1}{4} \sum_{i=1}^{4} \left( \bar{X}_{sm,i} -\mu_{sm} \right)^2 \\
+										 &= \frac{1}{4} \sum_{i=1}^{4} \left( \bar{X}_{sm,i} -\mu \right)^2  [\color{green}{\text{as we have demonstrated } \mu_{sm} =\mu}]\\
+										 &= \frac{1}{4} \left[ \left( \frac{X_1 + X_2 + X_3} {3} -\mu\right)^2 + 
+										                                            \left( \frac{X_1 + X_2 + X_4} {3} -\mu\right)^2 +
+																																\left( \frac{X_1 + X_3 + X_4} {3} -\mu\right)^2 +
+																																\left( \frac{X_2 + X_3 + X_4} {3} -\mu\right)^2  \right]  \\
+										&= \frac{1}{4} \left[ \left( \frac{(X_1-\mu) +(X_2-\mu) + (X_3-\mu)} {3} \right)^2 + 
+										                                            \left( \frac{(X_1-\mu) +(X_2-\mu) + (X_4-\mu)} {3} \right)^2 +
+																																\left( \frac{(X_1-\mu) +(X_3-\mu) + (X_4-\mu)} {3} \right)^2 +
+																																\left( \frac{(X_2-\mu) +(X_3-\mu) + (X_4-\mu)} {3} \right)^2  \right]  \\
+										&= \frac{1}{4} \left[ \left( \frac{\color{green}{3}\cdot(X_1-\mu)^2 +
+																																												\color{green}{3}\cdot(X_2-\mu)^2 + 
+																																												\color{green}{3}\cdot(X_3-\mu)^2 + 
+																																												\color{green}{3}\cdot(X_4-\mu)^2 \color{red}{+0}} {3^ 2} \right)  \right] 
+																															 [\color{green}{\text{each element appears } C_{N-1}^{n-1}=C_3^2=3 \text{ times in the samples}}, 
+																															 \color{red}{\text{assuming all $X_i$ are uncorrelated, so cross terms are neligible}}]\\
+										& = \frac{1}{\color{green}{C_N^n}} \left( \sum_{i=1}^{N}\frac{\color{green}{C_{N-1}^{n-1}}\cdot(X_i-\mu)^2} {\color{green}{n^2}}   \right)
+										                                          [\color{green}{\text{generalize to population size=N and sample size=n}}]\\
+										& = \frac{C_{N-1}^{n-1}}{C_N^n\cdot n^2}\sum_{i=1}^{N}(X_i-\mu)^2 \\
+										& = \frac{1}{n}\cdot\frac{1}{N}\sum_{i=1}^{N}(X_i-\mu)^2 \\
+										&=\frac{1}{n}\cdot \textbf{Var}(\vec{X})  \\
+										&=\color{blue}{\frac{\textbf{Var}(\vec{X}) }{n}=\frac{\sigma^2}{n} }
+\end{align*} %]]></script>
+
+<p>Q.E.D</p>
+
+<h1 id="variance-of-a-sum-equals-the-sum-of-the-variances">Variance of a sum equals the sum of the variances?</h1>
+
+<p><strong>Note</strong>: in the proof above, we have used the conclusion that <strong>the variance of  a sum equals the sum of the variances</strong>:</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+\textbf{Var} \left(  \sum_{i=1}^{N}X_i \right)=  \sum_{i=1}^{N} \textbf{Var} (X_i) \color{red}{?}
+\end{equation*}</script>
+
+<p>This conclusion is <em>NOT true</em>  in general. There is a <a href="https://stats.stackexchange.com/questions/31177/does-the-variance-of-a-sum-equal-the-sum-of-the-variances">post</a> that explains this issue. To summarise, starting from the calculation of variance as discussed above: $\textbf{Var}(\vec{X})  = \textbf{E}(\vec{X}^2) - \left[\textbf{E}(\vec{X})  \right]^2$, we can show that</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align*}
+\textbf{Var} \left(  \sum_{i=1}^{N}X_i \right) &= \textbf{E} \left(  \left[ \sum_{i=1}^{N}X_i \right]^2\right) - \left[ \textbf{E} \left(  \sum_{i=1}^{N}X_i \right)  \right]^2 \\
+                                                                                                  &=\textbf{E} \left(   \sum_{i=1}^{N}\sum_{j=1}^{N}X_i\cdot X_j\right) - \sum_{i=1}^{N}\sum_{j=1}^{N}\textbf{E} (X_i)\cdot \textbf{E} (X_j) \\
+																																																	&=\sum_{i=1}^{N}\sum_{j=1}^{N}\textbf{E} \left(   X_i\cdot X_j\right) - \sum_{i=1}^{N}\sum_{j=1}^{N}\textbf{E} (X_i)\cdot \textbf{E} (X_j) \\
+																																																	&=\sum_{i=1}^{N}\sum_{j=1}^{N}\left(\textbf{E} \left(   X_i\cdot X_j\right) - \textbf{E} (X_i)\cdot \textbf{E} (X_j) \right)\\
+																																																	&=\sum_{i=1}^{N}\sum_{j=1}^{N}\textbf{Cov}(X_i, X_j)\\
+\end{align*} %]]></script>
+
+<p>Therefore,</p>
+
+<p><strong>if the variables are uncorrelated</strong>, that is, $\textbf{Cov}(X_i, X_j)=0$ for $i\neq j$, then</p>
+
+<script type="math/tex; mode=display">\begin{equation*}
+\textbf{Var} \left(  \sum_{i=1}^{N}X_i \right)  =\sum_{i=1}^{N}\sum_{j=1}^{N}\textbf{Cov}(X_i, X_j) = \sum_{i=1}^{N}\textbf{Cov}(X_i, X_i) = \sum_{i=1}^{N}\textbf{Var}(X_i)
+\end{equation*}</script>
+
+<p><strong>but if the variables are correlated</strong>, this relation fails in general: for example, suppose $X_1$, $X_2$ are two random variables each with variance $\sigma^2$ and $\textbf{Cov}(X_1,X_2)=\rho$ where $0&lt;\rho&lt;\sigma^2$. Then $\textbf{Var}(X_1 + X_2) = 2\cdot(\sigma^2 + \rho) \neq 2\cdot \sigma^2$, so the identity fails.</p>
+<h1 id="unbiased-estimator-for-population-variance">Unbiased estimator for population variance</h1>
+<p>When computing variance from a sample, we use</p>
+
+<script type="math/tex; mode=display">\begin{equation*} 
+s^2 = \frac{1}{\color{blue}{n-1}} \sum_{i=1}^{n} \left( X_{sm},i-\mu_{sm} \right)^2
+\end{equation*}</script>
+
+<p>as an<em>unbiased estimator for the population variance</em> , which means, $\textbf{E}(s^2)=\sigma^2$. Why do we use $n-1$ instead of $n$ here? It is an issue related to <a href="https://en.wikipedia.org/wiki/Bessel%27s_correction">Bessel’s correction</a>.</p>
+
+<p>To explain this, let’s take $\textbf{E}(\vec{X}^2) =\textbf{Var}(\vec{X})  + \left[\textbf{E}(\vec{X})  \right]^2$ as assumed knowledge, and assume that variance of a sum equals the sum of the variances (i.e., variables are uncorrelated).</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align*} 
+\textbf{E}\left( \sum_{i=1}^{n} \left( X_{sm,i}-\mu_{sm} \right)^2 \right) 
+									&= \textbf{E}\left( \sum_{i=1}^{n}X_{sm,i}^2 - 2\cdot \mu_{sm}\cdot\sum_{i=1}^{n} X_{sm,i} + n\cdot\mu_{sm}^2 \right) \\
+									&= \textbf{E}\left( \sum_{i=1}^{n}X_{sm,i}^2 - n\cdot\mu_{sm}^2 \right)  
+									[\color{green}{\textbf{E}(X_{sm,i} )=\mu_{sm}, \text{ and } \textbf{E}(\mu_{sm}\cdot X)=\mu_{sm}\cdot\textbf{E}(X)}]\\
+									&=n\cdot\textbf{E}(X_{sm,i}^2) - n\cdot\textbf{E}(\mu_{sm}^2) \\
+									&=n\cdot\left[ \textbf{Var}(X_{sm,i}) + \left(\textbf{E}(X_{sm,i})\right)^2 \right]- n\cdot\left[ \textbf{Var}(\mu_{sm}) + \left(\textbf{E}(\mu_{sm})\right)^2 \right]
+									[\color{green}{\textbf{E}(\vec{X}^2) =\textbf{Var}(\vec{X})  + \left[\textbf{E}(\vec{X})  \right]^2}] \\
+									&=n\cdot\left(\sigma^2 + \mu_{sm}^2\right) - n\cdot\left(\frac{\sigma^2}{n} + \mu_{sm}^2\right) 
+									[\color{green}{\textbf{E}(X_{sm,i})=\mu_{sm}=\textbf{E}(\mu_{sm}); \text{ and } \textbf{Var}(\mu_{sm})=\textbf{Var}(X_{sm,i})/n=\sigma^2/n} \color{red}{ \text{ if we assume variables $X$ are uncorrelated as disscussed above}} ] \\
+									&=(n-1)\cdot\sigma^2\\
+\end{align*} %]]></script>
+
+<p>Therefore we have:</p>
+
+<script type="math/tex; mode=display">\begin{equation*} 
+\textbf{E}\left( \frac{1}{\color{blue}{n-1}}\sum_{i=1}^{n} \left( X_{sm,i}-\mu_{sm} \right)^2 \right) = \sigma^2
+\end{equation*}</script>
+
+
+
+    <div class="blog-navigation">
+        
+            <a class="prev" href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/">&laquo; Ernest P. Chan: Winning Strategies and Their Rationale (3)</a>
+        
+        
+    </div>
+
+
+
+    <div class="related">
+    
+    
+        
+        
+            
+                
+            
+        
+    
+        
+        
+            
+                
+                    
+                    <h4>Related Posts</h4>
+                    <ul>
+                    
+                    <li class="relatedPost">
+                        <a href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/">Ernest P. Chan: Winning Strategies and Their Rationale (3)
+                        
+                        </a>
+                    </li>
+                    
+                    
+                
+            
+        
+    
+        
+        
+            
+                
+            
+        
+    
+        
+        
+            
+                
+                    
+                    <li class="relatedPost">
+                        <a href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1/">Ernest P. Chan: Winning Strategies and Their Rationale (1)
+                        
+                        </a>
+                    </li>
+                    
+                    
+                
+            
+        
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+        
+            
+                
+            
+        
+    
+    
+        </ul>
+    
+</div>
+
+
+
+
+    <section class="author">
+    <div class="toleft">
+        <img
+            class="selfie"
+            src="http://localhost:4000/assets/images/joseph_profile.png"
+            alt="Joseph Chen"
+        />
+    </div>
+
+    <div class="toright">
+        <h4 class="name">Joseph Chen</h4>
+        <p class="bio">physicist/trader/travelor</p>
+
+        <div class="share">
+            <!-- Note: Only use three share links if your site width is set to large -->
+            <!-- If site width is set to normal, you may choose any two share links -->
+            <a
+                class="twitter"
+                href="https://twitter.com/intent/tweet?text=http://localhost:4000/sample-mean-and-variance/ - Sample Mean and Variance by @"
+            >
+                <svg class="icon icon-twitter">
+                    <use xlink:href="#icon-twitter"></use></svg
+                ><span class="icon-twitter">Tweet</span>
+            </a>
+
+            <a
+                class="facebook"
+                href="javascript:void(0)"
+                onclick="window.open('https://facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href), 'facebook-share-dialog', 'width=626,height=436'); return false;"
+            >
+                <svg class="icon icon-facebook">
+                    <use xlink:href="#icon-facebook"></use></svg
+                ><span class="icon-facebook-rect">Share</span>
+            </a>
+
+            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/sample-mean-and-variance/&amp;title=Sample Mean and Variance&amp;summary=读书笔记&amp;source=http://localhost:4000" target="_blank">
+                <svg class="icon icon-linkedin"><use xlink:href="#icon-linkedin"></use></svg><span class="icon-linkedin">Share</span>
+            </a> -->
+
+            <!-- <a class="reddit" href="https://reddit.com/submit?url=http://localhost:4000/sample-mean-and-variance/&amp;title=Sample Mean and Variance" target="_blank">
+                <svg class="icon icon-reddit"><use xlink:href="#icon-reddit"></use></svg><span class="icon-reddit">Share</span>
+            </a> -->
+        </div>
+    </div>
 </section>
 
-<hr>
 
-<section class="tag-list">
-    
-    <h2 class="title" id="markdown">#markdown</h2>
 
-    <ul class="list">
-        
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/markdown-tutorial/">
-                            <aside class="date"><time datetime="14-03-2020">Mar 14 2020</time></aside>
-                            <h3 class="title">Markdown Tutorial</h3>
-                        </a>
-                    </li>
-                
-            
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/install-redhat7.5/">
-                            <aside class="date"><time datetime="14-07-2020">Jul 14 2020</time></aside>
-                            <h3 class="title">RHEL 7.5（一）替换yum源以及安装GUI</h3>
-                        </a>
-                    </li>
-                
-            
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/vmware-workstation/">
-                            <aside class="date"><time datetime="18-07-2020">Jul 18 2020</time></aside>
-                            <h3 class="title">RHEL 7.5（二）安装Vmware Workstation</h3>
-                        </a>
-                    </li>
-                
-            
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/remote-access-to-local-network/">
-                            <aside class="date"><time datetime="20-07-2020">Jul 20 2020</time></aside>
-                            <h3 class="title">远程连接至局域网</h3>
-                        </a>
-                    </li>
-                
-            
-        
-        
-        
-    </ul>
 
-    <div class="breaker"></div>
-    
-    <h2 class="title" id="elements">#elements</h2>
+    <section class="disqus">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
 
-    <ul class="list">
-        
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/markdown-tutorial/">
-                            <aside class="date"><time datetime="14-03-2020">Mar 14 2020</time></aside>
-                            <h3 class="title">Markdown Tutorial</h3>
-                        </a>
-                    </li>
-                
-            
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/install-redhat7.5/">
-                            <aside class="date"><time datetime="14-07-2020">Jul 14 2020</time></aside>
-                            <h3 class="title">RHEL 7.5（一）替换yum源以及安装GUI</h3>
-                        </a>
-                    </li>
-                
-            
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/vmware-workstation/">
-                            <aside class="date"><time datetime="18-07-2020">Jul 18 2020</time></aside>
-                            <h3 class="title">RHEL 7.5（二）安装Vmware Workstation</h3>
-                        </a>
-                    </li>
-                
-            
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/remote-access-to-local-network/">
-                            <aside class="date"><time datetime="20-07-2020">Jul 20 2020</time></aside>
-                            <h3 class="title">远程连接至局域网</h3>
-                        </a>
-                    </li>
-                
-            
-        
-        
-        
-    </ul>
-
-    <div class="breaker"></div>
-    
-    <h2 class="title" id="qtrader">#qtrader</h2>
-
-    <ul class="list">
-        
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/qtrader-a-light-event-driven-algorithmic-trading-engine/">
-                            <aside class="date"><time datetime="14-03-2020">Mar 14 2020</time></aside>
-                            <h3 class="title">QTrader: A Light Event-Driven Algorithmic Trading Engine</h3>
-                        </a>
-                    </li>
-                
-            
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1/">
-                            <aside class="date"><time datetime="08-02-2021">Feb 08 2021</time></aside>
-                            <h3 class="title">Ernest P. Chan: Winning Strategies and Their Rationale (1)</h3>
-                        </a>
-                    </li>
-                
-            
-        
-        
-        
-    </ul>
-
-    <div class="breaker"></div>
-    
-    <h2 class="title" id="git">#Git</h2>
-
-    <ul class="list">
-        
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/git-server/">
-                            <aside class="date"><time datetime="21-07-2020">Jul 21 2020</time></aside>
-                            <h3 class="title">Git服务器搭建</h3>
-                        </a>
-                    </li>
-                
-            
-        
-        
-        
-    </ul>
-
-    <div class="breaker"></div>
-    
-    <h2 class="title" id="server">#server</h2>
-
-    <ul class="list">
-        
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/git-server/">
-                            <aside class="date"><time datetime="21-07-2020">Jul 21 2020</time></aside>
-                            <h3 class="title">Git服务器搭建</h3>
-                        </a>
-                    </li>
-                
-            
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/gitlab-server/">
-                            <aside class="date"><time datetime="21-07-2020">Jul 21 2020</time></aside>
-                            <h3 class="title">GitLab服务器搭建</h3>
-                        </a>
-                    </li>
-                
-            
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/jira-server/">
-                            <aside class="date"><time datetime="22-07-2020">Jul 22 2020</time></aside>
-                            <h3 class="title">Jira服务器搭建</h3>
-                        </a>
-                    </li>
-                
-            
-        
-        
-        
-    </ul>
-
-    <div class="breaker"></div>
-    
-    <h2 class="title" id="gitlab">#GitLab</h2>
-
-    <ul class="list">
-        
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/gitlab-server/">
-                            <aside class="date"><time datetime="21-07-2020">Jul 21 2020</time></aside>
-                            <h3 class="title">GitLab服务器搭建</h3>
-                        </a>
-                    </li>
-                
-            
-        
-        
-        
-    </ul>
-
-    <div class="breaker"></div>
-    
-    <h2 class="title" id="jira">#Jira</h2>
-
-    <ul class="list">
-        
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/jira-server/">
-                            <aside class="date"><time datetime="22-07-2020">Jul 22 2020</time></aside>
-                            <h3 class="title">Jira服务器搭建</h3>
-                        </a>
-                    </li>
-                
-            
-        
-        
-        
-    </ul>
-
-    <div class="breaker"></div>
-    
-    <h2 class="title" id="docker">#docker</h2>
-
-    <ul class="list">
-        
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/centos-install-docker/">
-                            <aside class="date"><time datetime="04-02-2021">Feb 04 2021</time></aside>
-                            <h3 class="title">在CentOS安装docker</h3>
-                        </a>
-                    </li>
-                
-            
-        
-        
-        
-    </ul>
-
-    <div class="breaker"></div>
-    
-    <h2 class="title" id="centos">#centos</h2>
-
-    <ul class="list">
-        
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/centos-install-docker/">
-                            <aside class="date"><time datetime="04-02-2021">Feb 04 2021</time></aside>
-                            <h3 class="title">在CentOS安装docker</h3>
-                        </a>
-                    </li>
-                
-            
-        
-        
-        
-    </ul>
-
-    <div class="breaker"></div>
-    
-    <h2 class="title" id="算法交易">#算法交易</h2>
-
-    <ul class="list">
-        
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1/">
-                            <aside class="date"><time datetime="08-02-2021">Feb 08 2021</time></aside>
-                            <h3 class="title">Ernest P. Chan: Winning Strategies and Their Rationale (1)</h3>
-                        </a>
-                    </li>
-                
-            
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/">
-                            <aside class="date"><time datetime="01-04-2021">Apr 01 2021</time></aside>
-                            <h3 class="title">Ernest P. Chan: Winning Strategies and Their Rationale (3)</h3>
-                        </a>
-                    </li>
-                
-            
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/sample-mean-and-variance/">
-                            <aside class="date"><time datetime="01-04-2021">Apr 01 2021</time></aside>
-                            <h3 class="title">Sample Mean and Variance</h3>
-                        </a>
-                    </li>
-                
-            
-        
-        
-        
-    </ul>
-
-    <div class="breaker"></div>
-    
-    <h2 class="title" id="vncserver">#vncserver</h2>
-
-    <ul class="list">
-        
-        
-            
-                
-                    <li class="item">
-                        <a class="url" href="http://localhost:4000/centos-7-remote-connect-gui/">
-                            <aside class="date"><time datetime="30-03-2021">Mar 30 2021</time></aside>
-                            <h3 class="title">CentOS 7 远程连接GUI界面</h3>
-                        </a>
-                    </li>
-                
-            
-        
-        
-        
-    </ul>
-
-    <div class="breaker"></div>
-    
+        var disqus_config = function () {
+            this.page.url = 'http://localhost:4000/sample-mean-and-variance/';
+            this.page.identifier = '/sample-mean-and-variance';
+        };
+        var disqus_shortname = 'josephchenhk';
+        var disqus_developer = 0;
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 </section>
+
+
 
 
 <footer class="footer-main">
