@@ -14,16 +14,16 @@
 <meta property="og:title" content="Sample Mean and Variance" />
 <meta name="author" content="joseph" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="读书笔记" />
-<meta property="og:description" content="读书笔记" />
+<meta name="description" content="knowledge of statistics" />
+<meta property="og:description" content="knowledge of statistics" />
 <link rel="canonical" href="http://localhost:4000/sample-mean-and-variance/" />
 <meta property="og:url" content="http://localhost:4000/sample-mean-and-variance/" />
 <meta property="og:site_name" content="Joseph Chen" />
 <meta property="og:image" content="http://localhost:4000/assets/images/markdown.jpg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2021-04-01T09:52:38+08:00" />
+<meta property="article:published_time" content="2021-05-26T09:52:38+08:00" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/sample-mean-and-variance/","headline":"Sample Mean and Variance","dateModified":"2021-04-01T09:52:38+08:00","datePublished":"2021-04-01T09:52:38+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/sample-mean-and-variance/"},"image":"http://localhost:4000/assets/images/markdown.jpg","author":{"@type":"Person","name":"joseph"},"description":"读书笔记","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/sample-mean-and-variance/","headline":"Sample Mean and Variance","dateModified":"2021-05-26T09:52:38+08:00","datePublished":"2021-05-26T09:52:38+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/sample-mean-and-variance/"},"image":"http://localhost:4000/assets/images/markdown.jpg","author":{"@type":"Person","name":"joseph"},"description":"knowledge of statistics","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -506,7 +506,7 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 <h1 class="title">Sample Mean and Variance</h1>
 
 <span class="date">
-    <time datetime="01-04-2021">Thursday. April 01, 2021</time>
+    <time datetime="26-05-2021">Wednesday. May 26, 2021</time>
      - <span class="reading-time" title="Estimated read time">
     
 
@@ -520,7 +520,9 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
     <div class="post-tags">
         
-            <a class="item" href="http://localhost:4000/tags/#算法交易">算法交易</a>
+            <a class="item" href="http://localhost:4000/tags/#systematic-trading">systematic trading</a>
+        
+            <a class="item" href="http://localhost:4000/tags/#statistics">statistics</a>
         
     </div>
 
@@ -597,7 +599,7 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 \bar{X}_{sm,4} &= \frac{X_2 + X_3 + X_4} {3} 
 \end{align*} %]]></script>
 
-<p>where $sm$ stands for <em>sample mean</em>. For this <strong>distribution of sample mean</strong> <script type="math/tex">\vec{X}_{sm} =\left( \bar{X}_{sm,1} , \bar{X}_{sm,2} , \bar{X}_{sm,3} , \bar{X}_{sm,4} \right)</script>,   we can calculate its mean and variance:</p>
+<p>where $sm$ stands for <em>sample mean</em>. For this <strong>distribution of sample mean</strong>  <script type="math/tex">\vec{X}_{sm} = (\bar{X}_{sm,1} ,\bar{X}_{sm,2} ,\bar{X}_{sm,3} ,\bar{X}_{sm,4} )</script>,   we can calculate its mean and variance:</p>
 
 <p>(3). mean of sample mean:</p>
 
@@ -712,7 +714,7 @@ s^2 = \frac{1}{\color{blue}{n-1}} \sum_{i=1}^{n} \left( X_{sm},i-\mu_{sm} \right
 \textbf{E}\left( \sum_{i=1}^{n} \left( X_{sm,i}-\mu_{sm} \right)^2 \right) 
 									&= \textbf{E}\left( \sum_{i=1}^{n}X_{sm,i}^2 - 2\cdot \mu_{sm}\cdot\sum_{i=1}^{n} X_{sm,i} + n\cdot\mu_{sm}^2 \right) \\
 									&= \textbf{E}\left( \sum_{i=1}^{n}X_{sm,i}^2 - n\cdot\mu_{sm}^2 \right)  
-									[\color{green}{\textbf{E}(X_{sm,i} )=\mu_{sm}, \text{ and } \textbf{E}(\mu_{sm}\cdot X)=\mu_{sm}\cdot\textbf{E}(X)}]\\
+									[\color{green}{\sum_{i=1}^{n} X_{sm,i}=n\cdot \mu_{sm}}]\\
 									&=n\cdot\textbf{E}(X_{sm,i}^2) - n\cdot\textbf{E}(\mu_{sm}^2) \\
 									&=n\cdot\left[ \textbf{Var}(X_{sm,i}) + \left(\textbf{E}(X_{sm,i})\right)^2 \right]- n\cdot\left[ \textbf{Var}(\mu_{sm}) + \left(\textbf{E}(\mu_{sm})\right)^2 \right]
 									[\color{green}{\textbf{E}(\vec{X}^2) =\textbf{Var}(\vec{X})  + \left[\textbf{E}(\vec{X})  \right]^2}] \\
@@ -746,49 +748,11 @@ s^2 = \frac{1}{\color{blue}{n-1}} \sum_{i=1}^{n} \left( X_{sm},i-\mu_{sm} \right
             
                 
             
-        
-    
-        
-        
-            
-                
-                    
-                    <h4>Related Posts</h4>
-                    <ul>
-                    
-                    <li class="relatedPost">
-                        <a href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/">Ernest P. Chan: Winning Strategies and Their Rationale (3)
-                        
-                        </a>
-                    </li>
-                    
-                    
                 
             
         
-    
-        
-        
             
                 
-            
-        
-    
-        
-        
-            
-                
-                    
-                    <li class="relatedPost">
-                        <a href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1/">Ernest P. Chan: Winning Strategies and Their Rationale (1)
-                        
-                        </a>
-                    </li>
-                    
-                    
-                
-            
-        
             
                 
             
@@ -799,7 +763,14 @@ s^2 = \frac{1}{\color{blue}{n-1}} \sum_{i=1}^{n} \left( X_{sm},i-\mu_{sm} \right
             
                 
             
+                
+            
         
+    
+        
+        
+            
+                
             
                 
             
@@ -810,7 +781,11 @@ s^2 = \frac{1}{\color{blue}{n-1}} \sum_{i=1}^{n} \left( X_{sm},i-\mu_{sm} \right
             
                 
             
+                
+            
         
+            
+                
             
                 
             
@@ -821,7 +796,11 @@ s^2 = \frac{1}{\color{blue}{n-1}} \sum_{i=1}^{n} \left( X_{sm},i-\mu_{sm} \right
             
                 
             
+                
+            
         
+            
+                
             
                 
             
@@ -832,7 +811,11 @@ s^2 = \frac{1}{\color{blue}{n-1}} \sum_{i=1}^{n} \left( X_{sm},i-\mu_{sm} \right
             
                 
             
+                
+            
         
+            
+                
             
                 
             
@@ -843,7 +826,11 @@ s^2 = \frac{1}{\color{blue}{n-1}} \sum_{i=1}^{n} \left( X_{sm},i-\mu_{sm} \right
             
                 
             
+                
+            
         
+            
+                
             
                 
             
@@ -854,7 +841,11 @@ s^2 = \frac{1}{\color{blue}{n-1}} \sum_{i=1}^{n} \left( X_{sm},i-\mu_{sm} \right
             
                 
             
+                
+            
         
+            
+                
             
                 
             
@@ -865,7 +856,11 @@ s^2 = \frac{1}{\color{blue}{n-1}} \sum_{i=1}^{n} \left( X_{sm},i-\mu_{sm} \right
             
                 
             
+                
+            
         
+            
+                
             
                 
             
@@ -876,6 +871,14 @@ s^2 = \frac{1}{\color{blue}{n-1}} \sum_{i=1}^{n} \left( X_{sm},i-\mu_{sm} \right
             
                 
             
+                
+            
+        
+            
+                
+            
+                
+            
         
     
         
@@ -883,14 +886,40 @@ s^2 = \frac{1}{\color{blue}{n-1}} \sum_{i=1}^{n} \left( X_{sm},i-\mu_{sm} \right
             
                 
             
+                
+            
         
+            
+                
             
                 
             
         
     
+        
+        
+            
+                
+            
+                
+            
+        
     
-        </ul>
+        
+        
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+        
+    
     
 </div>
 
@@ -908,7 +937,7 @@ s^2 = \frac{1}{\color{blue}{n-1}} \sum_{i=1}^{n} \left( X_{sm},i-\mu_{sm} \right
 
     <div class="toright">
         <h4 class="name">Joseph Chen</h4>
-        <p class="bio">physicist/trader/travelor</p>
+        <p class="bio">physicist/trader/traveler</p>
 
         <div class="share">
             <!-- Note: Only use three share links if your site width is set to large -->
@@ -932,7 +961,7 @@ s^2 = \frac{1}{\color{blue}{n-1}} \sum_{i=1}^{n} \left( X_{sm},i-\mu_{sm} \right
                 ><span class="icon-facebook-rect">Share</span>
             </a>
 
-            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/sample-mean-and-variance/&amp;title=Sample Mean and Variance&amp;summary=读书笔记&amp;source=http://localhost:4000" target="_blank">
+            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/sample-mean-and-variance/&amp;title=Sample Mean and Variance&amp;summary=knowledge of statistics&amp;source=http://localhost:4000" target="_blank">
                 <svg class="icon icon-linkedin"><use xlink:href="#icon-linkedin"></use></svg><span class="icon-linkedin">Share</span>
             </a> -->
 

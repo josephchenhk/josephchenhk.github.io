@@ -1,15 +1,16 @@
 ---
 title: Sample Mean and Variance
 layout: post
-date: '2021-04-01 09:52:38'
+date: '2021-05-26 09:52:38'
 image: assets/images/markdown.jpg
 headerImage: false
 tag:
-- 算法交易
+- systematic trading
+- statistics
 star: true
 category: blog
 author: joseph
-description: 读书笔记
+description: knowledge of statistics
 ---
 
 <head>
@@ -93,7 +94,7 @@ $$
 \end{align*} 
 $$
 
-where $sm$ stands for *sample mean*. For this **distribution of sample mean** $$\vec{X}_{sm} =\left( \bar{X}_{sm,1} , \bar{X}_{sm,2} , \bar{X}_{sm,3} , \bar{X}_{sm,4} \right)$$,   we can calculate its mean and variance:
+where $sm$ stands for *sample mean*. For this **distribution of sample mean**  $$\vec{X}_{sm} = (\bar{X}_{sm,1} ,\bar{X}_{sm,2} ,\bar{X}_{sm,3} ,\bar{X}_{sm,4} )$$,   we can calculate its mean and variance:
 
 (3). mean of sample mean: 
 
@@ -226,7 +227,7 @@ $$
 \textbf{E}\left( \sum_{i=1}^{n} \left( X_{sm,i}-\mu_{sm} \right)^2 \right) 
 									&= \textbf{E}\left( \sum_{i=1}^{n}X_{sm,i}^2 - 2\cdot \mu_{sm}\cdot\sum_{i=1}^{n} X_{sm,i} + n\cdot\mu_{sm}^2 \right) \\
 									&= \textbf{E}\left( \sum_{i=1}^{n}X_{sm,i}^2 - n\cdot\mu_{sm}^2 \right)  
-									[\color{green}{\textbf{E}(X_{sm,i} )=\mu_{sm}, \text{ and } \textbf{E}(\mu_{sm}\cdot X)=\mu_{sm}\cdot\textbf{E}(X)}]\\
+									[\color{green}{\sum_{i=1}^{n} X_{sm,i}=n\cdot \mu_{sm}}]\\
 									&=n\cdot\textbf{E}(X_{sm,i}^2) - n\cdot\textbf{E}(\mu_{sm}^2) \\
 									&=n\cdot\left[ \textbf{Var}(X_{sm,i}) + \left(\textbf{E}(X_{sm,i})\right)^2 \right]- n\cdot\left[ \textbf{Var}(\mu_{sm}) + \left(\textbf{E}(\mu_{sm})\right)^2 \right]
 									[\color{green}{\textbf{E}(\vec{X}^2) =\textbf{Var}(\vec{X})  + \left[\textbf{E}(\vec{X})  \right]^2}] \\

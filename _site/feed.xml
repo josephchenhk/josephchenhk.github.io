@@ -1,36 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-05-26T14:42:36+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about Joseph</subtitle><entry><title type="html">Ernest P. Chan: Winning Strategies and Their Rationale (3)</title><link href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/" rel="alternate" type="text/html" title="Ernest P. Chan: Winning Strategies and Their Rationale (3)" /><published>2021-04-01T09:52:38+08:00</published><updated>2021-04-01T09:52:38+08:00</updated><id>http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3</id><content type="html" xml:base="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/">&lt;head&gt;
-    &lt;script src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
-    &lt;script type=&quot;text/x-mathjax-config&quot;&gt;
-        MathJax.Hub.Config({
-            tex2jax: {
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-            inlineMath: [['$','$']]
-            }
-        });
-    &lt;/script&gt;
-&lt;/head&gt;
-
-&lt;h1 id=&quot;tests-for-time-series-momentum&quot;&gt;Tests for Time Series Momentum&lt;/h1&gt;
-
-&lt;p&gt;计算时间序列的correlation，首先需要&lt;strong&gt;选取一个time lag&lt;/strong&gt;，站在某个时间点上，我们总会有两个return：过去一段时间(-N)的return，和未来一段时间(+M)的return，我们需要计算在时间序列上两者的相关系数：&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;Corr(R(-N, t), R(+M, t)) = \rho(R(-N, t), R(+M, t))&lt;/script&gt;
-
-&lt;p&gt;尽可能尝试不同的(N,M)组合，去找出最optimal（相关系数最大）的look-back period (N) 和holding period (M).&lt;/p&gt;
-
-&lt;p&gt;计算时，需要注意要么look-back period不能重叠，要么holding period不能重叠，如下图所示：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images_in_posts/overlap_lookback_holding.png&quot; alt=&quot;Markdown Image&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;variance-ratio-test&quot;&gt;Variance Ratio test&lt;/h1&gt;
-&lt;p&gt;“variance-ratio test”又称作 “F-ratio test” 或者F-test.  F-test 主要表征两个分布的方差的比例&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;F = \frac{s_1^2}{s_2^2}&lt;/script&gt;
-
-&lt;p&gt;其中，$s_1^2=\frac{\sum(x_1-\bar{x}_1)^2}{n_1-1}$， $s_2^2=\frac{\sum(x_2-\bar{x}_2)^2}{n_2-1}$&lt;/p&gt;
-
-&lt;p&gt;Variance-ratio test由Cochrane（1988）年发展，主要用于检测时间序列是否具备均值回归（mean-reverting）的特性。其原理为：若价格时间序列遵从
-随机漫步过程，则任意K期的资产回报率的方差（Variance）与时间间隔K成正比。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="算法交易" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Sample Mean and Variance</title><link href="http://localhost:4000/sample-mean-and-variance/" rel="alternate" type="text/html" title="Sample Mean and Variance" /><published>2021-04-01T09:52:38+08:00</published><updated>2021-04-01T09:52:38+08:00</updated><id>http://localhost:4000/sample-mean-and-variance</id><content type="html" xml:base="http://localhost:4000/sample-mean-and-variance/">&lt;head&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-05-28T11:28:35+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about Joseph</subtitle><entry><title type="html">Sample Mean and Variance</title><link href="http://localhost:4000/sample-mean-and-variance/" rel="alternate" type="text/html" title="Sample Mean and Variance" /><published>2021-05-26T09:52:38+08:00</published><updated>2021-05-26T09:52:38+08:00</updated><id>http://localhost:4000/sample-mean-and-variance</id><content type="html" xml:base="http://localhost:4000/sample-mean-and-variance/">&lt;head&gt;
     &lt;script src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
     &lt;script type=&quot;text/x-mathjax-config&quot;&gt;
         MathJax.Hub.Config({
@@ -102,7 +70,7 @@
 \bar{X}_{sm,4} &amp;= \frac{X_2 + X_3 + X_4} {3} 
 \end{align*} %]]&gt;&lt;/script&gt;
 
-&lt;p&gt;where $sm$ stands for &lt;em&gt;sample mean&lt;/em&gt;. For this &lt;strong&gt;distribution of sample mean&lt;/strong&gt; &lt;script type=&quot;math/tex&quot;&gt;\vec{X}_{sm} =\left( \bar{X}_{sm,1} , \bar{X}_{sm,2} , \bar{X}_{sm,3} , \bar{X}_{sm,4} \right)&lt;/script&gt;,   we can calculate its mean and variance:&lt;/p&gt;
+&lt;p&gt;where $sm$ stands for &lt;em&gt;sample mean&lt;/em&gt;. For this &lt;strong&gt;distribution of sample mean&lt;/strong&gt;  &lt;script type=&quot;math/tex&quot;&gt;\vec{X}_{sm} = (\bar{X}_{sm,1} ,\bar{X}_{sm,2} ,\bar{X}_{sm,3} ,\bar{X}_{sm,4} )&lt;/script&gt;,   we can calculate its mean and variance:&lt;/p&gt;
 
 &lt;p&gt;(3). mean of sample mean:&lt;/p&gt;
 
@@ -217,7 +185,7 @@ s^2 = \frac{1}{\color{blue}{n-1}} \sum_{i=1}^{n} \left( X_{sm},i-\mu_{sm} \right
 \textbf{E}\left( \sum_{i=1}^{n} \left( X_{sm,i}-\mu_{sm} \right)^2 \right) 
 									&amp;= \textbf{E}\left( \sum_{i=1}^{n}X_{sm,i}^2 - 2\cdot \mu_{sm}\cdot\sum_{i=1}^{n} X_{sm,i} + n\cdot\mu_{sm}^2 \right) \\
 									&amp;= \textbf{E}\left( \sum_{i=1}^{n}X_{sm,i}^2 - n\cdot\mu_{sm}^2 \right)  
-									[\color{green}{\textbf{E}(X_{sm,i} )=\mu_{sm}, \text{ and } \textbf{E}(\mu_{sm}\cdot X)=\mu_{sm}\cdot\textbf{E}(X)}]\\
+									[\color{green}{\sum_{i=1}^{n} X_{sm,i}=n\cdot \mu_{sm}}]\\
 									&amp;=n\cdot\textbf{E}(X_{sm,i}^2) - n\cdot\textbf{E}(\mu_{sm}^2) \\
 									&amp;=n\cdot\left[ \textbf{Var}(X_{sm,i}) + \left(\textbf{E}(X_{sm,i})\right)^2 \right]- n\cdot\left[ \textbf{Var}(\mu_{sm}) + \left(\textbf{E}(\mu_{sm})\right)^2 \right]
 									[\color{green}{\textbf{E}(\vec{X}^2) =\textbf{Var}(\vec{X})  + \left[\textbf{E}(\vec{X})  \right]^2}] \\
@@ -230,7 +198,39 @@ s^2 = \frac{1}{\color{blue}{n-1}} \sum_{i=1}^{n} \left( X_{sm},i-\mu_{sm} \right
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation*} 
 \textbf{E}\left( \frac{1}{\color{blue}{n-1}}\sum_{i=1}^{n} \left( X_{sm,i}-\mu_{sm} \right)^2 \right) = \sigma^2
-\end{equation*}&lt;/script&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="算法交易" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">CentOS 7 远程连接GUI界面</title><link href="http://localhost:4000/centos-7-remote-connect-gui/" rel="alternate" type="text/html" title="CentOS 7 远程连接GUI界面" /><published>2021-03-30T17:15:18+08:00</published><updated>2021-03-30T17:15:18+08:00</updated><id>http://localhost:4000/centos-7-remote-connect-gui</id><content type="html" xml:base="http://localhost:4000/centos-7-remote-connect-gui/">&lt;h1 id=&quot;安装vnc-server&quot;&gt;安装vnc-server&lt;/h1&gt;
+\end{equation*}&lt;/script&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="systematic trading" /><category term="statistics" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Ernest P. Chan: Winning Strategies and Their Rationale (3)</title><link href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/" rel="alternate" type="text/html" title="Ernest P. Chan: Winning Strategies and Their Rationale (3)" /><published>2021-04-01T09:52:38+08:00</published><updated>2021-04-01T09:52:38+08:00</updated><id>http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3</id><content type="html" xml:base="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-3/">&lt;head&gt;
+    &lt;script src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+    &lt;script type=&quot;text/x-mathjax-config&quot;&gt;
+        MathJax.Hub.Config({
+            tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            inlineMath: [['$','$']]
+            }
+        });
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;h1 id=&quot;tests-for-time-series-momentum&quot;&gt;Tests for Time Series Momentum&lt;/h1&gt;
+
+&lt;p&gt;计算时间序列的correlation，首先需要&lt;strong&gt;选取一个time lag&lt;/strong&gt;，站在某个时间点上，我们总会有两个return：过去一段时间(-N)的return，和未来一段时间(+M)的return，我们需要计算在时间序列上两者的相关系数：&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;Corr(R(-N, t), R(+M, t)) = \rho(R(-N, t), R(+M, t))&lt;/script&gt;
+
+&lt;p&gt;尽可能尝试不同的(N,M)组合，去找出最optimal（相关系数最大）的look-back period (N) 和holding period (M).&lt;/p&gt;
+
+&lt;p&gt;计算时，需要注意要么look-back period不能重叠，要么holding period不能重叠，如下图所示：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images_in_posts/overlap_lookback_holding.png&quot; alt=&quot;Markdown Image&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;variance-ratio-test&quot;&gt;Variance Ratio test&lt;/h1&gt;
+&lt;p&gt;“variance-ratio test”又称作 “F-ratio test” 或者F-test.  F-test 主要表征两个分布的方差的比例&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;F = \frac{s_1^2}{s_2^2}&lt;/script&gt;
+
+&lt;p&gt;其中，$s_1^2=\frac{\sum(x_1-\bar{x}_1)^2}{n_1-1}$， $s_2^2=\frac{\sum(x_2-\bar{x}_2)^2}{n_2-1}$&lt;/p&gt;
+
+&lt;p&gt;Variance-ratio test由Cochrane（1988）年发展，主要用于检测时间序列是否具备均值回归（mean-reverting）的特性。其原理为：若价格时间序列遵从
+随机漫步过程，则任意K期的资产回报率的方差（Variance）与时间间隔K成正比。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="算法交易" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">CentOS 7 远程连接GUI界面</title><link href="http://localhost:4000/centos-7-remote-connect-gui/" rel="alternate" type="text/html" title="CentOS 7 远程连接GUI界面" /><published>2021-03-30T17:15:18+08:00</published><updated>2021-03-30T17:15:18+08:00</updated><id>http://localhost:4000/centos-7-remote-connect-gui</id><content type="html" xml:base="http://localhost:4000/centos-7-remote-connect-gui/">&lt;h1 id=&quot;安装vnc-server&quot;&gt;安装vnc-server&lt;/h1&gt;
 &lt;p&gt;有了桌面环境，一般可以通过云服务器厂商提供的web终端远程连接进入桌面。用web终端每次都需要打开浏览器，然后登陆云管理后台再连接，比较麻烦。我们采取直接从桌面客户端远程连接的方式，省去打开浏览器和登录云管理后台的操作。&lt;/p&gt;
 
 &lt;p&gt;远程桌面技术有多种，例如VNC, TeamViewer, RDP等，本文使用免费且广泛使用的VNC。&lt;/p&gt;
