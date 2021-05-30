@@ -1,4 +1,116 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-05-28T11:28:35+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about Joseph</subtitle><entry><title type="html">Sample Mean and Variance</title><link href="http://localhost:4000/sample-mean-and-variance/" rel="alternate" type="text/html" title="Sample Mean and Variance" /><published>2021-05-26T09:52:38+08:00</published><updated>2021-05-26T09:52:38+08:00</updated><id>http://localhost:4000/sample-mean-and-variance</id><content type="html" xml:base="http://localhost:4000/sample-mean-and-variance/">&lt;head&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-05-28T18:58:09+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about Joseph</subtitle><entry><title type="html">Stationary Time Series Tests</title><link href="http://localhost:4000/stationary_time_series_test/" rel="alternate" type="text/html" title="Stationary Time Series Tests" /><published>2021-05-28T09:55:00+08:00</published><updated>2021-05-28T09:55:00+08:00</updated><id>http://localhost:4000/stationary_time_series_test</id><content type="html" xml:base="http://localhost:4000/stationary_time_series_test/">&lt;head&gt;
+    &lt;script src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+    &lt;script type=&quot;text/x-mathjax-config&quot;&gt;
+        MathJax.Hub.Config({
+            tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            inlineMath: [['$','$']]
+            }
+        });
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;p&gt;In the previous &lt;a href=&quot;https://josephchenhk.github.io/sample-mean-and-variance/&quot;&gt;post&lt;/a&gt;, we investigated the population mean and variance, and the sample mean and variance. We also understand what is an unbiased estimator of the population variance. Now we are going to look for ways to test for mean reversion on time series using the Python programming language, which will give us the basic toolbox to deal with cointegration in future posts.&lt;/p&gt;
+
+&lt;h1 id=&quot;mean-reversion-process&quot;&gt;Mean Reversion Process&lt;/h1&gt;
+&lt;p&gt;Mathematically, a continuous mean-reverting time series can be represented by an Ornstein-Uhlenbeck stochastic differential equation in the following form:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation} \label{ou-eq}
+dx_t = \theta(\mu - x_t)dt + \sigma dW_t
+\end{equation}&lt;/script&gt;
+
+&lt;p&gt;Where $\theta$ is the rate of reversion to the mean, $\mu$ is the mean value of the process, $\sigma$ is the standard deviation (and $\sigma^2$ is the variance) of the process and, finally, $W_t$ is a Wiener process. The given equation implies that the change of the time series in the next period is proportional to the difference between the mean and the current value, with the addition of Gaussian noise.&lt;/p&gt;
+
+&lt;p&gt;In discrete form, this OU equation is given as (just let $\Delta t=1$, and change differentiaon to $\Delta$)&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation} 
+\Delta x_t = \theta(\mu - x_{t-1}) + \sigma \Delta W_t
+\end{equation}&lt;/script&gt;
+
+&lt;p&gt;where $\Delta x_t = x_t - x_{t-1}$.&lt;/p&gt;
+&lt;h1 id=&quot;augmented-dickey-fuller-test&quot;&gt;Augmented Dickey-Fuller Test&lt;/h1&gt;
+&lt;p&gt;The Augmented Dickey-Fuller test provides a quick check and confirmatory evidence that your time series is stationary or non-stationary. We should take into account that is a statistical test, and as such it can only be used to inform the degree to which a null hypothesis can be accepted or rejected. So the given result must be interpreted to be meaningful.&lt;/p&gt;
+
+&lt;p&gt;The ADF test is based on the simple observation that if the value level is higher than the mean, the next move will be downward while if the value is lower than the mean, the next move will be upward.&lt;/p&gt;
+
+&lt;p&gt;We can describe the value changes with the following linear model:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation} 
+\Delta x_t = \lambda x_{t-1} + \mu + \beta t + \alpha_1 \Delta x_{t-1} + ... + \alpha_k \Delta x_{t-k}  + \epsilon_t
+\end{equation}&lt;/script&gt;
+
+&lt;p&gt;where $\Delta x(t) = x(t) - x(t-1)$, $\Delta x(t-1) = x(t-1) - x(t-2)$ and so on.&lt;/p&gt;
+
+&lt;p&gt;The function of the ADF is to test if $\lambda = 0$. &lt;strong&gt;If the hypothesis $\lambda = 0$ can be rejected&lt;/strong&gt;, that means the next move $\Delta x(t)$ depends on the current level $x(t-1)$ and so &lt;strong&gt;it is not a random walk&lt;/strong&gt;. The test statistic is the regression coeficient $\lambda$ divided by the standard error of the regression fit:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation} 
+DF = \frac{\lambda }{SE(\lambda)}
+\end{equation}&lt;/script&gt;
+
+&lt;p&gt;Dickey and Fuller have already calculated the distribution of this test statistic, which allows us to determine the rejection of the hypothesis for any chosen percentage critical value. Since we expect mean regression to be negative (i.e., $\lambda$ is expected to be negative here if this is a mean-reverting time series) and it has to be more negative than the critical value for the hypothesis to be rejected.&lt;/p&gt;
+
+&lt;p&gt;We can simply interpret the result using the p-value from the test. A p-value below a specified threshold (we are going to use 5%) suggests we reject the null hypothesis (stationary), otherwise a p-value above the threshold suggests we accept the null hypothesis (non-stationary).&lt;/p&gt;
+
+&lt;p&gt;A naive implementation of the ADF test in Python is shown here:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import numpy as np
+from statsmodels.regression.linear_model import OLS
+from statsmodels.tsa.tsatools import lagmat, add_trend
+from statsmodels.tsa.adfvalues import mackinnonp
+
+def adf(ts, maxlag:int=None):
+    &quot;&quot;&quot;
+    Augmented Dickey-Fuller unit root test
+
+    tsdall[explanatory variable] (maxlag=3 as an example)
+    * 1st column(tsdall[:,0]): [x3, x4, ..., x_{t-2}, x_{t-1}] are X variables (corresponding to coefficient *lambda*)
+    * 2nd column(tsdall[:,1]): [x3-x2, x4-x3, ..., x_{t-2}-x_{t-3}, x_{t-1}-x_{t-2}] are X variables (corresponding to coeff *alpha_1*)
+    * 3rd column(tsdall[:,2]): [x2-x1, x3-x2, ..., x_{t-3}-x_{t-4}, x_{t-2}-x_{t-3}] are X variables (corresponding to coeff *alpha_2*)
+    * 4th column(tsdall[:,3]): [x1-x0, x2-x1, ..., x_{t-4}-x_{t-3}, x_{t-3}-x_{t-4}] are X variables (corresponding to coeff *alpha_3*)
+
+    tsdshort[response variable]:
+    * [x4-x3, x5-x4, ..., x_{t-1}-x_{t-2}, x_t-x_{t-1}] are the Y variables
+
+    Regression:
+    * x4-x3 = lambda*x3 + alpha1*(x3-x2) + alpha2*(x2-x1) + alpha3*(x1-x0) + mu + epsilon
+    * x5-x4 = lambda*x4 + alpha1*(x4-x3) + alpha2*(x3-x2) + alpha3*(x2-x1) + mu + epsilon
+    * ...
+    * x_t-x_{t-1} = lambda*x_{t-1} + alpha1*(x_{t-1}-x_{t-2}) + alpha2*(x_{t-2}-x_{t-3}) + alpha3*(x_{t-3}-x_{t-4}) + mu + epsilon
+    &quot;&quot;&quot;
+    # Maximum lag which is included in test, default 12*(nobs/100)^{1/4} 
+    # Ref: https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.adfuller.html
+    if maxlag is None:
+        maxlag = int(np.ceil(12 * (len(ts) / 100) ** (1 / 4)))
+
+    # make sure we are working with an array, convert if necessary
+    ts = np.asarray(ts)
+
+    # Calculate the discrete difference
+    tsdiff = np.diff(ts)
+
+    # Create a 2d array of lags, trim invalid observations on both sides
+    tsdall = lagmat(tsdiff[:, None], maxlag, trim='both', original='in')
+
+    # Get dimension of the array
+    nobs = tsdall.shape[0]
+
+    # [explanatory variable] replace first column ([:,0]) xdiff with level of x
+    tsdall[:, 0] = ts[-nobs - 1:-1]
+
+    # [response variable]
+    tsdshort = tsdiff[-nobs:]
+
+    # Calculate the linear regression using an ordinary least squares model
+    results = OLS(tsdshort, add_trend(tsdall[:, :maxlag + 1], 'c')).fit()
+
+    # adfstat = DF = lambda / SE(lambda)
+    adfstat = results.tvalues[0]
+
+    # Get approx p-value from a precomputed table (from stattools)
+    pvalue = mackinnonp(adfstat, 'c', N=1)
+
+    return adfstat, pvalue
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="systematic trading" /><category term="statistics" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Sample Mean and Variance</title><link href="http://localhost:4000/sample-mean-and-variance/" rel="alternate" type="text/html" title="Sample Mean and Variance" /><published>2021-05-26T09:52:38+08:00</published><updated>2021-05-26T09:52:38+08:00</updated><id>http://localhost:4000/sample-mean-and-variance</id><content type="html" xml:base="http://localhost:4000/sample-mean-and-variance/">&lt;head&gt;
     &lt;script src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
     &lt;script type=&quot;text/x-mathjax-config&quot;&gt;
         MathJax.Hub.Config({
@@ -718,26 +830,6 @@ gitlab Reconfigured!&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git clone git@192.168.2.24:/home/git/gitrepo/algo.git&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;192.168.2.24为Git所在服务器ip，需要将其改为你自己的服务器ip。这样我们的Git服务器就安装完成了。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="Git" /><category term="server" /><summary type="html">安装Git</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">远程连接至局域网</title><link href="http://localhost:4000/remote-access-to-local-network/" rel="alternate" type="text/html" title="远程连接至局域网" /><published>2020-07-20T19:23:00+08:00</published><updated>2020-07-20T19:23:00+08:00</updated><id>http://localhost:4000/remote-access-to-local-network</id><content type="html" xml:base="http://localhost:4000/remote-access-to-local-network/">&lt;h2 id=&quot;安装vmware-workstation&quot;&gt;安装Vmware Workstation&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;下载：&lt;a href=&quot;https://www.macxin.com/archives/3156.html&quot;&gt;WMware Workstation Pro 14.1.0 Linux 完美破解版 多语言版&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;注册码：(适合VMware 2017 v14.x) FF31K-AHZD1-H8ETZ-8WWEZ-WUUVA / CV7T2-6WY5Q-48EWP-ZXY7X-QGUWD&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;上传至服务器之后，解压，得到&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;o+x VMware-Workstation-Full-14.1.0-7370693.x86_64.bundle
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;./WMware-Workstation-Full-14.1.0-7370693.x86_64.bundle
-&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;填上上面的注册码&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# 安装好后打开，会提示安装gcc&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;gcc
-&lt;span class=&quot;c&quot;&gt;# 装好gcc之后再次尝试打开，会提示Kernel Headers 3.10.0-1127.13.el7.x86_64 not found，查看现有kernels headers，如果没有的话安装&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /usr/src/kernels/
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;kernel-devel
-&lt;span class=&quot;c&quot;&gt;# 装好kernel-devel之后再次尝试打开，会提示还有several packages need to compile，点击install，安装之后会提示失败，不要管它，点击cancel，之后再次打开，就ok了&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;下载CentOS-7-x86_64-Minimal-2003.iso并上传至服务器，打开vmware workstation，安装镜像。当安装完成之后，会提示说”Could not open /dev/vmmon: No such file or direcotry. Please make sure that the kernel module &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmmon&lt;/code&gt; is loaded.”&lt;/p&gt;
-
-&lt;p&gt;这个错误大概是说vmmonitor和vmnet这两个模块没有经过签名认证，所以vmware出于安全的考虑，无法built。解决方案之一是重启系统，进入bios修改secure boot，将之改为disable，再重新尝试即可。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="markdown" /><category term="elements" /><summary type="html">安装Vmware Workstation 下载：WMware Workstation Pro 14.1.0 Linux 完美破解版 多语言版 注册码：(适合VMware 2017 v14.x) FF31K-AHZD1-H8ETZ-8WWEZ-WUUVA / CV7T2-6WY5Q-48EWP-ZXY7X-QGUWD</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">RHEL 7.5（二）安装Vmware Workstation</title><link href="http://localhost:4000/vmware-workstation/" rel="alternate" type="text/html" title="RHEL 7.5（二）安装Vmware Workstation" /><published>2020-07-18T17:39:00+08:00</published><updated>2020-07-18T17:39:00+08:00</updated><id>http://localhost:4000/vmware-workstation</id><content type="html" xml:base="http://localhost:4000/vmware-workstation/">&lt;h2 id=&quot;安装vmware-workstation&quot;&gt;安装Vmware Workstation&lt;/h2&gt;
 &lt;ul&gt;
   &lt;li&gt;下载：&lt;a href=&quot;https://www.macxin.com/archives/3156.html&quot;&gt;WMware Workstation Pro 14.1.0 Linux 完美破解版 多语言版&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;注册码：(适合VMware 2017 v14.x) FF31K-AHZD1-H8ETZ-8WWEZ-WUUVA / CV7T2-6WY5Q-48EWP-ZXY7X-QGUWD&lt;/li&gt;

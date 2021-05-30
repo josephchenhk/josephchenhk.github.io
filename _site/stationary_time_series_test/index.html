@@ -9,21 +9,21 @@
     <meta name=author content="Joseph Chen">
 
     <!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>在CentOS安装docker | Joseph Chen</title>
+<title>Stationary Time Series Tests | Joseph Chen</title>
 <meta name="generator" content="Jekyll v3.8.7" />
-<meta property="og:title" content="在CentOS安装docker" />
+<meta property="og:title" content="Stationary Time Series Tests" />
 <meta name="author" content="joseph" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="docker in centos" />
-<meta property="og:description" content="docker in centos" />
-<link rel="canonical" href="http://localhost:4000/centos-install-docker/" />
-<meta property="og:url" content="http://localhost:4000/centos-install-docker/" />
+<meta name="description" content="knowledge of statistics" />
+<meta property="og:description" content="knowledge of statistics" />
+<link rel="canonical" href="http://localhost:4000/stationary_time_series_test/" />
+<meta property="og:url" content="http://localhost:4000/stationary_time_series_test/" />
 <meta property="og:site_name" content="Joseph Chen" />
 <meta property="og:image" content="http://localhost:4000/assets/images/markdown.jpg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2021-02-04T22:48:00+08:00" />
+<meta property="article:published_time" content="2021-05-28T09:55:00+08:00" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/centos-install-docker/","headline":"在CentOS安装docker","dateModified":"2021-02-04T22:48:00+08:00","datePublished":"2021-02-04T22:48:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/centos-install-docker/"},"image":"http://localhost:4000/assets/images/markdown.jpg","author":{"@type":"Person","name":"joseph"},"description":"docker in centos","@type":"BlogPosting","@context":"https://schema.org"}</script>
+{"url":"http://localhost:4000/stationary_time_series_test/","headline":"Stationary Time Series Tests","dateModified":"2021-05-28T09:55:00+08:00","datePublished":"2021-05-28T09:55:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/stationary_time_series_test/"},"image":"http://localhost:4000/assets/images/markdown.jpg","author":{"@type":"Person","name":"joseph"},"description":"knowledge of statistics","@type":"BlogPosting","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -49,7 +49,7 @@
 <meta name="msapplication-square310x310logo" content="mstile-310x310.png" />
 
 
-    <link rel="canonical" href="http://localhost:4000/centos-install-docker/">
+    <link rel="canonical" href="http://localhost:4000/stationary_time_series_test/">
     <link rel="alternate" type="application/rss+xml" title="" href="http://localhost:4000/feed.xml" />
 
     <style>
@@ -503,15 +503,15 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
 
 
-<h1 class="title">在CentOS安装docker</h1>
+<h1 class="title">Stationary Time Series Tests</h1>
 
 <span class="date">
-    <time datetime="04-02-2021">Thursday. February 04, 2021</time>
+    <time datetime="28-05-2021">Friday. May 28, 2021</time>
      - <span class="reading-time" title="Estimated read time">
     
 
     
-        1 min
+        4 mins
     
 </span>
 
@@ -520,78 +520,133 @@ pre { box-sizing: border-box; margin: 0 0 1.75em 0; width: 100%; padding: 5px 10
 
     <div class="post-tags">
         
-            <a class="item" href="http://localhost:4000/tags/#docker">docker</a>
+            <a class="item" href="http://localhost:4000/tags/#systematic-trading">systematic trading</a>
         
-            <a class="item" href="http://localhost:4000/tags/#centos">centos</a>
+            <a class="item" href="http://localhost:4000/tags/#statistics">statistics</a>
         
     </div>
 
 
-<h1 id="centos7安装docker详细步骤">centos7安装Docker详细步骤</h1>
+<head>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            inlineMath: [['$','$']]
+            }
+        });
+    </script>
+</head>
 
-<p>centos7安装Docker全过程记录（无坑版教程）：</p>
+<p>In the previous <a href="https://josephchenhk.github.io/sample-mean-and-variance/">post</a>, we investigated the population mean and variance, and the sample mean and variance. We also understand what is an unbiased estimator of the population variance. Now we are going to look for ways to test for mean reversion on time series using the Python programming language, which will give us the basic toolbox to deal with cointegration in future posts.</p>
 
-<h2 id="一安装前必读">一、安装前必读</h2>
-<p>在安装 Docker 之前，先说一下配置，我这里是Centos7
- Linux 内核：官方建议 3.10 以上，3.8以上貌似也可。</p>
+<h1 id="mean-reversion-process">Mean Reversion Process</h1>
+<p>Mathematically, a continuous mean-reverting time series can be represented by an Ornstein-Uhlenbeck stochastic differential equation in the following form:</p>
 
-<p>注意：本文的命令使用的是 root 用户登录执行，不是 root 的话所有命令前面要加 sudo</p>
+<script type="math/tex; mode=display">\begin{equation} \label{ou-eq}
+dx_t = \theta(\mu - x_t)dt + \sigma dW_t
+\end{equation}</script>
 
-<h3 id="1查看当前的内核版本">1.查看当前的内核版本</h3>
+<p>Where $\theta$ is the rate of reversion to the mean, $\mu$ is the mean value of the process, $\sigma$ is the standard deviation (and $\sigma^2$ is the variance) of the process and, finally, $W_t$ is a Wiener process. The given equation implies that the change of the time series in the next period is proportional to the difference between the mean and the current value, with the addition of Gaussian noise.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nb">uname</span> <span class="nt">-r</span></code></pre></figure>
+<p>In discrete form, this OU equation is given as (just let $\Delta t=1$, and change differentiaon to $\Delta$)</p>
 
-<h3 id="2使用-root-权限更新-yum-包生产环境中此步操作需慎重看自己情况学习的话随便搞">2.使用 root 权限更新 yum 包（生产环境中此步操作需慎重，看自己情况，学习的话随便搞）</h3>
+<script type="math/tex; mode=display">\begin{equation} 
+\Delta x_t = \theta(\mu - x_{t-1}) + \sigma \Delta W_t
+\end{equation}</script>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">注意​ 
-yum <span class="nt">-y</span> update：升级所有包同时也升级软件和系统内核；​ 
-yum <span class="nt">-y</span> upgrade：只升级所有包，不升级软件和系统内核</code></pre></figure>
+<p>where $\Delta x_t = x_t - x_{t-1}$.</p>
+<h1 id="augmented-dickey-fuller-test">Augmented Dickey-Fuller Test</h1>
+<p>The Augmented Dickey-Fuller test provides a quick check and confirmatory evidence that your time series is stationary or non-stationary. We should take into account that is a statistical test, and as such it can only be used to inform the degree to which a null hypothesis can be accepted or rejected. So the given result must be interpreted to be meaningful.</p>
 
-<h3 id="3卸载旧版本如果之前安装过的话">3.卸载旧版本（如果之前安装过的话）</h3>
+<p>The ADF test is based on the simple observation that if the value level is higher than the mean, the next move will be downward while if the value is lower than the mean, the next move will be upward.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">yum remove docker  docker-common docker-selinux docker-engine</code></pre></figure>
+<p>We can describe the value changes with the following linear model:</p>
 
-<h2 id="二安装docker的详细步骤">二、安装Docker的详细步骤</h2>
+<script type="math/tex; mode=display">\begin{equation} 
+\Delta x_t = \lambda x_{t-1} + \mu + \beta t + \alpha_1 \Delta x_{t-1} + ... + \alpha_k \Delta x_{t-k}  + \epsilon_t
+\end{equation}</script>
 
-<h3 id="1安装需要的软件包-yum-util-提供yum-config-manager功能另两个是devicemapper驱动依赖">1.安装需要的软件包， yum-util 提供yum-config-manager功能，另两个是devicemapper驱动依赖</h3>
+<p>where $\Delta x(t) = x(t) - x(t-1)$, $\Delta x(t-1) = x(t-1) - x(t-2)$ and so on.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils device-mapper-persistent-data lvm2</code></pre></figure>
+<p>The function of the ADF is to test if $\lambda = 0$. <strong>If the hypothesis $\lambda = 0$ can be rejected</strong>, that means the next move $\Delta x(t)$ depends on the current level $x(t-1)$ and so <strong>it is not a random walk</strong>. The test statistic is the regression coeficient $\lambda$ divided by the standard error of the regression fit:</p>
 
-<h3 id="2设置-yum-源">2.设置 yum 源</h3>
+<script type="math/tex; mode=display">\begin{equation} 
+DF = \frac{\lambda }{SE(\lambda)}
+\end{equation}</script>
 
-<p>设置一个yum源，下面两个都可用</p>
+<p>Dickey and Fuller have already calculated the distribution of this test statistic, which allows us to determine the rejection of the hypothesis for any chosen percentage critical value. Since we expect mean regression to be negative (i.e., $\lambda$ is expected to be negative here if this is a mean-reverting time series) and it has to be more negative than the critical value for the hypothesis to be rejected.</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">yum-config-manager <span class="nt">--add-repo</span> http://download.docker.com/linux/centos/docker-ce.repo（中央仓库）
+<p>We can simply interpret the result using the p-value from the test. A p-value below a specified threshold (we are going to use 5%) suggests we reject the null hypothesis (stationary), otherwise a p-value above the threshold suggests we accept the null hypothesis (non-stationary).</p>
 
-yum-config-manager <span class="nt">--add-repo</span> http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo（阿里仓库）</code></pre></figure>
+<p>A naive implementation of the ADF test in Python is shown here:</p>
 
-<h3 id="3选择docker版本并安装">3.选择docker版本并安装</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import numpy as np
+from statsmodels.regression.linear_model import OLS
+from statsmodels.tsa.tsatools import lagmat, add_trend
+from statsmodels.tsa.adfvalues import mackinnonp
 
-<p>####（1）查看可用版本有哪些</p>
+def adf(ts, maxlag:int=None):
+    """
+    Augmented Dickey-Fuller unit root test
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">yum list docker-ce <span class="nt">--showduplicates</span> | <span class="nb">sort</span> <span class="nt">-r</span></code></pre></figure>
+    tsdall[explanatory variable] (maxlag=3 as an example)
+    * 1st column(tsdall[:,0]): [x3, x4, ..., x_{t-2}, x_{t-1}] are X variables (corresponding to coefficient *lambda*)
+    * 2nd column(tsdall[:,1]): [x3-x2, x4-x3, ..., x_{t-2}-x_{t-3}, x_{t-1}-x_{t-2}] are X variables (corresponding to coeff *alpha_1*)
+    * 3rd column(tsdall[:,2]): [x2-x1, x3-x2, ..., x_{t-3}-x_{t-4}, x_{t-2}-x_{t-3}] are X variables (corresponding to coeff *alpha_2*)
+    * 4th column(tsdall[:,3]): [x1-x0, x2-x1, ..., x_{t-4}-x_{t-3}, x_{t-3}-x_{t-4}] are X variables (corresponding to coeff *alpha_3*)
 
-<p>####（2）选择一个版本并安装：<code class="language-plaintext highlighter-rouge">yum install docker-ce-版本号</code></p>
+    tsdshort[response variable]:
+    * [x4-x3, x5-x4, ..., x_{t-1}-x_{t-2}, x_t-x_{t-1}] are the Y variables
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">yum <span class="nb">install </span>docker-ce-20.10.2</code></pre></figure>
+    Regression:
+    * x4-x3 = lambda*x3 + alpha1*(x3-x2) + alpha2*(x2-x1) + alpha3*(x1-x0) + mu + epsilon
+    * x5-x4 = lambda*x4 + alpha1*(x4-x3) + alpha2*(x3-x2) + alpha3*(x2-x1) + mu + epsilon
+    * ...
+    * x_t-x_{t-1} = lambda*x_{t-1} + alpha1*(x_{t-1}-x_{t-2}) + alpha2*(x_{t-2}-x_{t-3}) + alpha3*(x_{t-3}-x_{t-4}) + mu + epsilon
+    """
+    # Maximum lag which is included in test, default 12*(nobs/100)^{1/4} 
+    # Ref: https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.adfuller.html
+    if maxlag is None:
+        maxlag = int(np.ceil(12 * (len(ts) / 100) ** (1 / 4)))
 
-<h3 id="4启动-docker-并设置开机自启">4.启动 Docker 并设置开机自启</h3>
+    # make sure we are working with an array, convert if necessary
+    ts = np.asarray(ts)
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">systemctl start docker
-systemctl <span class="nb">enable </span>docker</code></pre></figure>
+    # Calculate the discrete difference
+    tsdiff = np.diff(ts)
 
-<h3 id="ref">Ref</h3>
+    # Create a 2d array of lags, trim invalid observations on both sides
+    tsdall = lagmat(tsdiff[:, None], maxlag, trim='both', original='in')
 
-<p><a href="https://cloud.tencent.com/developer/article/1701451">centos7安装Docker详细步骤（无坑版教程）</a></p>
+    # Get dimension of the array
+    nobs = tsdall.shape[0]
+
+    # [explanatory variable] replace first column ([:,0]) xdiff with level of x
+    tsdall[:, 0] = ts[-nobs - 1:-1]
+
+    # [response variable]
+    tsdshort = tsdiff[-nobs:]
+
+    # Calculate the linear regression using an ordinary least squares model
+    results = OLS(tsdshort, add_trend(tsdall[:, :maxlag + 1], 'c')).fit()
+
+    # adfstat = DF = lambda / SE(lambda)
+    adfstat = results.tvalues[0]
+
+    # Get approx p-value from a precomputed table (from stattools)
+    pvalue = mackinnonp(adfstat, 'c', N=1)
+
+    return adfstat, pvalue
+</code></pre></div></div>
 
 
 
     <div class="blog-navigation">
         
-            <a class="prev" href="http://localhost:4000/jira-server/">&laquo; Jira服务器搭建</a>
+            <a class="prev" href="http://localhost:4000/sample-mean-and-variance/">&laquo; Sample Mean and Variance</a>
         
-        
-            <a class="next" href="http://localhost:4000/ernest-p-chan-winning-strategies-and-their-rationale-1/">Ernest P. Chan: Winning Strategies and Their Rationale (1) &raquo;</a>
         
     </div>
 
@@ -619,38 +674,17 @@ systemctl <span class="nb">enable </span>docker</code></pre></figure>
         
             
                 
-            
-                
-            
-        
-            
-                
-            
-                
-            
-        
-    
-        
-        
-            
-                
-            
-                
-            
-        
-    
-        
-        
-            
-                
-            
-                
-            
-        
-    
-        
-        
-            
+                    
+                    <h4>Related Posts</h4>
+                    <ul>
+                    
+                    <li class="relatedPost">
+                        <a href="http://localhost:4000/sample-mean-and-variance/">Sample Mean and Variance
+                        
+                        </a>
+                    </li>
+                    
+                    
                 
             
                 
@@ -670,6 +704,9 @@ systemctl <span class="nb">enable </span>docker</code></pre></figure>
             
                 
             
+        
+    
+        
         
             
                 
@@ -776,6 +813,36 @@ systemctl <span class="nb">enable </span>docker</code></pre></figure>
                 
             
         
+            
+                
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+                
+            
+        
+            
+                
+            
+                
+            
+        
+    
+        
+        
+            
+                
+            
+                
+            
+        
     
         
         
@@ -792,6 +859,8 @@ systemctl <span class="nb">enable </span>docker</code></pre></figure>
             
         
     
+    
+        </ul>
     
 </div>
 
@@ -816,7 +885,7 @@ systemctl <span class="nb">enable </span>docker</code></pre></figure>
             <!-- If site width is set to normal, you may choose any two share links -->
             <a
                 class="twitter"
-                href="https://twitter.com/intent/tweet?text=http://localhost:4000/centos-install-docker/ - 在CentOS安装docker by @"
+                href="https://twitter.com/intent/tweet?text=http://localhost:4000/stationary_time_series_test/ - Stationary Time Series Tests by @"
             >
                 <svg class="icon icon-twitter">
                     <use xlink:href="#icon-twitter"></use></svg
@@ -833,11 +902,11 @@ systemctl <span class="nb">enable </span>docker</code></pre></figure>
                 ><span class="icon-facebook-rect">Share</span>
             </a>
 
-            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/centos-install-docker/&amp;title=在CentOS安装docker&amp;summary=docker in centos&amp;source=http://localhost:4000" target="_blank">
+            <!-- <a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://localhost:4000/stationary_time_series_test/&amp;title=Stationary Time Series Tests&amp;summary=knowledge of statistics&amp;source=http://localhost:4000" target="_blank">
                 <svg class="icon icon-linkedin"><use xlink:href="#icon-linkedin"></use></svg><span class="icon-linkedin">Share</span>
             </a> -->
 
-            <!-- <a class="reddit" href="https://reddit.com/submit?url=http://localhost:4000/centos-install-docker/&amp;title=在CentOS安装docker" target="_blank">
+            <!-- <a class="reddit" href="https://reddit.com/submit?url=http://localhost:4000/stationary_time_series_test/&amp;title=Stationary Time Series Tests" target="_blank">
                 <svg class="icon icon-reddit"><use xlink:href="#icon-reddit"></use></svg><span class="icon-reddit">Share</span>
             </a> -->
         </div>
@@ -852,8 +921,8 @@ systemctl <span class="nb">enable </span>docker</code></pre></figure>
     <script type="text/javascript">
 
         var disqus_config = function () {
-            this.page.url = 'http://localhost:4000/centos-install-docker/';
-            this.page.identifier = '/centos-install-docker';
+            this.page.url = 'http://localhost:4000/stationary_time_series_test/';
+            this.page.identifier = '/stationary_time_series_test';
         };
         var disqus_shortname = 'josephchenhk';
         var disqus_developer = 0;
