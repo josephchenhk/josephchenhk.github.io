@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-05-28T18:58:09+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about Joseph</subtitle><entry><title type="html">Stationary Time Series Tests</title><link href="http://localhost:4000/stationary_time_series_test/" rel="alternate" type="text/html" title="Stationary Time Series Tests" /><published>2021-05-28T09:55:00+08:00</published><updated>2021-05-28T09:55:00+08:00</updated><id>http://localhost:4000/stationary_time_series_test</id><content type="html" xml:base="http://localhost:4000/stationary_time_series_test/">&lt;head&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-06-22T16:39:46+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about Joseph</subtitle><entry><title type="html">Stationary Time Series Tests</title><link href="http://localhost:4000/stationary_time_series_test/" rel="alternate" type="text/html" title="Stationary Time Series Tests" /><published>2021-05-28T09:55:00+08:00</published><updated>2021-05-28T09:55:00+08:00</updated><id>http://localhost:4000/stationary_time_series_test</id><content type="html" xml:base="http://localhost:4000/stationary_time_series_test/">&lt;head&gt;
     &lt;script src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
     &lt;script type=&quot;text/x-mathjax-config&quot;&gt;
         MathJax.Hub.Config({
@@ -110,7 +110,175 @@ def adf(ts, maxlag:int=None):
     pvalue = mackinnonp(adfstat, 'c', N=1)
 
     return adfstat, pvalue
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="systematic trading" /><category term="statistics" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Sample Mean and Variance</title><link href="http://localhost:4000/sample-mean-and-variance/" rel="alternate" type="text/html" title="Sample Mean and Variance" /><published>2021-05-26T09:52:38+08:00</published><updated>2021-05-26T09:52:38+08:00</updated><id>http://localhost:4000/sample-mean-and-variance</id><content type="html" xml:base="http://localhost:4000/sample-mean-and-variance/">&lt;head&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For the verification of our implementation we can compare the output of our implementation with the result of the function adfuller, included in the Python module statsmodels from the SciPy ecosystem, when used with the same input:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;from statsmodels.tsa.stattools import adfuller
+
+# Create a mean-reverting time series
+np.random.seed(2021)
+random_noise = np.random.randn(9999) / 100.
+lambda_ = 0.2
+mu = 5
+y0 = 1
+ts = [y0]
+for n in range(9999):
+    y1 = y0 + mu -lambda_*y0 + random_noise[n]
+    ts.append(y1)
+    y0 = y1
+
+# ADF tests
+print(&quot;ADF implemented:&quot;)
+print(adf(ts))
+
+print(&quot;ADF in statsmodels:&quot;)
+print(adfuller(ts, autolag=None)) # autolag set to None to use maxlag
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The results show that our implementation is consistent with adfuller method in statsmodels:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ADF implemented:
+(-16.74395546457208, 1.351035439732185e-29)
+ADF in statsmodels:
+(-16.74395546457208, 1.351035439732185e-29, 38, 9961, {'1%': -3.4310066595695945, '5%': -2.861830204343065, '10%': -2.5669244706354584})
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;hurst-exponent&quot;&gt;Hurst Exponent&lt;/h1&gt;
+&lt;p&gt;It is also possible to &lt;em&gt;determine the stationary nature of the time series&lt;/em&gt; by measuring its speed of diffusion, because a stationary time series should diffuse from its initial value more slowly than a geometric random walk.&lt;/p&gt;
+
+&lt;p&gt;We can model the speed by the variance:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{equation} 
+\textbf{Var}(\tau) = \left&lt; |z(t+\tau) - z(t) |^2 \right&gt; = \frac{1}{T} \int^T_0 |z(t+\tau) - z(t) |^2 
+\end{equation} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;where $z$ is the observed values, $\tau$ is an arbitrary time lag, and $&amp;lt;…&amp;gt;$ is an average over all $t$’s. For a geometric random walk, we know that&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{equation} 
+\left&lt; |z(t+\tau) - z(t) |^2 \right&gt; \sim \tau
+\end{equation} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;This relationship turns into an equality with some proportionally constant for a large value of $\tau$, but it may deviate for a small $\tau$. So if the time series is mean reverting this won’t hold.&lt;/p&gt;
+
+&lt;p&gt;Now we have to introduce the Hurst exponent H:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{equation} 
+\left&lt; |z(t+\tau) - z(t) |^2 \right&gt; \sim \tau^{2H}
+\end{equation} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;For a time series with a geometric random walk behaviour, $H=0.5$, for a mean reverting series, $H&amp;lt;0.5$, and, finally, for a trending series $H&amp;gt;0.5$. $H$ also is an indicator for the degree of mean reversion or trendiness: as $H$ decreases towards 0, the series is more mean reverting and as it increases towards 1, it is more trending.&lt;/p&gt;
+
+&lt;p&gt;There are $\color{blue}{\textbf{various methods}}$  of implementing a Hurst Exponent, depending on the definition (calculation) of variance. We introduce two commonly used methods here. One is defining the variance as square of standard deviations; another one is defining variance as square of &lt;strong&gt;rescaled range&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;hurst-exponent-1&quot;&gt;Hurst exponent (1)&lt;/h2&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def hurst_exponent_1(ts):
+    &quot;&quot;&quot;Returns the Hurst Exponent of the time series vector ts
+    Ref: 
+    1. https://www.quantstart.com/articles/Basics-of-Statistical-Mean-Reversion-Testing/
+    2. https://towardsdatascience.com/introduction-to-the-hurst-exponent-with-code-in-python-4da0414ca52e
+    &quot;&quot;&quot;
+    N = len(ts)
+    min_lag = 2
+    max_lag = 100
+    lags = range(min_lag, max_lag+1)
+
+    # Calculate the array of the variances of the lagged differences
+    tau = [np.square(np.std(np.subtract(ts[lag:], ts[:-lag]))) for lag in lags]
+
+    # Use a linear fit to estimate the Hurst Exponent (2*H)
+    poly = np.polyfit(np.log(lags), np.log(tau), 1)
+
+    # Return the Hurst exponent from the polyfit output
+    return poly[0]/2.0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;hurst-exponent-2&quot;&gt;Hurst exponent (2)&lt;/h2&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def hurst_exponent_2(ts):
+    &quot;&quot;&quot;Returns the Hurst Exponent of the time series vector ts
+    Ref:
+    1. https://en.wikipedia.org/wiki/Hurst_exponent
+    &quot;&quot;&quot;
+    # Convert into np.array if the original ts is not a np.array
+    ts = np.array(ts)
+    
+    N = len(ts)
+    min_lag = 10
+    max_lag = int(np.floor(N/2))
+    lags = range(min_lag, max_lag+1)
+
+    # Calculate different rescaled ranges
+    ARS = []
+    for lag in lags:
+        # divide ts into different samples
+        num = int(np.floor(N/lag))
+        RS = []
+        for n in range(num):
+            X = ts[n*lag:(n+1)*lag] 
+            # [Important]: take lagged differences
+            X_diff = X[1:] - X[:-1] # X_diff = np.diff(X)
+            Y = X_diff - X_diff.mean()
+            Z = np.cumsum(Y)
+            R = Z.max() - Z.min()
+            S = Y.std(ddof=1)
+            RS.append(R/S)
+        
+        ARS.append(sum(RS)/len(RS))   
+    
+    # Note we are estimating rescaled range (RS), instead of
+    # RS^2, so the factor 2 disappear here.
+    poly = np.polyfit(np.log(lags), np.log(ARS), 1)
+    return poly[0]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;half-life-of-mean-reversion&quot;&gt;Half-Life of Mean Reversion&lt;/h1&gt;
+&lt;p&gt;Calculating the half-life of a mean reversion time series is very interesting because it gives us the measure of how long it takes to mean revert.
+This measure is a way to interpret the $\lambda$ coefficient in the equation we have already seen:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation} 
+\Delta x_t = \lambda x_{t-1} + \mu + \color{red}{\beta t + \alpha_1 \Delta x_{t-1} + ... + \alpha_k \Delta x_{t-k}  }+ \epsilon_t
+\end{equation}&lt;/script&gt;
+
+&lt;p&gt;For this new interpretation we have to transform this discrete time series into a differential form while ignoring the drift $\color{red}{\beta t}$ and the lagged differences $\color{red}{\alpha_1 \Delta x_{t-1} , … , \alpha_k \Delta x_{t-k}  }$ and we get the following &lt;strong&gt;Ornstein-Uhlenbeck formula&lt;/strong&gt; for the mean reverting process:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{equation} 
+d x_t = (\lambda x_{t-1} + \mu)dt + d\epsilon_t
+\end{equation}&lt;/script&gt;
+
+&lt;p&gt;This form allows us to get an analytic solution for the $\color{blue}{\textbf{expected value}}$ of $x(t)$ (Note: $\textbf{E}\left(x(t)\right)=\textbf{E}\left(x(t-1)\right)$ here):&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\textbf{E}\left(x(t)\right) = x_0 \cdot\exp(\lambda t) - \frac{\mu}{\lambda}\cdot\left(1-\exp(\lambda t)\right)&lt;/script&gt;
+
+&lt;p&gt;If $\color{blue}{\lambda \text{ is negative}}$ for a &lt;strong&gt;mean-reverting process&lt;/strong&gt;, the expected value of the value decays exponentially to the value $-\mu/\lambda$ with the half-life of decay being $log(2)/\lambda$.&lt;/p&gt;
+
+&lt;p&gt;Finally, to calculate the half-life mean reversion test we can use this simple implementation in Python:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;def half_life(ts):  
+    &quot;&quot;&quot; 
+    Calculates the half life of a mean reversion
+    &quot;&quot;&quot;
+    # make sure we are working with an array, convert if necessary
+    ts = np.asarray(ts)
+    
+    # delta = p(t) - p(t-1)
+    delta_ts = np.diff(ts)
+    
+    # calculate the vector of lagged values. lag = 1
+    lag_ts = np.vstack([ts[:-1], np.ones(len(ts[:-1]))]).T
+   
+    # calculate the slope of the deltas vs the lagged values 
+    # Ref: https://numpy.org/doc/stable/reference/generated/numpy.linalg.lstsq.html
+    lambda_, const = np.linalg.lstsq(lag_ts, delta_ts, rcond=None)[0]
+
+    # compute and return half life
+    # negative sign to turn half life to a positive value
+    return - np.log(2) / lambda_
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;All this theory and practical examples in Python will help us to understand and master the concept of cointegration, which will be thoroughly discussed in a following post. Stay tuned!&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="systematic trading" /><category term="statistics" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Sample Mean and Variance</title><link href="http://localhost:4000/sample-mean-and-variance/" rel="alternate" type="text/html" title="Sample Mean and Variance" /><published>2021-05-26T09:52:38+08:00</published><updated>2021-05-26T09:52:38+08:00</updated><id>http://localhost:4000/sample-mean-and-variance</id><content type="html" xml:base="http://localhost:4000/sample-mean-and-variance/">&lt;head&gt;
     &lt;script src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
     &lt;script type=&quot;text/x-mathjax-config&quot;&gt;
         MathJax.Hub.Config({
