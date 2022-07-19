@@ -6,16 +6,19 @@ layout: page
 ![Profile Image]({% if site.external-image %}{{ site.picture }}{% else %}{{ site.url }}/{{ site.picture }}{% endif %})
 
 
-<p> Joseph obtained his Ph.D degree in theoretical physics from The University of Hong Kong. Currently he is a senior Quantitative Researcher at a bank. He has extensive experience in developing systematic trading strategies and building out the infrastructures. Before joining the bank, he was a senior Quantitative Researcher in an asset manager that provides global asset allocation services and quantitative investment solutions to institutional clients and high net worth individuals. Prior to that, he was a quantitative analyst in an online-casino provider in Asia, where he developed automated football betting models and system, and created a variety of casino game models.</p>
+<p> Joseph used to have a big dream to change the world,
+now he knows he can only change himself. Life is short,
+so he uses Python; life is short, so he loves what he
+is doing; life is short, so he loves who loves him.</p>
 
 
 
 <h2>Skills</h2>
 
 <ul class="skill-list">
-	<li>Python - Java - Shell - C - KDB</li>
-	<li>MySQL - MongoDB - InfluxDB - ClickHouse</li>
-	<li>Git - Docker - Jenkins</li>
+	<li>Python</li>
+	<li>Physics</li>
+	<li>Systematic trading</li>
 </ul>
 
 <h2>Projects</h2>
