@@ -1,4 +1,115 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-06-22T16:39:46+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about Joseph</subtitle><entry><title type="html">Stationary Time Series Tests</title><link href="http://localhost:4000/stationary_time_series_test/" rel="alternate" type="text/html" title="Stationary Time Series Tests" /><published>2021-05-28T09:55:00+08:00</published><updated>2021-05-28T09:55:00+08:00</updated><id>http://localhost:4000/stationary_time_series_test</id><content type="html" xml:base="http://localhost:4000/stationary_time_series_test/">&lt;head&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-07-19T16:46:46+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Joseph Chen</title><subtitle>A blog about Joseph</subtitle><entry><title type="html">Git Submodules</title><link href="http://localhost:4000/git-submodules/" rel="alternate" type="text/html" title="Git Submodules" /><published>2022-07-19T00:00:00+08:00</published><updated>2022-07-19T00:00:00+08:00</updated><id>http://localhost:4000/git-submodules</id><content type="html" xml:base="http://localhost:4000/git-submodules/">&lt;head&gt;
+    &lt;script src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+    &lt;script type=&quot;text/x-mathjax-config&quot;&gt;
+        MathJax.Hub.Config({
+            tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            inlineMath: [['$','$']]
+            }
+        });
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;p&gt;&lt;strong&gt;Starting with Submodules&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Let’s start by adding an existing Git repository as a submodule of the repository that we’re working on.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git submodule add https://github.com/josephchenhk/qtrader
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Afrter this, you should notice the new .gitmodules file. This is a configuration file that stores the mapping between the project’s URL and the local subdirectory you’ve pulled it into:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[submodule &quot;qtrader&quot;]
+	path = qtrader
+	url = https://github.com/josephchenhk/qtrader
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;When you commit, you see something like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git commit -am 'Add qtrader module'
+[master fb9093c] Add qtrader module
+ 2 files changed, 4 insertions(+)
+ create mode 100644 .gitmodules
+ create mode 160000 qtrader
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Notice the 160000 mode for the qtrader entry. That is a special mode in Git that basically means you’re recording a commit as a directory entry rather than a subdirectory or a file.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Cloning a Project with Submodules&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;When you clone such a project with a submodule, by default you get the directories that contain submodules, but none of the files within them yet:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone https://github.com/josephchenhk/qtrader_strategies
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;qtrader&lt;/code&gt; directory is there, but empty. You must run two commands: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git submodule init&lt;/code&gt; to initialize your local configuration file, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git submodule update&lt;/code&gt; to fetch all the data from that project and check out the appropriate commit listed in your superproject:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git submodule init
+$ git submodule update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Alternatively, you can pass &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--recurse-submodules&lt;/code&gt; to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git clone&lt;/code&gt; command, it will automatically initialize and update each submodule in the repository, including nested submodules if any of the submodules in the repository have submodules themselves.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone --recurse-submodules https://github.com/josephchenhk/qtrader_strategies
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you already cloned the project and forgot &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--recurse-submodules&lt;/code&gt;, you can combine the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git submodule init&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git submodule update&lt;/code&gt; steps by running &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git submodule update --init&lt;/code&gt;. To also initialize, fetch and checkout any nested submodules, you can use the foolproof &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git submodule update --init --recursive&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Working on a Project with Submodules&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we have a copy of a project with submodules in it and will collaborate with our teammates on both the main project (e.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;qtrader_strategies&lt;/code&gt;) and the submodule project (e.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;qtrader&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Pulling in Upstream Changes from the Submodule Remote&lt;/em&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Simply go into the directory and run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git fetch&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git merge&lt;/code&gt; the upstream branch to update the local code.&lt;/li&gt;
+  &lt;li&gt;Alternatively, you can run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git submodule update --remote&lt;/code&gt;, and Git will go into your submodules and fetch and update for you. By default the master/main branch is tracked and updated, if you want to specify a different branch &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dev&lt;/code&gt;, you can config in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.gitmodules&lt;/code&gt; file: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git config -f .gitmodules submodule.qtrader.branch dev&lt;/code&gt; (in this way, everyone else also tracks it)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;em&gt;Pulling Upstream Changes from the Project Remote&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Simply executing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git pull&lt;/code&gt; to get your newly committed changes is not enough. To finalize the update, you need to run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git submodule update&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git pull
+$ git status
+
+$ git submodule update --init --recursive
+$ git status
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;$\color{blue}{\textbf{Note}}$ that to be on the safe side, you should run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git submodule update&lt;/code&gt; with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--init&lt;/code&gt; flag in case the qtrader_strategies commits you just pulled added new submodules, and with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--recursive&lt;/code&gt; flag if any submodules have nested submodules.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Working on a Submodule&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Usually we want to work on both the main project and the submodule(s).&lt;/p&gt;
+
+&lt;p&gt;First of all, let’s go into our submodule directory and check out a branch.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd qtrader/
+$ git checkout dev
+Switched to branch 'dev'
+
+$ cd ..
+$ git submodule update --remote --merge (or --rebase)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you forget the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--rebase&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--merge&lt;/code&gt;, Git will just update the submodule to whatever is on the server and reset your project to a detached HEAD state.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Publishing Submodule Changes&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The git push command takes the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--recurse-submodules&lt;/code&gt; argument which can be set to either “check” or “on-demand”. The “check” option will make push simply fail if any of the committed submodule changes haven’t been pushed.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git push --recurse-submodules=check
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you want the check behavior to happen for all pushes, you can make this behavior the default by doing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git config push.recurseSubmodules check&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The other option is to use the “on-demand” value, which will try to do this for you (equivalent to manully git push in each submodule).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Further reference&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://git-scm.com/book/en/v2/Git-Tools-Submodules&quot;&gt;Git Tools - Submodules&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">Stationary Time Series Tests</title><link href="http://localhost:4000/stationary_time_series_test/" rel="alternate" type="text/html" title="Stationary Time Series Tests" /><published>2021-05-28T09:55:00+08:00</published><updated>2021-05-28T09:55:00+08:00</updated><id>http://localhost:4000/stationary_time_series_test</id><content type="html" xml:base="http://localhost:4000/stationary_time_series_test/">&lt;head&gt;
     &lt;script src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
     &lt;script type=&quot;text/x-mathjax-config&quot;&gt;
         MathJax.Hub.Config({
@@ -278,7 +389,40 @@ d x_t = (\lambda x_{t-1} + \mu)dt + d\epsilon_t
     return - np.log(2) / lambda_
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;All this theory and practical examples in Python will help us to understand and master the concept of cointegration, which will be thoroughly discussed in a following post. Stay tuned!&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="systematic trading" /><category term="statistics" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Sample Mean and Variance</title><link href="http://localhost:4000/sample-mean-and-variance/" rel="alternate" type="text/html" title="Sample Mean and Variance" /><published>2021-05-26T09:52:38+08:00</published><updated>2021-05-26T09:52:38+08:00</updated><id>http://localhost:4000/sample-mean-and-variance</id><content type="html" xml:base="http://localhost:4000/sample-mean-and-variance/">&lt;head&gt;
+&lt;p&gt;All this theory and practical examples in Python will help us to understand and master the concept of cointegration, which will be thoroughly discussed in a following post. Stay tuned!&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="systematic trading" /><category term="statistics" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Cointegration Time Series Tests</title><link href="http://localhost:4000/cointegration_time_series_test/" rel="alternate" type="text/html" title="Cointegration Time Series Tests" /><published>2021-05-28T09:55:00+08:00</published><updated>2021-05-28T09:55:00+08:00</updated><id>http://localhost:4000/cointegration_time_series_test</id><content type="html" xml:base="http://localhost:4000/cointegration_time_series_test/">&lt;head&gt;
+    &lt;script src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+    &lt;script type=&quot;text/x-mathjax-config&quot;&gt;
+        MathJax.Hub.Config({
+            tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            inlineMath: [['$','$']]
+            }
+        });
+    &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;p&gt;In a previous &lt;a href=&quot;https://josephchenhk.github.io/stationary_time_series_test/&quot;&gt;post&lt;/a&gt;, we examined the fundamental tools to test for stationarity on time series using Python. If we use the tools described in the article, we will very soon realise that most time series are neither stationary nor mean reverting. In this new article we are going to examine how we can test two (or more) non-stationary time series to check whether the combined value is stationary.&lt;/p&gt;
+
+&lt;p&gt;This is where we should introduce the notion of $\color{blue}{\textbf{cointegration}}$ .&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;If we are able to find a stationary linear combination of several time series that are not themselves stationary, then these are called cointegrated.&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;We are going to see two different tests: the simpler &lt;strong&gt;Cointegrated Augmented Dickey-Fuller test (CADF)&lt;/strong&gt; will be useful for pairs only, but we can apply the &lt;strong&gt;Johansen test&lt;/strong&gt; to any number of time series.&lt;/p&gt;
+
+&lt;h1 id=&quot;cointegrated-augmented-dickey-fuller-test&quot;&gt;Cointegrated Augmented Dickey-Fuller Test&lt;/h1&gt;
+&lt;p&gt;In the previous post, we saw how the ADF and Variance Ratio can test a given time series for mean reversion and stationarity, but we don’t know the number of units o percentage we should use to combine them into the stationary basket of elements we are looking for.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;We have to be aware that just because a set of time series is cointegrating doesn’t mean that any random linear combination of the series will form a stationary basket of elements.&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;To easily create the test we can use the procedure by Engle and Granger, which can be defined as the following steps:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Determine the optimal hedge ratio by running a lineal regression fit between the two series.&lt;/li&gt;
+  &lt;li&gt;Use the hedge computed in step 1 to form a portfolio.&lt;/li&gt;
+  &lt;li&gt;Run a stationarity test on the portfolio created in step 2.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Taking advantage of the code already written in the previous article, we can write the test easily with the help of the numpy and statsmodels libraries in the following way:&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="systematic trading" /><category term="statistics" /><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Sample Mean and Variance</title><link href="http://localhost:4000/sample-mean-and-variance/" rel="alternate" type="text/html" title="Sample Mean and Variance" /><published>2021-05-26T09:52:38+08:00</published><updated>2021-05-26T09:52:38+08:00</updated><id>http://localhost:4000/sample-mean-and-variance</id><content type="html" xml:base="http://localhost:4000/sample-mean-and-variance/">&lt;head&gt;
     &lt;script src=&quot;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
     &lt;script type=&quot;text/x-mathjax-config&quot;&gt;
         MathJax.Hub.Config({
@@ -958,63 +1102,4 @@ gitlab Reconfigured!&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nscd &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; hosts&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;注意：以上修改/etc/hosts 只能对修改的本机生效。如果要对所有机器生效，还是要老老实实地去注册一个域名，然后通过dns解析吧。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="GitLab" /><category term="server" /><summary type="html">我们上一篇介绍了搭建Git服务器。要使用一个更现代、功能更全的Git服务器，我们可以试试GitLab 准备工作</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Git服务器搭建</title><link href="http://localhost:4000/git-server/" rel="alternate" type="text/html" title="Git服务器搭建" /><published>2020-07-21T09:41:00+08:00</published><updated>2020-07-21T09:41:00+08:00</updated><id>http://localhost:4000/git-server</id><content type="html" xml:base="http://localhost:4000/git-server/">&lt;h1 id=&quot;安装git&quot;&gt;安装Git&lt;/h1&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;git&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;接下来我们创建一个git用户组和git用户，用来运行git服务&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;groupadd git
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;useradd git &lt;span class=&quot;nt&quot;&gt;-g&lt;/span&gt; git&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h1 id=&quot;创建证书登陆&quot;&gt;创建证书登陆&lt;/h1&gt;
-
-&lt;p&gt;收集需要登陆的用户的公钥，公钥位于id_rsa.pub文件中，把我们的公钥导入到/home/git/.ssh/authorized_keys文件里，一行一个。如果没有该文件就创建一个：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /home/git/
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; .ssh
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;755 .ssh
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;touch&lt;/span&gt; .ssh/authorized_keys
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;chomod 644 .ssh/authorized_keys&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h1 id=&quot;初始化git仓库&quot;&gt;初始化Git仓库&lt;/h1&gt;
-
-&lt;p&gt;首先我们选定一个目录作为Git仓库，假定是/home/git/gitrepo/algo.git，在/home/git/gitrepo目录下输入命令&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /home/git/
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;gitrepo
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chown &lt;/span&gt;git:git gitrepo/
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;gitrepo
-
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git init &lt;span class=&quot;nt&quot;&gt;--bare&lt;/span&gt; algo.git&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;以上命令创建了一个空仓库，服务器上的仓库通常以.git结尾。然后，把仓库所属用户改为git：&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chown&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-R&lt;/span&gt; git:git algo.git&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h1 id=&quot;克隆仓库&quot;&gt;克隆仓库&lt;/h1&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git clone git@192.168.2.24:/home/git/gitrepo/algo.git&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;192.168.2.24为Git所在服务器ip，需要将其改为你自己的服务器ip。这样我们的Git服务器就安装完成了。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="Git" /><category term="server" /><summary type="html">安装Git</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">远程连接至局域网</title><link href="http://localhost:4000/remote-access-to-local-network/" rel="alternate" type="text/html" title="远程连接至局域网" /><published>2020-07-20T19:23:00+08:00</published><updated>2020-07-20T19:23:00+08:00</updated><id>http://localhost:4000/remote-access-to-local-network</id><content type="html" xml:base="http://localhost:4000/remote-access-to-local-network/">&lt;h2 id=&quot;安装vmware-workstation&quot;&gt;安装Vmware Workstation&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;下载：&lt;a href=&quot;https://www.macxin.com/archives/3156.html&quot;&gt;WMware Workstation Pro 14.1.0 Linux 完美破解版 多语言版&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;注册码：(适合VMware 2017 v14.x) FF31K-AHZD1-H8ETZ-8WWEZ-WUUVA / CV7T2-6WY5Q-48EWP-ZXY7X-QGUWD&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;上传至服务器之后，解压，得到&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;o+x VMware-Workstation-Full-14.1.0-7370693.x86_64.bundle
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;./WMware-Workstation-Full-14.1.0-7370693.x86_64.bundle
-&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;填上上面的注册码&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# 安装好后打开，会提示安装gcc&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;gcc
-&lt;span class=&quot;c&quot;&gt;# 装好gcc之后再次尝试打开，会提示Kernel Headers 3.10.0-1127.13.el7.x86_64 not found，查看现有kernels headers，如果没有的话安装&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; /usr/src/kernels/
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yum &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;kernel-devel
-&lt;span class=&quot;c&quot;&gt;# 装好kernel-devel之后再次尝试打开，会提示还有several packages need to compile，点击install，安装之后会提示失败，不要管它，点击cancel，之后再次打开，就ok了&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;下载CentOS-7-x86_64-Minimal-2003.iso并上传至服务器，打开vmware workstation，安装镜像。当安装完成之后，会提示说”Could not open /dev/vmmon: No such file or direcotry. Please make sure that the kernel module &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmmon&lt;/code&gt; is loaded.”&lt;/p&gt;
-
-&lt;p&gt;这个错误大概是说vmmonitor和vmnet这两个模块没有经过签名认证，所以vmware出于安全的考虑，无法built。解决方案之一是重启系统，进入bios修改secure boot，将之改为disable，再重新尝试即可。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="markdown" /><category term="elements" /><summary type="html">安装Vmware Workstation 下载：WMware Workstation Pro 14.1.0 Linux 完美破解版 多语言版 注册码：(适合VMware 2017 v14.x) FF31K-AHZD1-H8ETZ-8WWEZ-WUUVA / CV7T2-6WY5Q-48EWP-ZXY7X-QGUWD</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;p&gt;注意：以上修改/etc/hosts 只能对修改的本机生效。如果要对所有机器生效，还是要老老实实地去注册一个域名，然后通过dns解析吧。&lt;/p&gt;</content><author><name>joseph</name></author><category term="blog" /><category term="GitLab" /><category term="server" /><summary type="html">我们上一篇介绍了搭建Git服务器。要使用一个更现代、功能更全的Git服务器，我们可以试试GitLab 准备工作</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/images/markdown.jpg" /><media:content medium="image" url="http://localhost:4000/assets/images/markdown.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
