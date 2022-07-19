@@ -1,5 +1,15 @@
 ---
 title: Git Submodules
+layout: post
+date: '2022-07-19 16:55:00'
+image: assets/images/markdown.jpg
+headerImage: false
+tag:
+- Git
+star: true
+category: blog
+author: joseph
+description: knowledge of Git
 ---
 
 <head>
