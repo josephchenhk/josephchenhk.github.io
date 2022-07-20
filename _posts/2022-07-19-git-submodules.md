@@ -1,8 +1,8 @@
 ---
 title: Git Submodules
 layout: post
-date: '2022-07-19 16:55:00'
-image: assets/images/markdown.jpg
+date: '2022-07-19 23:11:00'
+image: assets/images/git_black.png
 headerImage: false
 tag:
 - Git
