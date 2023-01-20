@@ -1,6 +1,10 @@
 ---
 title: PyTorch Quick Tutorial (1)
 tag: PyTorch
+category: blog
+layout: post
+author: Joseph
+description: PyTorch basic tutorial
 ---
 
 <head>
